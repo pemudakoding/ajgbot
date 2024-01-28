@@ -12,7 +12,6 @@ class WhatsappClient implements WhatsappClientContract {
 
     connection
       .connectToWhatsapp()
-      .resolveCredentialSaver()
   }
 
   async prepareConfig(): Promise<UserFacingSocketConfig> {
@@ -24,7 +23,7 @@ class WhatsappClient implements WhatsappClientContract {
   }
 
   async resolveAuthentication(): Promise<{ state: AuthenticationState; saveCreds: () => Promise<void>; }> {
-    return await useMultiFileAuthState('auth_info_baileys')
+    return await useMultiFileAuthState('ajgbotauth')
   }
 }
 

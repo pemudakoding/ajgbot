@@ -5,35 +5,41 @@ import { BaileysEventMap } from '@whiskeysockets/baileys/lib/Types';
 
 class WhatsappConnection {
   protected socket: WASocket
+  protected config: UserFacingSocketConfig
   protected saveCreds: Function
 
   constructor(config: UserFacingSocketConfig, saveCreds: Function) {
-    this.socket = makeWASocket(config)
+    this.config = config
     this.saveCreds = saveCreds
   }
 
   public connectToWhatsapp(): this {
-    this.socket.ev.on(SocketConnectionEnum.Update, (update: BaileysEventMap[SocketConnectionEnum.Update]) => {
+    const socket = makeWASocket(this.config);
+
+    socket.ev.on(SocketConnectionEnum.Update, (update: BaileysEventMap[SocketConnectionEnum.Update]) => {
       const {connection, lastDisconnect} = update
+
+      const shouldReconnect: boolean = connection === ConnectionStatusEnum.Close
+        && ((lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut)
+
+      if (shouldReconnect) {
+        console.log('connection closed due to ', lastDisconnect?.error, ', reconnecting ', shouldReconnect)
+
+        return this.connectToWhatsapp();
+      }
 
       if(connection === ConnectionStatusEnum.Open) {
         console.log('opened connection')
       }
-
-      const shouldReconnect: boolean = (lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut
-
-      if (connection === ConnectionStatusEnum.Close && shouldReconnect) {
-        console.log('connection closed due to ', lastDisconnect?.error, ', reconnecting ', shouldReconnect)
-
-        this.connectToWhatsapp();
-      }
     })
+
+    this.resolveCredentialSaver(socket);
 
     return this;
   }
 
-  public resolveCredentialSaver(): this {
-    this.socket.ev.on(CredEventEnum.Update, this.saveCreds)
+  public resolveCredentialSaver(socket: makeWASocket): this {
+    socket.ev.on(CredEventEnum.Update, this.saveCreds)
 
     return this
   }
