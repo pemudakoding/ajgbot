@@ -1,12 +1,11 @@
-import { BaileysEventMap } from '@whiskeysockets/baileys/lib/Types';
 import { WASocket } from '@whiskeysockets/baileys';
+import { BaileysEventMap } from '@whiskeysockets/baileys/lib/Types';
 import { WAMessage, WATextMessage } from '@whiskeysockets/baileys/lib/Types/Message';
 
-class ResolveMessageAction
-{
-  public static execute(socket: WASocket): void {
-    socket.ev.on('messages.upsert', async (messages: BaileysEventMap['messages.upsert']) => {
-      const messageInformations: WAMessage[] = messages.messages
+class ResolveMessageAction {
+
+  public static async execute(socket: WASocket,messages: BaileysEventMap['messages.upsert']): Promise<void> {
+    const messageInformations: WAMessage[] = messages.messages
 
       for(let message of messageInformations) {
         const messageInformation: WATextMessage | null | undefined = message.message?.extendedTextMessage
@@ -16,7 +15,6 @@ class ResolveMessageAction
           await socket.sendMessage(messageAuthorJid, {text: 'pong!'})
         }
       }
-    })
   }
 }
 

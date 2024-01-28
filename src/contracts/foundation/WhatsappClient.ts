@@ -2,7 +2,6 @@ import { UserFacingSocketConfig, AuthenticationState } from '@whiskeysockets/bai
 
 interface WhatsappClient {
   start(): Promise<void>
-  prepareConfig(): Promise<UserFacingSocketConfig>
   resolveAuthentication(): Promise<{
     state: AuthenticationState;
     saveCreds: () => Promise<void>;
