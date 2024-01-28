@@ -47,6 +47,8 @@ class WhatsappConnection {
       if(connection === ConnectionStatusEnum.Open) {
         console.log('opened connection')
       }
+
+      return;
     })
   }
 
