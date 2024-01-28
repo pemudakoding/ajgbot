@@ -5,5 +5,21 @@
     "add": "^2.0.6",
     "qrcode-terminal": "^0.12.0",
     "yarn": "^1.22.21"
+  },
+  "name": "ajgbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://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@github.com/pemudakoding/ajgbot.git",
+  "author": "StivenKatuuk <pemudakoding@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "^5.3.3"
   }
 }

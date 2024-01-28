@@ -1,18 +1,17 @@
-import { AuthenticationState, useMultiFileAuthState } from '@whiskeysockets/baileys';
-import WhatsappClientContract from '../contracts/foundation/WhatsappClient';
+import { useMultiFileAuthState } from '@whiskeysockets/baileys'
+import type { AuthenticationState } from '@whiskeysockets/baileys';
+import type WhatsappClientContract from '../contracts/foundation/WhatsappClient'
 
-import WhatsappConnection from './WhatsappConnection';
+import WhatsappConnection from './WhatsappConnection'
 
 class WhatsappClient implements WhatsappClientContract {
-  async start(): Promise<void> {
-    const connection = new WhatsappConnection(this.resolveAuthentication)
+  async start (): Promise<void> {
+    const connection = new WhatsappConnection(
+      async (): Promise<{ state: AuthenticationState, saveCreds: () => Promise<void> }> => await useMultiFileAuthState('ajgbotauth')
+    )
 
-    connection.connectToWhatsapp()
-  }
-
-  async resolveAuthentication(): Promise<{ state: AuthenticationState; saveCreds: () => Promise<void>; }> {
-    return await useMultiFileAuthState('ajgbotauth')
+    await connection.connectToWhatsapp()
   }
 }
 
-export default WhatsappClient;
+export default WhatsappClient

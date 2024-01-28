@@ -59,7 +59,7 @@ class WhatsappConnection {
       MessageEventEnum.Upsert,
       (messages: BaileysEventMap['messages.upsert']) => ResolveMessageAction.execute(this.socket, messages)
     )
-  };
+  }
 
   protected async prepareConfig(state: AuthenticationState): Promise<UserFacingSocketConfig> {
     const builder = new ConnectionConfigBuilder(connection)
