@@ -8,14 +8,18 @@ const withSign = (command: string): string => process.env.COMMAND_SIGN + command
 const patternsAndTextIsMatch = (patterns: MessagePatternType, message: WAMessage): boolean => {
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
-            if(pattern === getText(message)) {
+            const regexPattern: RegExp = new RegExp(pattern)
+
+            if(getText(message)?.toString().match(regexPattern)) {
                 return true
             }
         }
     }
 
     if(typeof patterns === 'string') {
-        return patterns === getText(message)
+        const regexPattern: RegExp = new RegExp(patterns)
+
+        return Boolean(getText(message)?.toString().match(regexPattern))
     }
 
     return false
