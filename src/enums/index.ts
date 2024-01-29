@@ -1,6 +1,6 @@
-import ConnectionStatusEnum  from "./connectionStatusEnum"
-import CredEventEnum from "./credEventEnum";
-import SocketConnectionEnum from "./socketConnectionEnum"
+import ConnectionStatusEnum  from "./ConnectionStatusEnum"
+import CredEventEnum from "./CredEventEnum";
+import SocketConnectionEnum from "./SocketConnectionEnum"
 import MessageEventEnum from "./MessageEventEnum";
 
 export {
