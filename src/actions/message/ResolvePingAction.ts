@@ -20,6 +20,10 @@ class ResolvePingAction extends BaseMessageHandlerAction{
             }
         )
     }
+
+    hasArgument(): boolean {
+        return false
+    }
 }
 
 export default ResolvePingAction

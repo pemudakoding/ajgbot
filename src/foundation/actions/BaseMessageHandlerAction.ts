@@ -8,6 +8,8 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
 
   public abstract sendMessage(message: baileys.WAMessage, socket: baileys.WASocket): void
 
+  public abstract hasArgument(): boolean
+
   public async execute(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
     if(! patternsAndTextIsMatch(this.patterns(), message)) {
       return;
