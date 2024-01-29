@@ -7,7 +7,7 @@ import {getJid} from "../../supports/Message";
 
 class ResolvePingAction extends BaseMessageHandlerAction{
     patterns(): MessagePatternType {
-        return withSign('ping')
+        return [withSign('ping'), withSign('test')]
     }
 
     async sendMessage(message: WAMessage, socket: WASocket): Promise<void> {

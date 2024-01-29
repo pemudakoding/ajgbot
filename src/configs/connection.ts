@@ -1,5 +1,5 @@
 import { Browsers } from '@whiskeysockets/baileys'
-import { UserFacingSocketConfig } from '@whiskeysockets/baileys/lib/Types/index'
+import { UserFacingSocketConfig } from '@whiskeysockets/baileys'
 
 export default <UserFacingSocketConfig> {
   printQRInTerminal: true,

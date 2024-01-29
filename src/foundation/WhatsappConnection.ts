@@ -9,7 +9,7 @@ import {
 import { BaileysEventMap } from '@whiskeysockets/baileys/lib/Types';
 import ResolveMessageAction from '../actions/ResolveMessageAction';
 import ConnectionConfigBuilder from '../builders/ConnectionConfigBuilder';
-import connection from '../config/connection';
+import connection from '../configs/connection';
 
 class WhatsappConnection {
   protected socket: WASocket
