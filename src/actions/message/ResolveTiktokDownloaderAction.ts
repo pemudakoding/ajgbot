@@ -5,7 +5,7 @@ import {getArguments, withSign} from "../../supports/Str";
 import {getJid, getText, react, sendWithTyping} from "../../supports/Message";
 import queue from "../../services/queue.ts";
 
-class ResolvePingAction extends BaseMessageHandlerAction{
+class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
     patterns(): MessagePatternType {
         return [withSign('tt'), withSign('vt')]
     }
@@ -63,7 +63,7 @@ class ResolvePingAction extends BaseMessageHandlerAction{
             if(Error.code === 'ERR_INVALID_URL') {
                 queue.add(() => sendWithTyping(
                     socket,
-                    { text: "pakai link tiktok yang valid kanda!!!"},
+                    { text: "pakai link tiktok yang valid kanda!!!" },
                     getJid(message)
                 ))
 
@@ -72,7 +72,7 @@ class ResolvePingAction extends BaseMessageHandlerAction{
 
             queue.add(() => sendWithTyping(
                 socket,
-                { text: Error.message},
+                { text: Error.message },
                 getJid(message)
             ))
         }
@@ -89,4 +89,4 @@ class ResolvePingAction extends BaseMessageHandlerAction{
     }
 }
 
-export default ResolvePingAction
+export default ResolveTiktokDownloaderAction
