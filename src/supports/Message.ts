@@ -4,7 +4,7 @@ const getJid = (message: baileys.WAMessage): string => {
   return message.key.remoteJid ?? ''
 }
 
-const getText = (message: baileys.WAMessage): baileysWATextMessage| string | null | undefined => {
+const getText = (message: baileys.WAMessage): baileys.WATextMessage| string | null | undefined => {
   return message.message?.extendedTextMessage?.text
     ?? message?.message?.conversation
 }

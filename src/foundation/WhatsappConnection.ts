@@ -35,7 +35,7 @@ class WhatsappConnection {
       const {connection, lastDisconnect} = update
 
       const shouldReconnect: boolean = connection === ConnectionStatusEnum.Close
-        && ((lastDisconnect?.error as Boom)?.output?.statusCode !== DisconnectReason.loggedOut)
+        && ((lastDisconnect?.error as Boom)?.output?.statusCode !== baileys.DisconnectReason.loggedOut)
 
       if (shouldReconnect) {
         console.log('connection closed due to ', lastDisconnect?.error, ', reconnecting ', shouldReconnect)
