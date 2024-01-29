@@ -1,6 +1,5 @@
-import {WASocket} from "@whiskeysockets/baileys";
+import * as baileys from "@whiskeysockets/baileys";
 import MessagePatternType from "../../types/MessagePatternType";
-import {WAMessage} from "@whiskeysockets/baileys/lib/Types/Message";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {withSign} from "../../supports/Str";
 import {getJid} from "../../supports/Message";
@@ -10,7 +9,7 @@ class ResolvePingAction extends BaseMessageHandlerAction{
         return [withSign('ping'), withSign('test')]
     }
 
-    async sendMessage(message: WAMessage, socket: WASocket): Promise<void> {
+    async sendMessage(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         await socket.sendMessage(
             getJid(message),
             {

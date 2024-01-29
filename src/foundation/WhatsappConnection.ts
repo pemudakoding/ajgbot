@@ -1,4 +1,4 @@
-import { UserFacingSocketConfig, WASocket, makeWASocket, DisconnectReason, AuthenticationState } from '@whiskeysockets/baileys';
+import * as baileys from '@whiskeysockets/baileys'
 import { Boom } from '@hapi/boom'
 import {
   SocketConnectionEnum,
@@ -6,17 +6,16 @@ import {
   CredEventEnum,
   MessageEventEnum
 } from '../enums';
-import { BaileysEventMap } from '@whiskeysockets/baileys/lib/Types';
 import ResolveMessageAction from '../actions/ResolveMessageAction';
 import ConnectionConfigBuilder from '../builders/ConnectionConfigBuilder';
 import connection from '../configs/connection';
 
 class WhatsappConnection {
-  protected socket: WASocket
-  protected authentication: () => Promise<{ state: AuthenticationState; saveCreds: () => Promise<void>; }>
+  protected socket: baileys.WASocket
+  protected authentication: () => Promise<{ state: baileys.AuthenticationState; saveCreds: () => Promise<void>; }>
 
   constructor(
-    authentication: () => Promise<{ state: AuthenticationState; saveCreds: () => Promise<void>; }>
+    authentication: () => Promise<{ state: baileys.AuthenticationState; saveCreds: () => Promise<void>; }>
   ) {
     this.authentication = authentication
   }
@@ -24,7 +23,7 @@ class WhatsappConnection {
   public async connectToWhatsapp(): Promise<void> {
     const { state, saveCreds } = await this.authentication()
 
-    this.socket = makeWASocket(await this.prepareConfig(state))
+    this.socket = baileys.makeWASocket(await this.prepareConfig(state))
 
     this.resolveClientConnection()
     this.resolveCredentialSaver(saveCreds)
@@ -32,7 +31,7 @@ class WhatsappConnection {
   }
 
   protected resolveClientConnection(): void {
-    this.socket.ev.on(SocketConnectionEnum.Update, (update: BaileysEventMap[SocketConnectionEnum.Update]) => {
+    this.socket.ev.on(SocketConnectionEnum.Update, (update: baileys.BaileysEventMap[SocketConnectionEnum.Update]) => {
       const {connection, lastDisconnect} = update
 
       const shouldReconnect: boolean = connection === ConnectionStatusEnum.Close
@@ -59,11 +58,11 @@ class WhatsappConnection {
   protected resolveMessagesUpsert(): void {
     this.socket.ev.on(
       MessageEventEnum.Upsert,
-      (messages: BaileysEventMap['messages.upsert']) => ResolveMessageAction.execute(this.socket, messages)
+      (messages: baileys.BaileysEventMap['messages.upsert']) => ResolveMessageAction.execute(this.socket, messages)
     )
   }
 
-  protected async prepareConfig(state: AuthenticationState): Promise<UserFacingSocketConfig> {
+  protected async prepareConfig(state: baileys.AuthenticationState): Promise<baileys.UserFacingSocketConfig> {
     const builder = new ConnectionConfigBuilder(connection)
 
     builder.setAuthState(state)

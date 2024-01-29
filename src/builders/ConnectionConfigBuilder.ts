@@ -1,19 +1,19 @@
-import { UserFacingSocketConfig, AuthenticationState } from '@whiskeysockets/baileys/lib/Types/index'
+import * as baileys from '@whiskeysockets/baileys'
 
 class ConnectionConfigBuilder {
-  protected config: UserFacingSocketConfig;
+  protected config: baileys.UserFacingSocketConfig;
 
-  constructor(config: UserFacingSocketConfig) {
+  constructor(config: baileys.UserFacingSocketConfig) {
     this.config = config
   }
 
-  public setAuthState(state: AuthenticationState): this {
+  public setAuthState(state: baileys.AuthenticationState): this {
     this.config.auth = state
 
     return this;
   }
 
-  public build(): UserFacingSocketConfig
+  public build(): baileys.UserFacingSocketConfig
   {
     return this.config
   }

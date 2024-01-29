@@ -1,9 +1,8 @@
-import {WASocket} from "@whiskeysockets/baileys";
+import * as baileys from "@whiskeysockets/baileys";
 import MessagePatternType from "../../types/MessagePatternType";
-import {WAMessage} from "@whiskeysockets/baileys/lib/Types/Message";
 
 interface BaseMessageAction {
-    execute: (message: WAMessage, socket: WASocket) => void
+    execute: (message: baileys.WAMessage, socket: baileys.WASocket) => void
     patterns: () => MessagePatternType,
 }
 

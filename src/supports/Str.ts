@@ -1,11 +1,11 @@
 
 import MessagePatternType from "../types/MessagePatternType";
 import {getText} from "./Message";
-import {WAMessage} from "@whiskeysockets/baileys";
+import * as baileys from "@whiskeysockets/baileys";
 
 const withSign = (command: string): string => process.env.COMMAND_SIGN + command
 
-const patternsAndTextIsMatch = (patterns: MessagePatternType, message: WAMessage): boolean => {
+const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.WAMessage): boolean => {
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
             const regexPattern: RegExp = new RegExp(pattern)

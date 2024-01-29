@@ -1,9 +1,8 @@
-import { Browsers } from '@whiskeysockets/baileys'
-import { UserFacingSocketConfig } from '@whiskeysockets/baileys'
+import * as baileys from '@whiskeysockets/baileys'
 
-export default <UserFacingSocketConfig> {
+export default <baileys.UserFacingSocketConfig> {
   printQRInTerminal: true,
-  browser: Browsers.macOS('Chrome'),
+  browser: baileys.Browsers.macOS('Chrome'),
   syncFullHistory: true,
 }
 
