@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+
+    "allowImportingTsExtensions": true,
     // project options
     "lib": [
       "ESNext",
@@ -14,7 +16,9 @@
     "baseUrl": "./", // Lets you set a base directory to resolve non-absolute module names.
     "esModuleInterop": true, // fixes some issues TS originally had with the ES6 spec where TypeScript treats CommonJS/AMD/UMD modules similar to ES6 module
     "moduleResolution": "node", // Pretty much always node for modern JS. Other option is "classic"
-    "paths": {}, // A series of entries which re-map imports to lookup locations relative to the baseUrl
+    "paths": {
+      "*": ["src/*"]
+    }, // A series of entries which re-map imports to lookup locations relative to the baseUrl
 
     // Source Map
     "sourceMap": true, // enables the use of source maps for debuggers and error reporting etc
@@ -32,11 +36,14 @@
     "noUnusedLocals": true, // Report errors on unused local variables.
     "noUnusedParameters": true // Report errors on unused parameters in functions
   },
-  "include": ["./**/*.ts"],
+  "include": [
+    "./**/*.ts",
+  ],
   "exclude": [
     "node_modules/**/*"
   ],
   "ts-node": {
     "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
 }
