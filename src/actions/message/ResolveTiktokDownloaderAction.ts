@@ -14,49 +14,47 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
         try {
             const link: string | undefined = getArguments(getText(message))[0]
 
-            if(link) {
-                new URL(link)
-
-                const tiktokDownload: {video: string, images: string[]} = await this.download(link)
-
-                if(tiktokDownload.video !== '') {
-                    queue.add(() => sendWithTyping(
-                        socket,
-                        {
-                            video: {
-                                url: tiktokDownload.video,
-                            },
-                            caption: "ini videonya, bilang apa? \n\n" + link
-                        },
-                        getJid(message),
-                        {
-                            quoted: message
-                        }
-                    ))
-                }
-
-                tiktokDownload.images.map((image: string) => {
-                    queue.add(() => sendWithTyping(
-                        socket,
-                        {
-                            image: {
-                                url: image,
-                            },
-                            caption: "ini gambarnya, bilang apa? \n\n" + link
-                        },
-                        getJid(message),
-                        {
-                            quoted: message
-                        }
-                    ))
-                })
-
-                queue.add(() => react(socket, '✅', message))
-
-                return
+            if(link === undefined) {
+                throw Error('Pakailah URL Tiktok Bung!!!')
             }
 
-            throw Error('Pakailah URL Tiktok Bung!!!')
+            new URL(link)
+
+            const tiktokDownload: {video: string, images: string[]} = await this.download(link)
+
+            if(tiktokDownload.video !== '') {
+                queue.add(() => sendWithTyping(
+                    socket,
+                    {
+                        video: {
+                            url: tiktokDownload.video,
+                        },
+                        caption: "ini videonya, bilang apa? \n\n" + link
+                    },
+                    getJid(message),
+                    {
+                        quoted: message
+                    }
+                ))
+            }
+
+            tiktokDownload.images.map((image: string) => {
+                queue.add(() => sendWithTyping(
+                    socket,
+                    {
+                        image: {
+                            url: image,
+                        },
+                        caption: "ini gambarnya, bilang apa? \n\n" + link
+                    },
+                    getJid(message),
+                    {
+                        quoted: message
+                    }
+                ))
+            })
+
+            queue.add(() => react(socket, '✅', message))
         } catch (Error) {
             queue.add(() => react(socket, '😡', message))
 

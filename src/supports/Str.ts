@@ -11,18 +11,19 @@ const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.W
 
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
-            const regexPattern: RegExp = new RegExp('^' + pattern + endOfPattern)
+            const regexPattern: RegExp = new RegExp('^' + pattern.replace('.', '') + endOfPattern)
 
-            if(getText(message)?.toString().match(regexPattern)) {
+            if(getText(message)?.toString().toLowerCase().replace(/^\./, '').match(regexPattern)) {
+
                 return true
             }
         }
     }
 
     if(typeof patterns === 'string') {
-        const regexPattern: RegExp = new RegExp('^' + patterns + endOfPattern)
+        const regexPattern: RegExp = new RegExp('^' + patterns.replace('.', '') + endOfPattern)
 
-        return Boolean(getText(message)?.toString().match(regexPattern))
+        return Boolean(getText(message)?.toString().toLowerCase().replace(/^\./, '').match(regexPattern))
     }
 
     return false

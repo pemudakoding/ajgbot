@@ -2,6 +2,7 @@
   "dependencies": {
     "@hapi/boom": "^10.0.1",
     "@whiskeysockets/baileys": "^6.6.0",
+    "@xncn/instagramdownloaderpro": "^0.0.3",
     "add": "^2.0.6",
     "dotenv": "^16.4.1",
     "jimp": "^0.22.10",
