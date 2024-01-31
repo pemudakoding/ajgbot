@@ -11,7 +11,7 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
     }
 
     patterns(): MessagePatternType {
-        return withSign('sumon');
+        return withSign('summon');
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
