@@ -1,4 +1,5 @@
 import * as baileys from '@whiskeysockets/baileys'
+import {GroupMetadata, GroupParticipant, WASocket} from "@whiskeysockets/baileys";
 
 const getJid = (message: baileys.WAMessage): string => {
   return message.key.remoteJid ?? ''
@@ -40,10 +41,26 @@ const react = async (socket: baileys.WASocket, emoji: string, message: baileys.W
 	)
 }
 
+const isGroup = (message: baileys.WAMessage): boolean => {
+	return Boolean(message.key.participant)
+}
+
+const isParticipantAdmin = async (message: baileys.WAMessage, socket: WASocket): Promise<boolean> => {
+	const groupMetadata: GroupMetadata = await socket.groupMetadata(getJid(message))
+
+	const participant: GroupParticipant[] = groupMetadata
+		.participants
+		.filter((participant: GroupParticipant): boolean => participant.id === message.key.participant && participant.admin !== null)
+
+	return participant.length > 0
+}
+
 export {
 	getJid,
 	getText,
 	sendWithTyping,
 	getParticipants,
-	react
+	react,
+	isGroup,
+	isParticipantAdmin,
 }

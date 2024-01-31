@@ -2,7 +2,7 @@ import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHan
 import MessagePatternType from "../../../types/MessagePatternType.ts";
 import {GroupParticipant, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str.ts";
-import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts";
+import {getJid, getParticipants, getText, isGroup, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 
 class ResolveMentionAllAction extends BaseMessageHandlerAction {
@@ -17,16 +17,14 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    isEligibleToProcess(message: WAMessage, socket: WASocket): boolean {
-        return Boolean(message.key.participant);
+    async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
+        return isGroup(message);
     }
 
-    async sendMessage(message: WAMessage, socket: WASocket): Promise<void> {
+    async processAction(message: WAMessage, socket: WASocket): Promise<void> {
         const texts: string[] = getArguments(getText(message))
-        const groupMetaData = await socket.groupMetadata(message.key.remoteJid!)
-        const participants: string[] = groupMetaData
-            .participants
-            .map((participant: GroupParticipant) => participant.id)
+        const groupMetaData: GroupParticipant[] = await getParticipants(socket, getJid(message))
+        const participants: string[] = groupMetaData.map((participant: GroupParticipant) => participant.id)
         const text: string = texts.length < 1 ? "yo wazzup" : texts.join(" ")
 
         queue.add(() => sendWithTyping(

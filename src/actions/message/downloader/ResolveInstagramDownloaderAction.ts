@@ -12,7 +12,7 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
         return withSign('ig')
     }
 
-    async sendMessage(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
+    async processAction(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
             const links: string[] = getArguments(getText(message))
 

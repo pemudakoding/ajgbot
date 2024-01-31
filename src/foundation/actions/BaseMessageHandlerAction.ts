@@ -9,14 +9,14 @@ import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 abstract class BaseMessageHandlerAction implements BaseMessageAction{
   public abstract patterns(): MessagePatternType
 
-  public abstract sendMessage(message: baileys.WAMessage, socket: baileys.WASocket): void
+  public abstract processAction(message: baileys.WAMessage, socket: baileys.WASocket): void
 
   public abstract hasArgument(): boolean
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public isEligibleToProcess(message: WAMessage, socket: WASocket): boolean {
+  public async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
     return true
   }
 
@@ -26,11 +26,11 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
         return;
       }
 
-      if(! this.isEligibleToProcess(message, socket)) {
+      if(! await this.isEligibleToProcess(message, socket)) {
         return;
       }
 
-      await this.sendMessage(message, socket)
+      await this.processAction(message, socket)
     } catch (Error) {
       queue.add(() => react(socket, '❌', message))
 

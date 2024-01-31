@@ -4,6 +4,10 @@ import ResolveTiktokDownloaderAction from "../actions/message/downloader/Resolve
 import ResolveInstagramDownloaderAction from "../actions/message/downloader/ResolveInstagramDownloaderAction.ts";
 import ResolveFacebookVideoDownloaderAction from "../actions/message/downloader/ResolveFacebookVideoDownloaderAction.ts";
 import ResolveMentionAllAction from "../actions/message/group/ResolveMentionAllAction.ts";
+import ResolveAddMemberAction from "../actions/message/group/ResolveAddMemberAction.ts";
+import ResolveKickMemberAction from "../actions/message/group/ResolveKickMemberAction.ts";
+import ResolveDemoteAdminAction from "../actions/message/group/ResolveDemoteAdminAction.ts";
+import ResolvePromoteMemberAction from "../actions/message/group/ResolvePromoteMemberAction.ts";
 
 export default <CommandConfigType> {
     messageHandlers: [
@@ -26,6 +30,22 @@ export default <CommandConfigType> {
         {
             patterns: (new ResolveMentionAllAction()).patterns(),
             concrete: new ResolveMentionAllAction()
+        },
+        {
+            patterns: (new ResolveAddMemberAction()).patterns(),
+            concrete: new ResolveAddMemberAction()
+        },
+        {
+            patterns: (new ResolveKickMemberAction()).patterns(),
+            concrete: new ResolveKickMemberAction()
+        },
+        {
+            patterns: (new ResolveDemoteAdminAction()).patterns(),
+            concrete: new ResolveDemoteAdminAction()
+        },
+        {
+            patterns: (new ResolvePromoteMemberAction()).patterns(),
+            concrete: new ResolvePromoteMemberAction()
         }
     ]
 }
