@@ -18,7 +18,7 @@ export default class ResolveAddMemberAction extends BaseMessageHandlerAction {
         return isGroup(message) && await isParticipantAdmin(message, socket)
     }
 
-    async processAction(message: WAMessage, socket: WASocket): Promise<void> {
+    async process(message: WAMessage, socket: WASocket): Promise<void> {
         const groupMetadata: GroupMetadata = await socket.groupMetadata(getJid(message))
         const participant: string | undefined | null = message.message?.extendedTextMessage?.contextInfo?.participant
 

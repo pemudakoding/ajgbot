@@ -9,7 +9,7 @@ import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 abstract class BaseMessageHandlerAction implements BaseMessageAction{
   public abstract patterns(): MessagePatternType
 
-  public abstract processAction(message: baileys.WAMessage, socket: baileys.WASocket): void
+  public abstract process(message: baileys.WAMessage, socket: baileys.WASocket): void
 
   public abstract hasArgument(): boolean
 
@@ -30,7 +30,7 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
         return;
       }
 
-      await this.processAction(message, socket)
+      await this.process(message, socket)
     } catch (Error) {
       queue.add(() => react(socket, '❌', message))
 

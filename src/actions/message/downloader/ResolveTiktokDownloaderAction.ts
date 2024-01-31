@@ -12,7 +12,7 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
         return [withSign('tt'), withSign('vt')]
     }
 
-    async processAction(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
+    async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
             const link: string | undefined = getArguments(getText(message))[0]
 

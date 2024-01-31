@@ -13,7 +13,7 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
         return withSign('fbv')
     }
 
-    async processAction(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
+    async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
             const links: string[] = getArguments(getText(message))
 

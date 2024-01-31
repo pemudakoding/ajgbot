@@ -21,7 +21,7 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
         return isGroup(message);
     }
 
-    async processAction(message: WAMessage, socket: WASocket): Promise<void> {
+    async process(message: WAMessage, socket: WASocket): Promise<void> {
         const texts: string[] = getArguments(getText(message))
         const groupMetaData: GroupParticipant[] = await getParticipants(socket, getJid(message))
         const participants: string[] = groupMetaData.map((participant: GroupParticipant) => participant.id)

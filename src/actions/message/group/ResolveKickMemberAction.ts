@@ -34,7 +34,7 @@ export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
         return true
     }
 
-    async processAction(message: WAMessage, socket: WASocket): Promise<void> {
+    async process(message: WAMessage, socket: WASocket): Promise<void> {
         const groupMetadata: GroupMetadata = await socket.groupMetadata(getJid(message))
         const members: string[] = getArguments(getText(message))
         const listOfMemberToKick: string[] = [];

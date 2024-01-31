@@ -9,7 +9,7 @@ class ResolvePingAction extends BaseMessageHandlerAction{
         return [withSign('ping'), withSign('test')]
     }
 
-    async processAction(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
+    async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         await socket.sendMessage(
             getJid(message),
             {
