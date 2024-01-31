@@ -1,9 +1,11 @@
 import * as baileys from "@whiskeysockets/baileys";
-import MessagePatternType from "../../types/MessagePatternType";
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
-import {getArguments, withSign} from "../../supports/Str";
-import {getJid, getText, react, sendWithTyping} from "../../supports/Message";
-import queue from "../../services/queue.ts";
+import MessagePatternType from "../../../types/MessagePatternType.ts";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
+import {getArguments, withSign} from "../../../supports/Str.ts";
+import {getJid, getText, react, sendWithTyping} from "../../../supports/Message.ts";
+import queue from "../../../services/queue.ts";
+import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
+import TiktokDownloaderResponse from "../../../types/services/mediasaver/TiktokDownloaderResponse.ts";
 
 class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
     patterns(): MessagePatternType {
@@ -20,7 +22,9 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
 
             new URL(link)
 
-            const tiktokDownload: {video: string, images: string[]} = await this.download(link)
+            const downloader: MediaSaver = new MediaSaver(link)
+
+            const tiktokDownload: TiktokDownloaderResponse = await downloader.tiktok()
 
             if(tiktokDownload.video !== '') {
                 queue.add(() => sendWithTyping(
@@ -56,9 +60,8 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
 
             queue.add(() => react(socket, '✅', message))
         } catch (Error) {
-            queue.add(() => react(socket, '😡', message))
-
             if(Error.code === 'ERR_INVALID_URL') {
+                queue.add(() => react(socket, '😡', message))
                 queue.add(() => sendWithTyping(
                     socket,
                     { text: "pakai link tiktok yang valid kanda!!!" },
@@ -68,22 +71,12 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
                 return
             }
 
-            queue.add(() => sendWithTyping(
-                socket,
-                { text: Error.message },
-                getJid(message)
-            ))
+           throw Error
         }
     }
 
     hasArgument(): boolean {
         return true
-    }
-
-    private async download(link: string): Promise<{video: string, images: string[]}> {
-        const response: Response = await fetch('https://mediasaver.vercel.app/services/tiktok/snaptik?url=' + link)
-
-        return await response.json()
     }
 }
 

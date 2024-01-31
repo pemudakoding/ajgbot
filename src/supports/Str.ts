@@ -11,9 +11,9 @@ const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.W
 
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
-            const regexPattern: RegExp = new RegExp('^' + pattern.replace('.', '') + endOfPattern)
+            const regexPattern: RegExp = new RegExp('^' + pattern + endOfPattern)
 
-            if(getText(message)?.toString().toLowerCase().replace(/^\./, '').match(regexPattern)) {
+            if(getText(message)?.toString().toLowerCase().match(regexPattern)) {
 
                 return true
             }
@@ -21,9 +21,9 @@ const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.W
     }
 
     if(typeof patterns === 'string') {
-        const regexPattern: RegExp = new RegExp('^' + patterns.replace('.', '') + endOfPattern)
+        const regexPattern: RegExp = new RegExp('^' + patterns + endOfPattern)
 
-        return Boolean(getText(message)?.toString().toLowerCase().replace(/^\./, '').match(regexPattern))
+        return Boolean(getText(message)?.toString().toLowerCase().match(regexPattern))
     }
 
     return false

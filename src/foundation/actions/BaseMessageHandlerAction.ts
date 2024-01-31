@@ -2,6 +2,8 @@ import * as baileys from "@whiskeysockets/baileys";
 import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
+import queue from "../../services/queue.ts";
+import {getJid, react, sendWithTyping} from "../../supports/Message.ts";
 
 abstract class BaseMessageHandlerAction implements BaseMessageAction{
   public abstract patterns(): MessagePatternType
@@ -11,11 +13,24 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
   public abstract hasArgument(): boolean
 
   public async execute(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
-    if(! patternsAndTextIsMatch(this.patterns(), message)) {
-      return;
-    }
+    try {
+      if(! patternsAndTextIsMatch(this.patterns(), message)) {
+        return;
+      }
 
-    this.sendMessage(message, socket)
+      await this.sendMessage(message, socket)
+    } catch (Error) {
+      queue.add(() => react(socket, '❌', message))
+
+      queue.add(() => sendWithTyping(
+          socket,
+          { text: Error.message },
+          getJid(message),
+          {
+            quoted: message
+          }
+      ))
+    }
   }
 
 }

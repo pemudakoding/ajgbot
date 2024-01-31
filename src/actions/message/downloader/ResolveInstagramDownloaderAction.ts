@@ -1,9 +1,9 @@
 import * as baileys from "@whiskeysockets/baileys"
-import MessagePatternType from "../../types/MessagePatternType"
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction"
-import {getArguments, withSign} from "../../supports/Str"
-import {getJid, getText, react, sendWithTyping} from "../../supports/Message"
-import queue from "../../services/queue.ts"
+import MessagePatternType from "../../../types/MessagePatternType.ts"
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts"
+import {getArguments, withSign} from "../../../supports/Str.ts"
+import {getJid, getText, react, sendWithTyping} from "../../../supports/Message.ts"
+import queue from "../../../services/queue.ts"
 import { InstagramService } from "@xncn/instagramdownloaderpro";
 import DownloadResponse from "@xncn/instagramdownloaderpro/dist/response/DownloadResponse";
 
@@ -66,9 +66,9 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
 
             queue.add(() => react(socket, '✅', message))
         } catch (Error) {
-            queue.add(() => react(socket, '😡', message))
-
             if(Error.code === 'ERR_INVALID_URL') {
+                queue.add(() => react(socket, '😡', message))
+
                 queue.add(() => sendWithTyping(
                     socket,
                     { text: "pakai link Instagram yang valid kanda!!!" },
@@ -78,11 +78,7 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                 return
             }
 
-            queue.add(() => sendWithTyping(
-                socket,
-                { text: Error.message },
-                getJid(message)
-            ))
+            throw Error
         }
     }
 
