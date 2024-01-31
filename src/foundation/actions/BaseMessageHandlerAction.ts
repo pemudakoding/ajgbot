@@ -4,6 +4,7 @@ import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
 import queue from "../../services/queue.ts";
 import {getJid, react, sendWithTyping} from "../../supports/Message.ts";
+import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 
 abstract class BaseMessageHandlerAction implements BaseMessageAction{
   public abstract patterns(): MessagePatternType
@@ -12,9 +13,20 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
 
   public abstract hasArgument(): boolean
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public isEligibleToProcess(message: WAMessage, socket: WASocket): boolean {
+    return true
+  }
+
   public async execute(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
     try {
       if(! patternsAndTextIsMatch(this.patterns(), message)) {
+        return;
+      }
+
+      if(! this.isEligibleToProcess(message, socket)) {
         return;
       }
 

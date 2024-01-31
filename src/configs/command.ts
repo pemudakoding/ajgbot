@@ -2,8 +2,8 @@ import ResolvePingAction from "../actions/message/ResolvePingAction";
 import CommandConfigType from "../types/CommandConfigType";
 import ResolveTiktokDownloaderAction from "../actions/message/downloader/ResolveTiktokDownloaderAction.ts";
 import ResolveInstagramDownloaderAction from "../actions/message/downloader/ResolveInstagramDownloaderAction.ts";
-import ResolveFacebookVideoDownloaderAction
-    from "../actions/message/downloader/ResolveFacebookVideoDownloaderAction.ts";
+import ResolveFacebookVideoDownloaderAction from "../actions/message/downloader/ResolveFacebookVideoDownloaderAction.ts";
+import ResolveMentionAllAction from "../actions/message/group/ResolveMentionAllAction.ts";
 
 export default <CommandConfigType> {
     messageHandlers: [
@@ -22,6 +22,10 @@ export default <CommandConfigType> {
         {
             patterns: (new ResolveFacebookVideoDownloaderAction()).patterns(),
             concrete: new ResolveFacebookVideoDownloaderAction()
+        },
+        {
+            patterns: (new ResolveMentionAllAction()).patterns(),
+            concrete: new ResolveMentionAllAction()
         }
     ]
 }
