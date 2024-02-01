@@ -1,14 +1,25 @@
 import * as baileys from '@whiskeysockets/baileys'
-import {GroupMetadata, GroupParticipant, WASocket} from "@whiskeysockets/baileys";
+import {
+	DownloadableMessage,
+	downloadContentFromMessage, downloadMediaMessage,
+	GroupMetadata,
+	GroupParticipant, MediaType,
+	MessageType,
+	WAMessage,
+	WASocket
+} from "@whiskeysockets/baileys";
+import {writeFile} from "fs/promises";
+import logger from "../services/logger.ts";
 
 const getJid = (message: baileys.WAMessage): string => {
-  return message.key.remoteJid ?? ''
+	return message.key.remoteJid ?? ''
 }
 
 const getText = (message: baileys.WAMessage): string => {
-  return message.message?.extendedTextMessage?.text
-    ?? message?.message?.conversation
-	?? ''
+	return message.message?.extendedTextMessage?.text
+		?? message?.message?.imageMessage?.caption
+		?? message?.message?.conversation
+		?? ''
 }
 
 const sendWithTyping = async (socket: baileys.WASocket, message: baileys.AnyMessageContent, jid: string, options: baileys.MiscMessageGenerationOptions = {}): Promise<void> => {
@@ -55,6 +66,43 @@ const isParticipantAdmin = async (message: baileys.WAMessage, socket: WASocket):
 	return participant.length > 0
 }
 
+const downloadQuotedMessageMedia = async (message: baileys.proto.IMessage | undefined | null , path: string): Promise<string> => {
+
+	if(message) {
+		const type = Object.keys(message)[0] as MessageType
+		const msg = message[type as keyof typeof message]
+
+		const stream = await downloadContentFromMessage(
+			msg as DownloadableMessage,
+			type.replace('Message', '') as MediaType
+		)
+		let buffer = Buffer.from([])
+		for await (const chunk of stream) {
+			buffer = Buffer.concat([buffer, chunk])
+		}
+
+		await writeFile(path, buffer)
+	}
+
+	return path
+}
+
+const downloadMessageMedia = async (message: WAMessage, socket: WASocket, path: string ): Promise<string> => {
+	const buffer: Buffer | import("stream").Transform = await downloadMediaMessage(
+		message,
+		'buffer',
+		{},
+		{
+			logger,
+			reuploadRequest: socket.updateMediaMessage
+		}
+	)
+
+	await writeFile(path, buffer)
+
+	return path
+}
+
 export {
 	getJid,
 	getText,
@@ -63,4 +111,6 @@ export {
 	react,
 	isGroup,
 	isParticipantAdmin,
+	downloadQuotedMessageMedia,
+	downloadMessageMedia
 }

@@ -1,7 +1,7 @@
 import * as baileys from '@whiskeysockets/baileys';
-import command from "../configs/command";
-import {patternsAndTextIsMatch} from "../supports/Str";
-import queue from "../services/queue";
+import command from "../../configs/command.ts";
+import {patternsAndTextIsMatch} from "../../supports/Str.ts";
+import queue from "../../services/queue.ts";
 
 class ResolveMessageAction {
   public static async execute(socket: baileys.WASocket,messages: baileys.BaileysEventMap['messages.upsert']): Promise<void> {

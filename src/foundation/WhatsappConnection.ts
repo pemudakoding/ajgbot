@@ -6,7 +6,7 @@ import {
   CredEventEnum,
   MessageEventEnum
 } from '../enums';
-import ResolveMessageAction from '../actions/ResolveMessageAction';
+import ResolveMessageAction from '../actions/message/ResolveMessageAction.ts';
 import ConnectionConfigBuilder from '../builders/ConnectionConfigBuilder';
 import connection from '../configs/connection';
 

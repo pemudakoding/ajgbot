@@ -8,6 +8,7 @@ import ResolveAddMemberAction from "../actions/message/group/ResolveAddMemberAct
 import ResolveKickMemberAction from "../actions/message/group/ResolveKickMemberAction.ts";
 import ResolveDemoteAdminAction from "../actions/message/group/ResolveDemoteAdminAction.ts";
 import ResolvePromoteMemberAction from "../actions/message/group/ResolvePromoteMemberAction.ts";
+import ResolveStickerAction from "../actions/message/ResolveStickerAction.ts";
 
 export default <CommandConfigType> {
     messageHandlers: [
@@ -46,6 +47,10 @@ export default <CommandConfigType> {
         {
             patterns: (new ResolvePromoteMemberAction()).patterns(),
             concrete: new ResolvePromoteMemberAction()
+        },
+        {
+            patterns: (new ResolveStickerAction()).patterns(),
+            concrete: new ResolveStickerAction()
         }
     ]
 }

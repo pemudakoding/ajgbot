@@ -32,6 +32,7 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
 
       await this.process(message, socket)
     } catch (Error) {
+      console.log(Error)
       queue.add(() => react(socket, '❌', message))
 
       queue.add(() => sendWithTyping(
