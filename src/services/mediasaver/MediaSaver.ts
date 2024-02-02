@@ -3,7 +3,7 @@ import FacebookVideoDownloaderResponse from "../../types/services/mediasaver/Fac
 import TiktokDownloaderResponse from "../../types/services/mediasaver/TiktokDownloaderResponse.ts";
 
 export default class MediaSaver {
-    private readonly baseUrl: string = 'https://mediasaver.vercel.app/services'
+    private readonly baseUrl: string = 'https://mediasaver.binsarjr.com/services'
     private readonly link: string
 
     constructor(link: string) {

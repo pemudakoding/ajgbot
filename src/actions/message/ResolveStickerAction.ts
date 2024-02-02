@@ -81,6 +81,6 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
         const [top, bottom] = commandArguments[commandArguments.length - 1]!.split('|')
         const imageLink: string = await telegraph(defaultPhoto)
 
-        return "https://api.memegen.link/images/custom/" + encodeURIComponent(top ? top : '_') + "/" + encodeURIComponent(bottom ? bottom : '_') + ".png?background=" + imageLink
+        return "https://api.memegen.link/images/custom/" + encodeURIComponent(top ? top.substring(0,20) : '_') + "/" + encodeURIComponent(bottom ? bottom.substring(0,20) : '_') + ".png?background=" + imageLink
     }
 }
