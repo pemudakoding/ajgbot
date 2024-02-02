@@ -2,7 +2,7 @@ import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHan
 import MessagePatternType from "../../../types/MessagePatternType.ts";
 import {getArguments, withSign} from "../../../supports/Str.ts";
 import * as baileys from "@whiskeysockets/baileys";
-import {getJid, getText, react, sendWithTyping} from "../../../supports/Message.ts";
+import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts";
 import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import queue from "../../../services/queue.ts";
 import BraveDownDownloaderType from "../../../enums/services/mediasaver/BraveDownDownloaderType.ts";
@@ -20,6 +20,8 @@ export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandl
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
+            this.reactToProcessing(message, socket)
+
             const link: string | undefined = getArguments(getText(message))[0]
 
             if(link === undefined) {
@@ -43,24 +45,24 @@ export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandl
                         return;
                     }
 
-                    console.log(link)
-                    queue.add(() => sendWithTyping(
-                        socket,
-                        {
-                            audio: {url: link.url},
-                            mimetype: 'audio/mp4'
-                        },
-                        getJid(message),
-                        {quoted: message}
-                    ))
+                    queue.add(async () => {
+                        await sendWithTyping(
+                            socket,
+                            {
+                                audio: {url: link.url},
+                                mimetype: 'audio/mp4'
+                            },
+                            getJid(message),
+                            {quoted: message}
+                        )
 
-
-                    queue.add(() => react(socket, '✅', message))
+                        queue.add(() => this.reactToDone(message,socket))
+                    })
                 })
             }
         } catch (Error) {
             if(Error.code === 'ERR_INVALID_URL') {
-                queue.add(() => react(socket, '😡', message))
+                this.reactToInvalid(message, socket)
                 queue.add(() => sendWithTyping(
                     socket,
                     { text: "pakai link tiktok yang valid kanda!!!" },

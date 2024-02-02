@@ -3,10 +3,11 @@ import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
 import queue from "../../services/queue.ts";
-import {getJid, react, sendWithTyping} from "../../supports/Message.ts";
+import {getJid, sendWithTyping} from "../../supports/Message.ts";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
+import MessageReactHandlerAction from "./MessageReactHandlerAction.ts";
 
-abstract class BaseMessageHandlerAction implements BaseMessageAction{
+abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction{
   public abstract patterns(): MessagePatternType
 
   public abstract process(message: baileys.WAMessage, socket: baileys.WASocket): void
@@ -32,8 +33,7 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
 
       await this.process(message, socket)
     } catch (Error) {
-      console.log(Error)
-      queue.add(() => react(socket, '❌', message))
+      this.reactToFailed(message,socket)
 
       queue.add(() => sendWithTyping(
           socket,
@@ -45,7 +45,6 @@ abstract class BaseMessageHandlerAction implements BaseMessageAction{
       ))
     }
   }
-
 }
 
 export default BaseMessageHandlerAction

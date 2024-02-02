@@ -2,7 +2,7 @@ import MessagePatternType from "src/types/MessagePatternType.ts";
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
 import {GroupMetadata, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str.ts";
-import {getJid, getText, isGroup, isParticipantAdmin, react, sendWithTyping} from "../../../supports/Message.ts";
+import {getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 
 export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
@@ -20,7 +20,8 @@ export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
         }
 
         if(! await isParticipantAdmin(message, socket)) {
-            queue.add(() => react(socket, '😡', message))
+            this.reactToInvalid(message, socket)
+
             queue.add(() => sendWithTyping(
                 socket,
                 { text: "yang bukan admin jangan banyak gaya mau kick-kick member :)" },

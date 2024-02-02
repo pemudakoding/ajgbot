@@ -2,7 +2,7 @@ import * as baileys from "@whiskeysockets/baileys"
 import MessagePatternType from "../../../types/MessagePatternType.ts"
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts"
 import {getArguments, withSign} from "../../../supports/Str.ts"
-import {getJid, getText, react, sendWithTyping} from "../../../supports/Message.ts"
+import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts"
 import queue from "../../../services/queue.ts"
 import { InstagramService } from "@xncn/instagramdownloaderpro";
 import DownloadResponse from "@xncn/instagramdownloaderpro/dist/response/DownloadResponse";
@@ -14,6 +14,8 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
+            this.reactToProcessing(message, socket)
+
             const links: string[] = getArguments(getText(message))
 
             if(links.length < 1) {
@@ -28,46 +30,51 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
             new URL(link)
 
             const urls: (string | undefined)[] = await this.download(link)
+            const promises: Promise<unknown>[] = []
 
             urls.map((url: string): void => {
                 const isImage = /(webp|jpg)/
                 if(isImage.test(url)) {
+                    promises.push(
+                        queue.add(() => sendWithTyping(
+                            socket,
+                            {
+                                image: {
+                                    url: url,
+                                },
+                                caption: "ini gambarnya, bilang apa? \n\n" + link
+                            },
+                            getJid(message),
+                            {
+                                quoted: message
+                            }
+                        ))
+                    )
+
+                    return
+                }
+
+                promises.push(
                     queue.add(() => sendWithTyping(
                         socket,
                         {
-                            image: {
+                            video: {
                                 url: url,
                             },
-                            caption: "ini gambarnya, bilang apa? \n\n" + link
+                            caption: "ini videonya, bilang apa? \n\n" + link
                         },
                         getJid(message),
                         {
                             quoted: message
                         }
                     ))
-
-                    return
-                }
-
-                queue.add(() => sendWithTyping(
-                    socket,
-                    {
-                        video: {
-                            url: url,
-                        },
-                        caption: "ini videonya, bilang apa? \n\n" + link
-                    },
-                    getJid(message),
-                    {
-                        quoted: message
-                    }
-                ))
+                )
             })
 
-            queue.add(() => react(socket, '✅', message))
+            Promise.any(promises).then(() => this.reactToDone(message, socket))
         } catch (Error) {
             if(Error.code === 'ERR_INVALID_URL') {
-                queue.add(() => react(socket, '😡', message))
+                this.reactToInvalid(message, socket)
 
                 queue.add(() => sendWithTyping(
                     socket,

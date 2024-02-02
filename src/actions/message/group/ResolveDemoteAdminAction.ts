@@ -2,7 +2,7 @@ import MessagePatternType from "src/types/MessagePatternType.ts";
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
 import {GroupMetadata, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str.ts";
-import {getJid, getText, isGroup, isParticipantAdmin, react, sendWithTyping} from "../../../supports/Message.ts";
+import {getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 
 export default class ResolveDemoteAdminAction extends BaseMessageHandlerAction {
@@ -20,10 +20,11 @@ export default class ResolveDemoteAdminAction extends BaseMessageHandlerAction {
         }
 
         if(! await isParticipantAdmin(message, socket)) {
-            queue.add(() => react(socket, '😡', message))
+            this.reactToInvalid(message, socket)
+
             queue.add(() => sendWithTyping(
                 socket,
-                { text: "Rakyat jelata dilarang mengikuti kudeta kekuasaan" },
+                { text: "Rakyat jelata dilarang mengikuti proses kudeta kekuasaan" },
                 getJid(message),
                 {quoted: message}
             ))

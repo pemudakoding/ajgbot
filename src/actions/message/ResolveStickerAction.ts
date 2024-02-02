@@ -24,6 +24,8 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
     }
 
     async process(message: WAMessage, socket: WASocket) {
+        this.reactToProcessing(message, socket)
+
         let photoBuffer: Buffer | null = null;
         let photoPath: string | null = null;
         const imagePath: string = this.tempImgPath + message.key.id! + '.jpeg'
@@ -46,7 +48,7 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
         const sticker: Sticker = this.prepareSticker(photo)
 
         queue.add(async () => {
-            socket.sendMessage(
+            await socket.sendMessage(
                 getJid(message),
                 await sticker.toMessage(),
                 {
@@ -55,6 +57,8 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
             )
 
             fs.unlink(photoPath!, () => {})
+
+            this.reactToDone(message, socket)
         })
     }
 

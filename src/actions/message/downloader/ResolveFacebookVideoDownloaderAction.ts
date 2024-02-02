@@ -2,7 +2,7 @@ import * as baileys from "@whiskeysockets/baileys"
 import MessagePatternType from "../../../types/MessagePatternType.ts"
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts"
 import {getArguments, withSign} from "../../../supports/Str.ts"
-import {getJid, getText, react, sendWithTyping} from "../../../supports/Message.ts"
+import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts"
 import queue from "../../../services/queue.ts"
 import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import FacebookVideoDownloaderResponse from "../../../types/services/mediasaver/FacebookVideoDownloaderResponse.ts";
@@ -15,6 +15,8 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
+            this.reactToProcessing(message, socket)
+
             const links: string[] = getArguments(getText(message))
 
             if(links.length < 1) {
@@ -36,6 +38,8 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
                 throw Error('Video gagal diproses, video mungkin bersifat pribadi atau tidak ada')
             }
 
+            const promises: Promise<unknown>[]  = []
+
             response
                 .data
                 .videos
@@ -46,25 +50,27 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
 
                     url = video.url
 
-                    queue.add(() => sendWithTyping(
-                        socket,
-                        {
-                            video: {
-                                url: url,
+                    promises.push(
+                        queue.add(() => sendWithTyping(
+                            socket,
+                            {
+                                video: {
+                                    url: url,
+                                },
+                                caption: "ini videonya, bilang apa? \n\n" + link
                             },
-                            caption: "ini videonya, bilang apa? \n\n" + link
-                        },
-                        getJid(message),
-                        {
-                            quoted: message
-                        }
-                    ))
+                            getJid(message),
+                            {
+                                quoted: message
+                            }
+                        ))
+                    )
                 })
 
-            queue.add(() => react(socket, '✅', message))
+            Promise.any(promises).then(() => this.reactToDone(message, socket))
         } catch (error) {
             if(error.code === 'ERR_INVALID_URL') {
-                queue.add(() => react(socket, '❌', message))
+                this.reactToInvalid(message, socket)
 
                 queue.add(() => sendWithTyping(
                     socket,
