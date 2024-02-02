@@ -9,6 +9,7 @@ import ResolveKickMemberAction from "../actions/message/group/ResolveKickMemberA
 import ResolveDemoteAdminAction from "../actions/message/group/ResolveDemoteAdminAction.ts";
 import ResolvePromoteMemberAction from "../actions/message/group/ResolvePromoteMemberAction.ts";
 import ResolveStickerAction from "../actions/message/ResolveStickerAction.ts";
+import ResolveTikTokAudioDownloaderAction from "../actions/message/downloader/ResolveTikTokAudioDownloaderAction.ts";
 
 export default <CommandConfigType> {
     messageHandlers: [
@@ -51,6 +52,10 @@ export default <CommandConfigType> {
         {
             patterns: (new ResolveStickerAction()).patterns(),
             concrete: new ResolveStickerAction()
+        },
+        {
+            patterns: (new ResolveTikTokAudioDownloaderAction()).patterns(),
+            concrete: new ResolveTikTokAudioDownloaderAction()
         }
     ]
 }
