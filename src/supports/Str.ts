@@ -6,13 +6,11 @@ import 'dotenv/config'
 
 const withSign = (command: string): string => process.env.COMMAND_SIGN + command
 
-const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.WAMessage, containArguments: boolean = false): boolean => {
-    const endOfPattern: string = containArguments ? '$' : '';
-
+const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.WAMessage): boolean => {
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
-            const regexPattern: RegExp = new RegExp('^\\.' + pattern.replace('.', '') + endOfPattern)
-
+            const regexPattern: RegExp = new RegExp('^\\.' + pattern.replace('.', '') + '\\b')
+            console.log(regexPattern)
             if(getText(message)?.toString().toLowerCase().match(regexPattern)) {
 
                 return true
@@ -21,8 +19,8 @@ const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.W
     }
 
     if(typeof patterns === 'string') {
-        const regexPattern: RegExp = new RegExp('^\\.' + patterns.replace('.', '') + endOfPattern)
-
+        const regexPattern: RegExp = new RegExp('^\\.' + patterns.replace('.', '') + '\\b')
+        console.log(regexPattern)
         return Boolean(getText(message)?.toString().toLowerCase().match(regexPattern))
     }
 
