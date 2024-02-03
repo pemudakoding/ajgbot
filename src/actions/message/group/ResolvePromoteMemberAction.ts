@@ -5,9 +5,13 @@ import {getArguments, withSign} from "../../../supports/Str.ts";
 import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolvePromoteMemberAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.PromoteMember
     alias: string = Alias.PromoteMember
+    category: string = Category.Group
 
     public patterns(): MessagePatternType {
         return [withSign('promote'), withSign('promosi')];
@@ -65,5 +69,10 @@ export default class ResolvePromoteMemberAction extends BaseMessageHandlerAction
         }
 
         socket.groupParticipantsUpdate(groupMetadata.id, listOfMemberToPromote, "promote")
+    }
+
+    usageExample(): string {
+        return ".promote @member1 @member2\n atau" +
+            "reply member yang ingin dipromote dengan command promote";
     }
 }

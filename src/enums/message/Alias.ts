@@ -11,6 +11,7 @@ enum Alias {
     TiktokAudioDownloader = 'tiktok-audio-downloader',
     InstagramDownloader = 'instagram-downloader',
     FacebookDownloader = 'facebook-downloader',
+    ListOfCommands = 'list-of-commands',
 }
 
 export default Alias

@@ -7,9 +7,13 @@ import queue from "../../../services/queue.ts"
 import { InstagramService } from "@xncn/instagramdownloaderpro";
 import DownloadResponse from "@xncn/instagramdownloaderpro/dist/response/DownloadResponse";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
+    description: string = CommandDescription.InstagramDownloader
     alias: string = Alias.InstagramDownloader
+    category: string = Category.Downloader
 
     patterns(): MessagePatternType {
         return withSign('ig')
@@ -94,6 +98,10 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
 
     hasArgument(): boolean {
         return true
+    }
+
+    usageExample(): string {
+        return ".ig https://instagram.conm/reels/balgaba";
     }
 
     private async download(link: string): Promise<(string|undefined)[]> {

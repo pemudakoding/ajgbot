@@ -9,9 +9,14 @@ import {DataError} from "node-json-db";
 import queue from "../../../services/queue.ts";
 import Alias from "../../../enums/message/Alias.ts";
 import Command from "../../../configs/command.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Path from "../../../enums/services/Database/Path.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolveGroupRegistrationAction extends GroupMessageHandlerAction {
+    description: string = CommandDescription.GroupRegistration
     alias: string = Alias.GroupRegistration
+    category: string = Category.Group
 
     hasArgument(): boolean {
         return false;
@@ -30,9 +35,9 @@ export default class ResolveGroupRegistrationAction extends GroupMessageHandlerA
 
     public async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         const groupId: string = await getGroupId(message, socket)
-
+        const path = Path.GroupWithIdentifier.replace(':identifier', groupId);
         try {
-            await database.getData('.group.' + groupId)
+            await database.getData(path)
 
             queue.add(() => sendWithTyping(
                 socket,
@@ -52,7 +57,7 @@ export default class ResolveGroupRegistrationAction extends GroupMessageHandlerA
                 })
 
                 await database.push(
-                    '.group.' + groupId,
+                    path,
                     {
                         flags: defaultFeature
                     }
@@ -70,5 +75,9 @@ export default class ResolveGroupRegistrationAction extends GroupMessageHandlerA
 
             throw Error
         }
+    }
+
+    usageExample(): string {
+        return "~";
     }
 }

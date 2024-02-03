@@ -9,14 +9,19 @@ import MessageReactHandlerAction from "./MessageReactHandlerAction.ts";
 import {isFlagEnabled} from "../../supports/Flag.ts";
 import Alias from "../../enums/message/Alias.ts";
 
-abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction{
-  public abstract alias: string
+
+abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction {
+  public abstract description: string
+  public abstract alias: string;
+  public abstract category: string
 
   public abstract patterns(): MessagePatternType
 
   public abstract process(message: baileys.WAMessage, socket: baileys.WASocket): void
 
   public abstract hasArgument(): boolean
+
+  public abstract usageExample(): string
 
   public async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
     if(isGroup(message)) {

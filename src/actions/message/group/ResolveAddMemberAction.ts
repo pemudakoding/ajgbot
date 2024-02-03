@@ -5,9 +5,13 @@ import {getJid, isParticipantAdmin, sendWithTyping} from "../../../supports/Mess
 import queue from "../../../services/queue.ts";
 import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolveAddMemberAction extends GroupMessageHandlerAction {
+    description: string = CommandDescription.AddMember
     alias: string = Alias.AddMember
+    category: string = Category.Group
 
     public patterns(): MessagePatternType {
         return [withSign('add'), withSign('pull')];
@@ -39,5 +43,9 @@ export default class ResolveAddMemberAction extends GroupMessageHandlerAction {
         ))
 
         return
+    }
+
+    usageExample(): string {
+        return "reply chat member yang ingin ditambahkan dengan command add";
     }
 }

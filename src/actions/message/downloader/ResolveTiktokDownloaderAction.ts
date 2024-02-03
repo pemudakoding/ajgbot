@@ -7,9 +7,13 @@ import queue from "../../../services/queue.ts";
 import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import TiktokDownloaderResponse from "../../../types/services/mediasaver/TiktokDownloaderResponse.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
+    description: string = CommandDescription.TiktokDownloader
     alias: string = Alias.TiktokDownloader
+    category: string = Category.Downloader
 
     patterns(): MessagePatternType {
         return [withSign('tt'), withSign('vt')]
@@ -88,6 +92,10 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
 
     hasArgument(): boolean {
         return true
+    }
+
+    usageExample(): string {
+        return ".tt https://tiktok.com/balgaba";
     }
 }
 

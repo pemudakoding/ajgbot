@@ -9,9 +9,13 @@ import BraveDownDownloaderType from "../../../enums/services/mediasaver/BraveDow
 import BraveDownDownloaderResponse from "../../../types/services/mediasaver/BraveDownDownloaderResponse.ts";
 import BraveDownData from "../../../types/services/mediasaver/BraveDownData.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.TiktokAudioDownloader
     alias: string = Alias.TiktokAudioDownloader
+    category: string = Category.Downloader
 
     patterns(): MessagePatternType {
         return [withSign('tiktokaudio'), withSign('ta')]
@@ -77,5 +81,9 @@ export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandl
 
             throw Error
         }
+    }
+
+    usageExample(): string {
+        return ".ta https://tiktok.com/balgaba";
     }
 }

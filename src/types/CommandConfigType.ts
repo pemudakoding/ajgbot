@@ -1,13 +1,7 @@
-import MessagePatternType from "./MessagePatternType";
-import BaseMessageHandlerAction from "../foundation/actions/BaseMessageHandlerAction";
-import Alias from "../enums/message/Alias.ts";
+import MessageHandler from "./MessageHandler.ts";
 
 type CommandConfigType = {
-    messageHandlers: Array<{
-        flag: {alias: Alias, isEnabled: boolean},
-        patterns: MessagePatternType,
-        concrete: BaseMessageHandlerAction
-    }>
+    messageHandlers: MessageHandler[]
 }
 
 export default CommandConfigType

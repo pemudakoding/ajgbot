@@ -5,9 +5,13 @@ import {getArguments, withSign} from "../../../supports/Str.ts";
 import {getJid, getParticipants, getText, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 class ResolveMentionAllAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.MentionAll
     alias: string = Alias.MentionAll
+    category: string = Category.Group
 
     hasArgument(): boolean {
         return true;
@@ -31,6 +35,11 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
             },
             getJid(message),
         ))
+    }
+
+    usageExample(): string {
+        return "*.summon* untuk mention all \n" +
+            "*.summon pesan yang ingin disampaikan* untuk mention dengan pesan yang diinginkan";
     }
 }
 

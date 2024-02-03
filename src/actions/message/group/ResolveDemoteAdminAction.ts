@@ -5,9 +5,13 @@ import {getArguments, withSign} from "../../../supports/Str.ts";
 import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolveDemoteAdminAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.DemoteMember
     alias: string = Alias.DemoteMember
+    category: string = Category.Group
 
     public patterns(): MessagePatternType {
         return [withSign('demote'), withSign('kudeta')];
@@ -65,5 +69,10 @@ export default class ResolveDemoteAdminAction extends BaseMessageHandlerAction {
         }
 
         socket.groupParticipantsUpdate(groupMetadata.id, listOfAdminsToDemote, "demote")
+    }
+
+    usageExample(): string {
+        return ".demote @admin1 @admin2\n atau" +
+            "reply admin yang ingin didemote dengan command demote";
     }
 }

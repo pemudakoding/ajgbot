@@ -8,9 +8,13 @@ import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import FacebookVideoDownloaderResponse from "../../../types/services/mediasaver/FacebookVideoDownloaderResponse.ts";
 import Video from "../../../types/services/mediasaver/Video.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
+    description: string = CommandDescription.FacebookVideoDownloader
     alias: string = Alias.FacebookDownloader
+    category: string = Category.Downloader
 
     patterns(): MessagePatternType {
         return withSign('fbv')
@@ -92,6 +96,9 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
         return true
     }
 
+    usageExample(): string {
+        return ".fbv https://facebook.conm/watch/balgaba";
+    }
 }
 
 export default ResolveFacebookVideoDownloaderAction

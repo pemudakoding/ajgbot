@@ -12,15 +12,19 @@ import queue from "../../services/queue.ts";
 import {Buffer} from "buffer";
 import telegraph from "../../services/telegraph.ts";
 import Alias from "../../enums/message/Alias.ts";
+import CommandDescription from "../../enums/message/CommandDescription.ts";
+import Category from "../../enums/message/Category.ts";
 
 
 export default class ResolveStickerAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.Sticker
     alias: string = Alias.Sticker
+    category: string = Category.Random
 
     private tempImgPath: string = './static/temp-img/'
 
     public patterns(): MessagePatternType {
-        return [withSign('s'), withSign('sticker')]
+        return [withSign('s'), withSign('sticker'), withSign('stiker')]
     }
     public hasArgument(): boolean {
         return true
@@ -65,6 +69,13 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
         })
     }
 
+    usageExample(): string {
+        return "membuat sticker tanpa text .sticker \n" +
+            "membuat sticker text atas *.sticker text atas* \n" +
+            "membuat sticker text bawah *.sticker |text bawah*\n" +
+            "membuat sticker text atas bawah *.sticker text atas|text bawah*";
+    }
+
     protected prepareSticker(photo: string | Buffer): Sticker {
         return new Sticker(photo)
             .setPack('Majelis Anak Anjing')
@@ -90,4 +101,5 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
 
         return "https://api.memegen.link/images/custom/" + encodeURIComponent(top ? top.substring(0,20) : '_') + "/" + encodeURIComponent(bottom ? bottom.substring(0,20) : '_') + ".png?background=" + imageLink
     }
+
 }

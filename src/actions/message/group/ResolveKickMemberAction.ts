@@ -5,9 +5,13 @@ import {getArguments, withSign} from "../../../supports/Str.ts";
 import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 import Alias from "../../../enums/message/Alias.ts";
+import CommandDescription from "../../../enums/message/CommandDescription.ts";
+import Category from "../../../enums/message/Category.ts";
 
 export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
+    description: string = CommandDescription.KickMember
     alias: string = Alias.KickMember
+    category: string = Category.Group
 
     public patterns(): MessagePatternType {
         return [withSign('rm'), withSign('kick')];
@@ -65,5 +69,10 @@ export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
         }
 
         socket.groupParticipantsUpdate(groupMetadata.id, listOfMemberToKick, "remove")
+    }
+
+    usageExample(): string {
+        return ".kick @member1 @member2\n atau" +
+            "reply member yang ingin dikick dengan command kick";
     }
 }

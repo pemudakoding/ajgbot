@@ -4,9 +4,13 @@ import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandle
 import {withSign} from "../../supports/Str";
 import {getJid} from "../../supports/Message";
 import Alias from "../../enums/message/Alias.ts";
+import CommandDescription from "../../enums/message/CommandDescription.ts";
+import Category from "../../enums/message/Category.ts";
 
 class ResolvePingAction extends BaseMessageHandlerAction{
+    description: string = CommandDescription.Ping
     alias: string = Alias.Ping
+    category: string = Category.Random
 
     patterns(): MessagePatternType {
         return [withSign('ping'), withSign('test')]
@@ -26,6 +30,10 @@ class ResolvePingAction extends BaseMessageHandlerAction{
 
     hasArgument(): boolean {
         return false
+    }
+
+    usageExample(): string {
+        return ".ping";
     }
 }
 
