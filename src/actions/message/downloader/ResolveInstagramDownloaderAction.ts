@@ -6,15 +6,18 @@ import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts"
 import queue from "../../../services/queue.ts"
 import { InstagramService } from "@xncn/instagramdownloaderpro";
 import DownloadResponse from "@xncn/instagramdownloaderpro/dist/response/DownloadResponse";
+import Alias from "../../../enums/message/Alias.ts";
 
 class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
+    alias: string = Alias.InstagramDownloader
+
     patterns(): MessagePatternType {
         return withSign('ig')
     }
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
-            this.reactToProcessing(message, socket)
+            await this.reactToProcessing(message, socket)
 
             const links: string[] = getArguments(getText(message))
 

@@ -3,8 +3,11 @@ import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {withSign} from "../../supports/Str";
 import {getJid} from "../../supports/Message";
+import Alias from "../../enums/message/Alias.ts";
 
 class ResolvePingAction extends BaseMessageHandlerAction{
+    alias: string = Alias.Ping
+
     patterns(): MessagePatternType {
         return [withSign('ping'), withSign('test')]
     }

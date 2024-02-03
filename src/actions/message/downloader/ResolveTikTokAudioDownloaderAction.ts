@@ -8,8 +8,11 @@ import queue from "../../../services/queue.ts";
 import BraveDownDownloaderType from "../../../enums/services/mediasaver/BraveDownDownloaderType.ts";
 import BraveDownDownloaderResponse from "../../../types/services/mediasaver/BraveDownDownloaderResponse.ts";
 import BraveDownData from "../../../types/services/mediasaver/BraveDownData.ts";
+import Alias from "../../../enums/message/Alias.ts";
 
 export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandlerAction {
+    alias: string = Alias.TiktokAudioDownloader
+
     patterns(): MessagePatternType {
         return [withSign('tiktokaudio'), withSign('ta')]
     }
@@ -20,7 +23,7 @@ export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandl
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
-            this.reactToProcessing(message, socket)
+            await this.reactToProcessing(message, socket)
 
             const link: string | undefined = getArguments(getText(message))[0]
 

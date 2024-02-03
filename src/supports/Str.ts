@@ -12,6 +12,7 @@ const patternsAndTextIsMatch = (patterns: MessagePatternType, message: baileys.W
     if(Array.isArray(patterns)) {
         for(const pattern of patterns) {
             const regexPattern: RegExp = new RegExp('^\\.' + pattern.replace('.', '') + endOfPattern)
+
             if(getText(message)?.toString().toLowerCase().match(regexPattern)) {
 
                 return true

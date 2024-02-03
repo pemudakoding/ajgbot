@@ -7,15 +7,18 @@ import queue from "../../../services/queue.ts"
 import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import FacebookVideoDownloaderResponse from "../../../types/services/mediasaver/FacebookVideoDownloaderResponse.ts";
 import Video from "../../../types/services/mediasaver/Video.ts";
+import Alias from "../../../enums/message/Alias.ts";
 
 class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
+    alias: string = Alias.FacebookDownloader
+
     patterns(): MessagePatternType {
         return withSign('fbv')
     }
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
-            this.reactToProcessing(message, socket)
+            await this.reactToProcessing(message, socket)
 
             const links: string[] = getArguments(getText(message))
 

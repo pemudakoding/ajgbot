@@ -6,15 +6,18 @@ import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
 import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
 import TiktokDownloaderResponse from "../../../types/services/mediasaver/TiktokDownloaderResponse.ts";
+import Alias from "../../../enums/message/Alias.ts";
 
 class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
+    alias: string = Alias.TiktokDownloader
+
     patterns(): MessagePatternType {
         return [withSign('tt'), withSign('vt')]
     }
 
     async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         try {
-            this.reactToProcessing(message, socket)
+            await this.reactToProcessing(message, socket)
 
             const link: string | undefined = getArguments(getText(message))[0]
 

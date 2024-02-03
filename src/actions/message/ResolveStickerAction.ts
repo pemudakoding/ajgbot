@@ -11,9 +11,12 @@ import {Sticker, StickerTypes} from "wa-sticker-formatter";
 import queue from "../../services/queue.ts";
 import {Buffer} from "buffer";
 import telegraph from "../../services/telegraph.ts";
+import Alias from "../../enums/message/Alias.ts";
 
 
 export default class ResolveStickerAction extends BaseMessageHandlerAction {
+    alias: string = Alias.Sticker
+
     private tempImgPath: string = './static/temp-img/'
 
     public patterns(): MessagePatternType {

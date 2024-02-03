@@ -2367,6 +2367,13 @@ node-html-parser@^6.1.5:
     css-select "^5.1.0"
     he "1.2.0"
 
+node-json-db@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/node-json-db/-/node-json-db-2.3.0.tgz#cec666e7b3b4e2a3e33c60962def0fe3ff1f3027"
+  integrity sha512-B8T+w4q6zXZ20YcfQINLSjMGgImRKzkvR0ShYYoNRdLxtMhVvbzaMBzNdEaRcCjilW/lKS+g9CwVXNoK5uTncw==
+  dependencies:
+    rwlock "^5.0.0"
+
 node-wav@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/node-wav/-/node-wav-0.0.2.tgz#89cb63cf8cd66ec8ab455f5ba4864e5fcb4605e8"
@@ -2874,6 +2881,11 @@ run-parallel@^1.1.9:
   integrity sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==
   dependencies:
     queue-microtask "^1.2.2"
+
+rwlock@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/rwlock/-/rwlock-5.0.0.tgz#888d6a77a3351cc1a209204ef2ee1722093836cf"
+  integrity sha512-XgzRqLMfCcm9QfZuPav9cV3Xin5TRcIlp4X/SH3CvB+x5D2AakdlEepfJKDd8ByncvfpcxNWdRZVUl38PS6ZJg==
 
 safe-array-concat@^1.0.1:
   version "1.1.0"

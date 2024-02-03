@@ -5,8 +5,8 @@ import {WASocket} from "@whiskeysockets/baileys";
 import Emoji from "../../enums/foundation/Emoji.ts";
 
 export default abstract class MessageReactHandlerAction {
-    protected reactToProcessing(message: baileys.WAMessage, socket: WASocket): void {
-        queue.add(() => react(socket, Emoji.Processing, message))
+    protected async reactToProcessing(message: baileys.WAMessage, socket: WASocket): Promise<void> {
+        await queue.add(() => react(socket, Emoji.Processing, message))
     }
 
     protected resetReact(message: baileys.WAMessage, socket: WASocket): void {

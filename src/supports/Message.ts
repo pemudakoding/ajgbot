@@ -103,6 +103,12 @@ const downloadMessageMedia = async (message: WAMessage, socket: WASocket, path: 
 	return path
 }
 
+const getGroupId = async (message: WAMessage, socket: WASocket): Promise<string> => {
+	const metaData = await socket.groupMetadata(getJid(message))
+
+	return metaData.id.replace('@g.us', '')
+}
+
 export {
 	getJid,
 	getText,
@@ -112,5 +118,6 @@ export {
 	isGroup,
 	isParticipantAdmin,
 	downloadQuotedMessageMedia,
-	downloadMessageMedia
+	downloadMessageMedia,
+	getGroupId
 }

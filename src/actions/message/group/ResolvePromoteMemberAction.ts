@@ -2,10 +2,13 @@ import MessagePatternType from "src/types/MessagePatternType.ts";
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
 import {GroupMetadata, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str.ts";
-import {getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
+import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
 import queue from "../../../services/queue.ts";
+import Alias from "../../../enums/message/Alias.ts";
 
 export default class ResolvePromoteMemberAction extends BaseMessageHandlerAction {
+    alias: string = Alias.PromoteMember
+
     public patterns(): MessagePatternType {
         return [withSign('promote'), withSign('promosi')];
     }
@@ -15,7 +18,7 @@ export default class ResolvePromoteMemberAction extends BaseMessageHandlerAction
     }
 
     public async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
-        if(! isGroup(message)) {
+        if(! await super.isEligibleToProcess(message, socket)) {
             return false
         }
 
