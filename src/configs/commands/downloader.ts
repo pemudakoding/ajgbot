@@ -22,6 +22,19 @@ export default <MessageHandler[]> [
     },
     {
         details: {
+            usage: (new ResolveTikTokAudioDownloaderAction()).usageExample(),
+            description: (new ResolveTikTokAudioDownloaderAction()).description,
+            category: (new ResolveTikTokAudioDownloaderAction()).category,
+        },
+        flag: {
+            alias: (new ResolveTikTokAudioDownloaderAction()).alias,
+            isEnabled: true
+        },
+        patterns: (new ResolveTikTokAudioDownloaderAction()).patterns(),
+        concrete: new ResolveTikTokAudioDownloaderAction()
+    },
+    {
+        details: {
             usage: (new ResolveInstagramDownloaderAction()).usageExample(),
             description: (new ResolveInstagramDownloaderAction()).description,
             category: (new ResolveInstagramDownloaderAction()).category,
@@ -59,17 +72,4 @@ export default <MessageHandler[]> [
         patterns: (new ResolveFacebookVideoDownloaderAction()).patterns(),
         concrete: new ResolveFacebookVideoDownloaderAction()
     },
-    {
-        details: {
-            usage: (new ResolveTikTokAudioDownloaderAction()).usageExample(),
-            description: (new ResolveTikTokAudioDownloaderAction()).description,
-            category: (new ResolveTikTokAudioDownloaderAction()).category,
-        },
-        flag: {
-            alias: (new ResolveTikTokAudioDownloaderAction()).alias,
-            isEnabled: true
-        },
-        patterns: (new ResolveTikTokAudioDownloaderAction()).patterns(),
-        concrete: new ResolveTikTokAudioDownloaderAction()
-    }
 ]

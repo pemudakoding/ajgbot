@@ -7,12 +7,12 @@ enum Alias {
     KickMember = 'kick-member',
     MentionAll = 'mention-all',
     PromoteMember = 'promote-member',
-    TiktokDownloader = 'tiktok-downloader',
-    TiktokAudioDownloader = 'tiktok-audio-downloader',
-    InstagramDownloader = 'instagram-downloader',
-    FacebookDownloader = 'facebook-downloader',
+    TiktokDownloader = 'tiktok',
+    TiktokAudioDownloader = 'tiktok-audio',
+    InstagramDownloader = 'instagram',
+    FacebookDownloader = 'facebook',
     ListOfCommands = 'list-of-commands',
-    InstagramAudioDownloader = 'instagram-audio-downloader',
+    InstagramAudioDownloader = 'instagram-audio',
     SyncFeature = 'sync-feature',
 }
 
