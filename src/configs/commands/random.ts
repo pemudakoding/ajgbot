@@ -2,6 +2,7 @@ import ResolvePingAction from "../../actions/message/ResolvePingAction.ts";
 import ResolveStickerAction from "../../actions/message/ResolveStickerAction.ts";
 import MessageHandler from "../../types/MessageHandler.ts";
 import ResolveListOfCommandsAction from "../../actions/message/ResolveListOfCommandsAction.ts";
+import ResolveFeatureSynchronizeAction from "../../actions/message/ResolveFeatureSynchronizeAction.ts";
 
 export default <MessageHandler[]> [
     {
@@ -42,5 +43,18 @@ export default <MessageHandler[]> [
         },
         patterns: (new ResolveListOfCommandsAction()).patterns(),
         concrete: new ResolveListOfCommandsAction()
+    },
+    {
+        details: {
+            usage: (new ResolveFeatureSynchronizeAction()).usageExample(),
+            description: (new ResolveFeatureSynchronizeAction()).description,
+            category: (new ResolveFeatureSynchronizeAction()).category,
+        },
+        flag: {
+            alias: (new ResolveFeatureSynchronizeAction()).alias,
+            isEnabled: true
+        },
+        patterns: (new ResolveFeatureSynchronizeAction()).patterns(),
+        concrete: new ResolveFeatureSynchronizeAction()
     },
 ]

@@ -3,29 +3,37 @@ import FacebookVideoDownloaderResponse from "../../types/services/mediasaver/Fac
 import TiktokDownloaderResponse from "../../types/services/mediasaver/TiktokDownloaderResponse.ts";
 import BraveDownDownloaderType from "../../enums/services/mediasaver/BraveDownDownloaderType.ts";
 import BraveDownDownloaderResponse from "../../types/services/mediasaver/BraveDownDownloaderResponse.ts";
+import SavetubeDownloaderType from "../../enums/services/mediasaver/SavetubeDownloaderType.ts";
+import SavetubeInstagramAudioResponse from "../../types/services/mediasaver/SavetubeInstagramAudioResponse.ts";
 
 export default class MediaSaver {
     private readonly baseUrl: string = 'https://mediasaver.binsarjr.com/services'
-    private readonly link: string
+    private readonly identifier: string
 
     constructor(link: string) {
-        this.link = link
+        this.identifier = link
     }
 
     public async facebookVideo(): Promise<FacebookVideoDownloaderResponse> {
-        const response: Response = await fetch(this.baseUrl + Blueprint.Fdownloader + '?url=' + this.link)
+        const response: Response = await fetch(this.baseUrl + Blueprint.Fdownloader + '?url=' + this.identifier)
 
         return response.json()
     }
 
     public async tiktok(): Promise<TiktokDownloaderResponse> {
-        const response: Response = await fetch(this.baseUrl + Blueprint.Snaptik + '?url=' + this.link)
+        const response: Response = await fetch(this.baseUrl + Blueprint.Snaptik + '?url=' + this.identifier)
 
         return response.json()
     }
 
     public async braveDown(downloader: BraveDownDownloaderType): Promise<BraveDownDownloaderResponse> {
-        const response: Response = await fetch(this.baseUrl + Blueprint.BraveDown + downloader + '?url=' + this.link)
+        const response: Response = await fetch(this.baseUrl + Blueprint.BraveDown + downloader + '?url=' + this.identifier)
+
+        return response.json()
+    }
+
+    public async saveTube(downloader: SavetubeDownloaderType): Promise<SavetubeInstagramAudioResponse> {
+        const response: Response = await fetch(this.baseUrl + Blueprint.Savetube + downloader + '?identifier=' + this.identifier)
 
         return response.json()
     }

@@ -3,6 +3,8 @@ import ResolveInstagramDownloaderAction from "../../actions/message/downloader/R
 import ResolveFacebookVideoDownloaderAction from "../../actions/message/downloader/ResolveFacebookVideoDownloaderAction.ts";
 import ResolveTikTokAudioDownloaderAction from "../../actions/message/downloader/ResolveTikTokAudioDownloaderAction.ts";
 import MessageHandler from "../../types/MessageHandler.ts";
+import ResolveInstagramAudioDownloaderAction
+    from "../../actions/message/downloader/ResolveInstagramAudioDownloaderAction.ts";
 
 export default <MessageHandler[]> [
     {
@@ -30,6 +32,19 @@ export default <MessageHandler[]> [
         },
         patterns: (new ResolveInstagramDownloaderAction()).patterns(),
         concrete: new ResolveInstagramDownloaderAction()
+    },
+    {
+        details: {
+            usage: (new ResolveInstagramAudioDownloaderAction()).usageExample(),
+            description: (new ResolveInstagramAudioDownloaderAction()).description,
+            category: (new ResolveInstagramAudioDownloaderAction()).category,
+        },
+        flag: {
+            alias: (new ResolveInstagramAudioDownloaderAction()).alias,
+            isEnabled: true
+        },
+        patterns: (new ResolveInstagramAudioDownloaderAction()).patterns(),
+        concrete: new ResolveInstagramAudioDownloaderAction()
     },
     {
         details: {

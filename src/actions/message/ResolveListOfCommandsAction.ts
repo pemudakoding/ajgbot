@@ -27,7 +27,7 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
         const groupedhandlers: {[key: string]: MessageHandler[]} = this.resolveForCommandGroup()
 
         let text = 'Hi this is MAA BOT  \n\n' +
-            '========== Daftar Fitur Bot ========== \n'
+            '======= Daftar Fitur Bot ======= \n'
 
         let iteration: number = 1;
         for (const group in groupedhandlers) {

@@ -12,6 +12,8 @@ enum CommandDescription {
     TiktokDownloader = 'Tiktok Downloader Video/Gambar',
     GroupRegistration = 'Registrasi Group (digunakan oleh owner)',
     ListOfCommands = 'Menampilkan daftar command bot',
+    InstagramAudioDownloader = 'Instagram Audio Downloader',
+    SyncFeature = 'Sync Feature',
 }
 
 export default CommandDescription
