@@ -1,5 +1,5 @@
 import WhatsappClient from './src/foundation/WhatsappClient'
 
-const whatsappClient = new WhatsappClient()
+const whatsappClient: WhatsappClient = new WhatsappClient()
 
 whatsappClient.start()

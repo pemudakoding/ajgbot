@@ -2,3 +2,4 @@ node_modules
 ajgbotauth
 .idea
 ./static/temp-img
+./static/database
