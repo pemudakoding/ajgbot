@@ -1,12 +1,12 @@
-import MessagePatternType from "src/types/MessagePatternType.ts";
+import MessagePatternType from "src/types/MessagePatternType";
 import {GroupMetadata, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {withSign} from "../../../supports/Str.ts";
-import {getJid, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
-import queue from "../../../services/queue.ts";
-import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction.ts";
-import Alias from "../../../enums/message/Alias.ts";
-import CommandDescription from "../../../enums/message/CommandDescription.ts";
-import Category from "../../../enums/message/Category.ts";
+import {withSign} from "../../../supports/Str";
+import {getJid, isParticipantAdmin, sendWithTyping} from "../../../supports/Message";
+import queue from "../../../services/queue";
+import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 
 export default class ResolveAddMemberAction extends GroupMessageHandlerAction {
     description: string = CommandDescription.AddMember

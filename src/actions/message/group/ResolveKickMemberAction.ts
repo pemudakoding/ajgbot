@@ -1,12 +1,12 @@
-import MessagePatternType from "src/types/MessagePatternType.ts";
-import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
+import MessagePatternType from "src/types/MessagePatternType";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
 import {GroupMetadata, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {getArguments, withSign} from "../../../supports/Str.ts";
-import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message.ts";
-import queue from "../../../services/queue.ts";
-import Alias from "../../../enums/message/Alias.ts";
-import CommandDescription from "../../../enums/message/CommandDescription.ts";
-import Category from "../../../enums/message/Category.ts";
+import {getArguments, withSign} from "../../../supports/Str";
+import {getJid, getText, isParticipantAdmin, sendWithTyping} from "../../../supports/Message";
+import queue from "../../../services/queue";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 
 export default class ResolveKickMemberAction extends BaseMessageHandlerAction {
     description: string = CommandDescription.KickMember

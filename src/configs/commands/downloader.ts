@@ -1,10 +1,10 @@
-import ResolveTiktokDownloaderAction from "../../actions/message/downloader/ResolveTiktokDownloaderAction.ts";
-import ResolveInstagramDownloaderAction from "../../actions/message/downloader/ResolveInstagramDownloaderAction.ts";
-import ResolveFacebookVideoDownloaderAction from "../../actions/message/downloader/ResolveFacebookVideoDownloaderAction.ts";
-import ResolveTikTokAudioDownloaderAction from "../../actions/message/downloader/ResolveTikTokAudioDownloaderAction.ts";
-import MessageHandler from "../../types/MessageHandler.ts";
+import ResolveTiktokDownloaderAction from "../../actions/message/downloader/ResolveTiktokDownloaderAction";
+import ResolveInstagramDownloaderAction from "../../actions/message/downloader/ResolveInstagramDownloaderAction";
+import ResolveFacebookVideoDownloaderAction from "../../actions/message/downloader/ResolveFacebookVideoDownloaderAction";
+import ResolveTikTokAudioDownloaderAction from "../../actions/message/downloader/ResolveTikTokAudioDownloaderAction";
+import MessageHandler from "../../types/MessageHandler";
 import ResolveInstagramAudioDownloaderAction
-    from "../../actions/message/downloader/ResolveInstagramAudioDownloaderAction.ts";
+    from "../../actions/message/downloader/ResolveInstagramAudioDownloaderAction";
 
 export default <MessageHandler[]> [
     {

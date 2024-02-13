@@ -9,7 +9,7 @@ import {
 	WASocket
 } from "@whiskeysockets/baileys";
 import {writeFile} from "fs/promises";
-import logger from "../services/logger.ts";
+import logger from "../services/logger";
 
 const getJid = (message: baileys.WAMessage): string => {
 	return message.key.remoteJid ?? ''

@@ -1,10 +1,10 @@
-import ResolveGroupRegistrationAction from "../../actions/message/group/ResolveGroupRegistrationAction.ts";
-import ResolveMentionAllAction from "../../actions/message/group/ResolveMentionAllAction.ts";
-import ResolveAddMemberAction from "../../actions/message/group/ResolveAddMemberAction.ts";
-import ResolveKickMemberAction from "../../actions/message/group/ResolveKickMemberAction.ts";
-import ResolveDemoteAdminAction from "../../actions/message/group/ResolveDemoteAdminAction.ts";
-import ResolvePromoteMemberAction from "../../actions/message/group/ResolvePromoteMemberAction.ts";
-import MessageHandler from "../../types/MessageHandler.ts";
+import ResolveGroupRegistrationAction from "../../actions/message/group/ResolveGroupRegistrationAction";
+import ResolveMentionAllAction from "../../actions/message/group/ResolveMentionAllAction";
+import ResolveAddMemberAction from "../../actions/message/group/ResolveAddMemberAction";
+import ResolveKickMemberAction from "../../actions/message/group/ResolveKickMemberAction";
+import ResolveDemoteAdminAction from "../../actions/message/group/ResolveDemoteAdminAction";
+import ResolvePromoteMemberAction from "../../actions/message/group/ResolvePromoteMemberAction";
+import MessageHandler from "../../types/MessageHandler";
 
 export default <MessageHandler[]> [
     {

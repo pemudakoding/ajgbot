@@ -1,6 +1,6 @@
-import Alias from "../enums/message/Alias.ts";
-import database from "../services/database.ts";
-import Path from "../enums/services/Database/Path.ts";
+import Alias from "../enums/message/Alias";
+import database from "../services/database";
+import Path from "../enums/services/Database/Path";
 
 const isFlagEnabled = async (type: 'group' | 'member', id: string , featureAlias: Alias): Promise<boolean> => {
     try {

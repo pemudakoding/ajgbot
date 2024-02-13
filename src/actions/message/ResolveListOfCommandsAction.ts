@@ -1,14 +1,14 @@
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction.ts";
-import MessagePatternType from "../../types/MessagePatternType.ts";
+import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
+import MessagePatternType from "../../types/MessagePatternType";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {withSign} from "../../supports/Str.ts";
-import Alias from "../../enums/message/Alias.ts";
-import Category from "../../enums/message/Category.ts";
-import CommandDescription from "../../enums/message/CommandDescription.ts";
-import command from "../../configs/command.ts";
-import MessageHandler from "../../types/MessageHandler.ts";
-import queue from "../../services/queue.ts";
-import {getJid, sendWithTyping} from "../../supports/Message.ts";
+import {withSign} from "../../supports/Str";
+import Alias from "../../enums/message/Alias";
+import Category from "../../enums/message/Category";
+import CommandDescription from "../../enums/message/CommandDescription";
+import command from "../../configs/command";
+import MessageHandler from "../../types/MessageHandler";
+import queue from "../../services/queue";
+import {getJid, sendWithTyping} from "../../supports/Message";
 
 export default class ResolveListOfCommandsAction extends BaseMessageHandlerAction {
     alias: string = Alias.ListOfCommands;

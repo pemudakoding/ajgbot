@@ -1,7 +1,7 @@
-import Category from "../enums/message/Category.ts";
-import Alias from "../enums/message/Alias.ts";
-import MessagePatternType from "./MessagePatternType.ts";
-import BaseMessageHandlerAction from "../foundation/actions/BaseMessageHandlerAction.ts";
+import Category from "../enums/message/Category";
+import Alias from "../enums/message/Alias";
+import MessagePatternType from "./MessagePatternType";
+import BaseMessageHandlerAction from "../foundation/actions/BaseMessageHandlerAction";
 
 type MessageHandler = {
     details: {

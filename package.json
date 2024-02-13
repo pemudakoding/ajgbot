@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@digitak/tsc-esm": "^3.1.4",
     "@hapi/boom": "^10.0.1",
     "@whiskeysockets/baileys": "^6.6.0",
     "@xncn/instagramdownloaderpro": "^0.0.3",
@@ -21,7 +22,9 @@
   "author": "StivenKatuuk <pemudakoding@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node --loader ts-node/esm index.ts"
+    "start": "node --loader ts-node/esm index.ts",
+    "start:prod": "node dist/index.js",
+    "build": "tsc-esm"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",

@@ -1,4 +1,4 @@
-import MessageHandler from "./MessageHandler.ts";
+import MessageHandler from "./MessageHandler";
 
 type CommandConfigType = {
     messageHandlers: MessageHandler[]

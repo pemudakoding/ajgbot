@@ -1,10 +1,10 @@
-import Blueprint from "../../enums/services/mediasaver/Blueprint.ts";
-import FacebookVideoDownloaderResponse from "../../types/services/mediasaver/FacebookVideoDownloaderResponse.ts";
-import TiktokDownloaderResponse from "../../types/services/mediasaver/TiktokDownloaderResponse.ts";
-import BraveDownDownloaderType from "../../enums/services/mediasaver/BraveDownDownloaderType.ts";
-import BraveDownDownloaderResponse from "../../types/services/mediasaver/BraveDownDownloaderResponse.ts";
-import SavetubeDownloaderType from "../../enums/services/mediasaver/SavetubeDownloaderType.ts";
-import SavetubeInstagramAudioResponse from "../../types/services/mediasaver/SavetubeInstagramAudioResponse.ts";
+import Blueprint from "../../enums/services/mediasaver/Blueprint";
+import FacebookVideoDownloaderResponse from "../../types/services/mediasaver/FacebookVideoDownloaderResponse";
+import TiktokDownloaderResponse from "../../types/services/mediasaver/TiktokDownloaderResponse";
+import BraveDownDownloaderType from "../../enums/services/mediasaver/BraveDownDownloaderType";
+import BraveDownDownloaderResponse from "../../types/services/mediasaver/BraveDownDownloaderResponse";
+import SavetubeDownloaderType from "../../enums/services/mediasaver/SavetubeDownloaderType";
+import SavetubeInstagramAudioResponse from "../../types/services/mediasaver/SavetubeInstagramAudioResponse";
 
 export default class MediaSaver {
     private readonly baseUrl: string = 'https://mediasaver.binsarjr.com/services'

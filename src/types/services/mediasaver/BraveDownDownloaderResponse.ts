@@ -1,4 +1,4 @@
-import BraveDownData from "./BraveDownData.ts";
+import BraveDownData from "./BraveDownData";
 
 type BraveDownDownloaderResponse = {
     message: string,

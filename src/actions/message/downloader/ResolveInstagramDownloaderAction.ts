@@ -1,14 +1,14 @@
 import * as baileys from "@whiskeysockets/baileys"
-import MessagePatternType from "../../../types/MessagePatternType.ts"
-import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts"
-import {getArguments, withSign} from "../../../supports/Str.ts"
-import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts"
-import queue from "../../../services/queue.ts"
+import MessagePatternType from "../../../types/MessagePatternType"
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction"
+import {getArguments, withSign} from "../../../supports/Str"
+import {getJid, getText, sendWithTyping} from "../../../supports/Message"
+import queue from "../../../services/queue"
 import { InstagramService } from "@xncn/instagramdownloaderpro";
 import DownloadResponse from "@xncn/instagramdownloaderpro/dist/response/DownloadResponse";
-import Alias from "../../../enums/message/Alias.ts";
-import CommandDescription from "../../../enums/message/CommandDescription.ts";
-import Category from "../../../enums/message/Category.ts";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 
 class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
     description: string = CommandDescription.InstagramDownloader

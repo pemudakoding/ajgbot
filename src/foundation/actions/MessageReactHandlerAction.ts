@@ -1,8 +1,8 @@
 import * as baileys from "@whiskeysockets/baileys";
-import queue from "../../services/queue.ts";
-import {react} from "../../supports/Message.ts";
+import queue from "../../services/queue";
+import {react} from "../../supports/Message";
 import {WASocket} from "@whiskeysockets/baileys";
-import Emoji from "../../enums/foundation/Emoji.ts";
+import Emoji from "../../enums/foundation/Emoji";
 
 export default abstract class MessageReactHandlerAction {
     protected async reactToProcessing(message: baileys.WAMessage, socket: WASocket): Promise<void> {

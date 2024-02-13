@@ -2,12 +2,12 @@ import * as baileys from "@whiskeysockets/baileys";
 import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
-import queue from "../../services/queue.ts";
-import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message.ts";
+import queue from "../../services/queue";
+import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
-import MessageReactHandlerAction from "./MessageReactHandlerAction.ts";
-import {isFlagEnabled} from "../../supports/Flag.ts";
-import Alias from "../../enums/message/Alias.ts";
+import MessageReactHandlerAction from "./MessageReactHandlerAction";
+import {isFlagEnabled} from "../../supports/Flag";
+import Alias from "../../enums/message/Alias";
 
 
 abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction {

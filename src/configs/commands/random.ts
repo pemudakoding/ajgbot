@@ -1,8 +1,8 @@
-import ResolvePingAction from "../../actions/message/ResolvePingAction.ts";
-import ResolveStickerAction from "../../actions/message/ResolveStickerAction.ts";
-import MessageHandler from "../../types/MessageHandler.ts";
-import ResolveListOfCommandsAction from "../../actions/message/ResolveListOfCommandsAction.ts";
-import ResolveFeatureSynchronizeAction from "../../actions/message/ResolveFeatureSynchronizeAction.ts";
+import ResolvePingAction from "../../actions/message/ResolvePingAction";
+import ResolveStickerAction from "../../actions/message/ResolveStickerAction";
+import MessageHandler from "../../types/MessageHandler";
+import ResolveListOfCommandsAction from "../../actions/message/ResolveListOfCommandsAction";
+import ResolveFeatureSynchronizeAction from "../../actions/message/ResolveFeatureSynchronizeAction";
 
 export default <MessageHandler[]> [
     {

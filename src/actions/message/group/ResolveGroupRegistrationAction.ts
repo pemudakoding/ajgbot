@@ -1,17 +1,17 @@
-import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction.ts";
+import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction";
 import * as baileys from "@whiskeysockets/baileys";
-import MessagePatternType from "../../../types/MessagePatternType.ts";
-import {withSign} from "../../../supports/Str.ts";
-import database from "../../../services/database.ts";
-import {getGroupId, getJid, isGroup, sendWithTyping} from "../../../supports/Message.ts";
+import MessagePatternType from "../../../types/MessagePatternType";
+import {withSign} from "../../../supports/Str";
+import database from "../../../services/database";
+import {getGroupId, getJid, isGroup, sendWithTyping} from "../../../supports/Message";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {DataError} from "node-json-db";
-import queue from "../../../services/queue.ts";
-import Alias from "../../../enums/message/Alias.ts";
-import Command from "../../../configs/command.ts";
-import CommandDescription from "../../../enums/message/CommandDescription.ts";
-import Path from "../../../enums/services/Database/Path.ts";
-import Category from "../../../enums/message/Category.ts";
+import queue from "../../../services/queue";
+import Alias from "../../../enums/message/Alias";
+import Command from "../../../configs/command";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Path from "../../../enums/services/Database/Path";
+import Category from "../../../enums/message/Category";
 
 export default class ResolveGroupRegistrationAction extends GroupMessageHandlerAction {
     description: string = CommandDescription.GroupRegistration

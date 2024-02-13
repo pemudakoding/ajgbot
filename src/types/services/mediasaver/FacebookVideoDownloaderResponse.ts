@@ -1,4 +1,4 @@
-import Video from "./Video.ts";
+import Video from "./Video";
 
 type FacebookVideoDownloaderResponse = {
     message: string,

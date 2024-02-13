@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-
-    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
     // project options
     "lib": [
       "ESNext",
@@ -34,7 +33,7 @@
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true, // accessing index must always check for undefined
     "noUnusedLocals": true, // Report errors on unused local variables.
-    "noUnusedParameters": true, // Report errors on unused parameters in functions
+    "noUnusedParameters": true // Report errors on unused parameters in functions
   },
   "include": [
     "./**/*.ts",

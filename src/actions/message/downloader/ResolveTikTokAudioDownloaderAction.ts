@@ -1,16 +1,16 @@
-import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction.ts";
-import MessagePatternType from "../../../types/MessagePatternType.ts";
-import {getArguments, withSign} from "../../../supports/Str.ts";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
+import MessagePatternType from "../../../types/MessagePatternType";
+import {getArguments, withSign} from "../../../supports/Str";
 import * as baileys from "@whiskeysockets/baileys";
-import {getJid, getText, sendWithTyping} from "../../../supports/Message.ts";
-import MediaSaver from "../../../services/mediasaver/MediaSaver.ts";
-import queue from "../../../services/queue.ts";
-import BraveDownDownloaderType from "../../../enums/services/mediasaver/BraveDownDownloaderType.ts";
-import BraveDownDownloaderResponse from "../../../types/services/mediasaver/BraveDownDownloaderResponse.ts";
-import BraveDownData from "../../../types/services/mediasaver/BraveDownData.ts";
-import Alias from "../../../enums/message/Alias.ts";
-import CommandDescription from "../../../enums/message/CommandDescription.ts";
-import Category from "../../../enums/message/Category.ts";
+import {getJid, getText, sendWithTyping} from "../../../supports/Message";
+import MediaSaver from "../../../services/mediasaver/MediaSaver";
+import queue from "../../../services/queue";
+import BraveDownDownloaderType from "../../../enums/services/mediasaver/BraveDownDownloaderType";
+import BraveDownDownloaderResponse from "../../../types/services/mediasaver/BraveDownDownloaderResponse";
+import BraveDownData from "../../../types/services/mediasaver/BraveDownData";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 
 export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandlerAction {
     description: string = CommandDescription.TiktokAudioDownloader
