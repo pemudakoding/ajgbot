@@ -20,4 +20,10 @@ jobs:
           key: ${{ secrets.KEY }}
           script_stop: true
           envs: GIT_SSH_COMMAND
-          script: whoami
+          script: |
+            cd /home/forge/ajgbot
+            git restore .
+            yarn install
+            yarn build
+            pm2 restart 1 --update-env
+            pm2 save
