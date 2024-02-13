@@ -23,7 +23,8 @@ jobs:
           script: |
             cd /home/forge/ajgbot
             git restore .
+            git pull origin main
             yarn install
             yarn build
-            pm2 restart 1 --update-env
+            pm2 restart ecosystem.config.cjs --update-env
             pm2 save
