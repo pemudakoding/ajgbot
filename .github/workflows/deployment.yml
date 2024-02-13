@@ -8,7 +8,8 @@ env:
   GIT_SSH_COMMAND: ssh -i /home/forge/.ssh/id_rsa -o IdentitiesOnly=yes
 
 jobs:
-  deploy:
+  deploy:runs-on: ubuntu-latest
+  steps:
     - uses: actions/checkout@v2
     - name: Deploy to production
       uses: appleboy/ssh-action@master
