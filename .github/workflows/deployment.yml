@@ -16,9 +16,9 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
         with:
-          host: secrets.HOST
-          username: secrets.USERNAME
-          key: secrets.KEY
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           script_stop: true
           envs: GIT_SSH_COMMAND
           script: whoami
