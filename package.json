@@ -20,6 +20,9 @@
   "main": "index.js",
   "author": "StivenKatuuk <pemudakoding@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node --loader ts-node/esm index.ts"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",

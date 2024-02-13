@@ -5,7 +5,7 @@ on:
     branches:
       - main
 env:
-  GIT_SSH_COMMAND: ssh -i /home/forge/.ssh/id_rsa -o IdentitiesOnly=yes
+  GIT_SSH_COMMAND: ssh -i /home/forge/.ssh/id_rsa_bot -o IdentitiesOnly=yes
 
 jobs:
   deploy:
