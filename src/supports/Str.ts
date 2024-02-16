@@ -32,7 +32,7 @@ const getArguments = (text: string): string[] => {
 
     splittedText.shift();
 
-    return splittedText
+    return splittedText.map((argument: string) => argument.trim())
 }
 
 export {
