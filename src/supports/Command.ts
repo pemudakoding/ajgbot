@@ -10,6 +10,7 @@ const resolveCommandHandlerConfig = (handlers: BaseMessageHandlerAction[]): Mess
             usage: handler.usageExample(),
             description: handler.description,
             category: handler.category as Category,
+            showInList: handler.showInList
         },
         flag: {
             alias: handler.alias as Alias,

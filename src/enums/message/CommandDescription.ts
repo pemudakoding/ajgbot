@@ -14,6 +14,7 @@ enum CommandDescription {
     ListOfCommands = 'Menampilkan daftar command bot',
     InstagramAudioDownloader = 'Instagram Audio Downloader',
     SyncFeature = 'Sync Feature',
+    AntiSecret = 'Anti rahasia (view once)',
 }
 
 export default CommandDescription

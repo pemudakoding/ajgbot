@@ -11,9 +11,11 @@ import Alias from "../../enums/message/Alias";
 
 
 abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction {
-  public abstract description: string
-  public abstract alias: string;
-  public abstract category: string
+  public abstract description: string | null
+  public abstract alias: string | null
+  public abstract category: string | null
+
+  public showInList: boolean = true
 
   public abstract patterns(): MessagePatternType
 

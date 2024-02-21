@@ -1,7 +1,8 @@
 enum Path {
     GroupWithIdentifier = '.group.:identifier',
     TypeWithIdentifier = '.:type.:identifier',
-    Flags = '.:type.:id.flags.:featureAlias',
+    FlagsWithFeatureAlias = '.:type.:id.flags.:featureAlias',
+    Flags = '.:type.:id.flags',
 }
 
 export default Path

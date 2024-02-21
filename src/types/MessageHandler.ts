@@ -6,8 +6,9 @@ import BaseMessageHandlerAction from "../foundation/actions/BaseMessageHandlerAc
 type MessageHandler = {
     details: {
         usage: string,
-        description: string,
-        category: Category
+        description: string | null,
+        category: Category,
+        showInList: boolean,
     }
     flag: {alias: Alias, isEnabled: boolean},
     patterns: MessagePatternType,

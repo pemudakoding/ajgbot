@@ -14,6 +14,7 @@ enum Alias {
     ListOfCommands = 'list-of-commands',
     InstagramAudioDownloader = 'instagram-audio',
     SyncFeature = 'sync-feature',
+    AntiSecret = 'anti-secret',
 }
 
 export default Alias

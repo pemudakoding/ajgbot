@@ -1,3 +1,3 @@
-type MessagePatternType = Array<string> | string;
+type MessagePatternType = Array<string> | string | null;
 
 export default MessagePatternType

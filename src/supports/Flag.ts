@@ -6,7 +6,7 @@ const isFlagEnabled = async (type: 'group' | 'member', id: string , featureAlias
     try {
         return await database.getData(
             Path
-                .Flags
+                .FlagsWithFeatureAlias
                 .replace(':type', type)
                 .replace(':id', id)
                 .replace(':featureAlias', featureAlias)

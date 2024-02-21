@@ -14,6 +14,7 @@ import telegraph from "../../services/telegraph";
 import Alias from "../../enums/message/Alias";
 import CommandDescription from "../../enums/message/CommandDescription";
 import Category from "../../enums/message/Category";
+import {PathLike, PathOrFileDescriptor} from "fs";
 
 
 export default class ResolveStickerAction extends BaseMessageHandlerAction {
@@ -34,7 +35,7 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
         this.reactToProcessing(message, socket)
 
         let photoBuffer: Buffer | null = null;
-        let photoPath: string | null = null;
+        let photoPath: string | null | Buffer | import("stream").Transform = null;
         const imagePath: string = this.tempImgPath + message.key.id! + '.jpeg'
 
         switch (true) {
@@ -43,9 +44,9 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
                 photoPath = await downloadQuotedMessageMedia(message.message?.extendedTextMessage?.contextInfo?.quotedMessage, imagePath);
                 photoBuffer = fs.readFileSync(photoPath)
                 break
-            case Boolean(message?.message?.imageMessage):
+            case Boolean(message?.message?.imageMessage) && typeof photoPath === 'string' :
                 photoPath = await downloadMessageMedia(message!, socket, imagePath);
-                photoBuffer = fs.readFileSync(photoPath)
+                photoBuffer = fs.readFileSync(photoPath as PathOrFileDescriptor)
                 break
             default: return
         }
@@ -63,7 +64,7 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
                 }
             )
 
-            fs.unlink(photoPath!, () => {})
+            fs.unlink(photoPath as PathLike, () => {})
 
             this.reactToDone(message, socket)
         })

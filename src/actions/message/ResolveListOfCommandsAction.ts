@@ -50,12 +50,15 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
     protected resolveForCommandGroup(): {[key: string]: MessageHandler[]} {
         const group: {[key: string]: MessageHandler[]} = {}
 
-        command.messageHandlers.map((handler: MessageHandler): void  => {
-            if(! group[handler.details.category]) {
-                group[handler.details.category] = []
-            }
+        command
+            .messageHandlers
+            .filter((handler: MessageHandler) => handler.details.showInList)
+            .map((handler: MessageHandler): void  => {
+                if(! group[handler.details.category]) {
+                    group[handler.details.category] = []
+                }
 
-            group[handler.details.category]!.push(handler)
+                group[handler.details.category]!.push(handler)
         })
 
         return group
@@ -70,10 +73,18 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
             const patterns: MessagePatternType = handler.concrete.patterns();
             let showedPatterns = '';
 
+            if(patterns === null) {
+                continue;
+            }
+
             if(Array.isArray(patterns)) {
                 showedPatterns = patterns.join(', ')
             } else {
                 showedPatterns = patterns
+            }
+
+            if(handler.concrete.alias === null) {
+                continue;
             }
 
             text += handlerIteration + ". " + handler
