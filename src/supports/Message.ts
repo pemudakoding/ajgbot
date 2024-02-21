@@ -10,6 +10,7 @@ import {
 } from "@whiskeysockets/baileys";
 import {writeFile} from "fs/promises";
 import logger from "../services/logger";
+import {Buffer} from "buffer";
 
 const getJid = (message: baileys.WAMessage): string => {
 	return message.key.remoteJid ?? ''
@@ -87,7 +88,12 @@ const downloadQuotedMessageMedia = async (message: baileys.proto.IMessage | unde
 	return path
 }
 
-const downloadMessageMedia = async (message: WAMessage, socket: WASocket, path: string ): Promise<string> => {
+const downloadMessageMedia = async (
+	message: WAMessage,
+	socket: WASocket,
+	path: string | null = null,
+	type: 'buffer' | 'write' = 'write',
+): Promise<string | Buffer | import("stream").Transform> => {
 	const buffer: Buffer | import("stream").Transform = await downloadMediaMessage(
 		message,
 		'buffer',
@@ -98,9 +104,13 @@ const downloadMessageMedia = async (message: WAMessage, socket: WASocket, path: 
 		}
 	)
 
-	await writeFile(path, buffer)
+	if(type === 'write' && path !== null) {
+		await writeFile(path, buffer)
 
-	return path
+		return path
+	}
+
+	return buffer
 }
 
 const getGroupId = async (message: WAMessage, socket: WASocket): Promise<string> => {
