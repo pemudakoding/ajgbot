@@ -12,7 +12,7 @@ import CommandDescription from "../../enums/message/CommandDescription";
 
 export default class SetAntiSecretAction extends BaseMessageHandlerAction{
     alias: string =  Alias.AntiSecret;
-    category: string =  Category.Random;
+    category: string =  Category.Group;
     description: string = CommandDescription.AntiSecret;
 
     hasArgument(): boolean {
