@@ -38,7 +38,7 @@ export default class ResolveGroupRegistrationAction extends GroupMessageHandlerA
         const path = Path.GroupWithIdentifier.replace(':identifier', groupId);
         try {
             await database.getData(path)
-
+            console.log(database.getData(path), path, groupId)
             queue.add(() => sendWithTyping(
                 socket,
                 {text: "Grup telah terdaftar"},

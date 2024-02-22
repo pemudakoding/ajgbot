@@ -36,9 +36,9 @@ export default class ResolveFeatureSynchronizeAction extends GroupMessageHandler
 
     public async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
         const groupId: string = await getGroupId(message, socket)
-        const path = Path.TypeWithIdentifier
+        const path = Path.Flags
             .replace(':type', isGroup(message) ? 'group' : 'personal')
-            .replace(':identifier', groupId);
+            .replace(':id', groupId);
 
         try {
             const existingFlags = await database.getData(path)
