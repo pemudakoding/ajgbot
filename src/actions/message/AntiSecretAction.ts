@@ -1,10 +1,12 @@
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import MessagePatternType from "../../types/MessagePatternType";
-import {downloadMediaMessage, proto, WAMessage, WASocket} from "@whiskeysockets/baileys";
+import {downloadMediaMessage, jidDecode, proto, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import Alias from "../../enums/message/Alias";
 import {Buffer} from "buffer";
 import queue from "../../services/queue";
-import {getJid, sendWithTyping} from "../../supports/Message";
+import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message";
+import {isFlagEnabled} from "../../supports/Flag";
+import Type from "../../enums/message/Type";
 
 export default class AntiSecretAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;
@@ -20,15 +22,15 @@ export default class AntiSecretAction extends BaseMessageHandlerAction {
         return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
-        return true;
+        const type: Type = isGroup(message) ? Type.Group : Type.Individual
+        const botNumber: string = jidDecode(socket.user!.id)!.user;
+        const identifier: string = isGroup(message) ? await getGroupId(message, socket) : botNumber
+
+        return isFlagEnabled(type, identifier, this.alias as Alias);
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
-
         const viewOnceMessage: proto.Message.IFutureProofMessage | null | undefined =
             message.message?.viewOnceMessage ||
             message.message?.viewOnceMessageV2 ||

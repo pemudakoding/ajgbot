@@ -7,6 +7,7 @@ import ResolvePromoteMemberAction from "../../actions/message/group/ResolvePromo
 import MessageHandler from "../../types/MessageHandler";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {resolveCommandHandlerConfig} from "../../supports/Command";
+import SetAntiSecretAction from "../../actions/message/SetAntiSecretAction";
 
 
 const handlers: BaseMessageHandlerAction[] = [
@@ -16,6 +17,7 @@ const handlers: BaseMessageHandlerAction[] = [
     new ResolveKickMemberAction(),
     new ResolveDemoteAdminAction(),
     new ResolvePromoteMemberAction(),
+    new SetAntiSecretAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

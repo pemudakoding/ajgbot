@@ -1,6 +1,6 @@
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import MessagePatternType from "../../types/MessagePatternType";
-import {WAMessage, WASocket} from "@whiskeysockets/baileys";
+import {jidDecode, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../supports/Str";
 import {getGroupId, getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../supports/Message";
 import Path from "../../enums/services/Database/Path";
@@ -36,7 +36,8 @@ export default class SetAntiSecretAction extends BaseMessageHandlerAction{
 
         const argument: string[] = getArguments(getText(message))
         const type: string = isGroup(message) ? 'group' : 'individual'
-        const identifier: string = isGroup(message) ? await getGroupId(message, socket) : getJid(message).replace('@g.us', '')
+        const botNumber: string = jidDecode(socket.user!.id)!.user;
+        const identifier: string = isGroup(message) ? await getGroupId(message, socket) : botNumber
         const path: string = Path
             .Flags
             .replace(':type', type)

@@ -1,13 +1,14 @@
 import * as baileys from "@whiskeysockets/baileys";
+import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
 import queue from "../../services/queue";
 import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message";
-import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 import MessageReactHandlerAction from "./MessageReactHandlerAction";
 import {isFlagEnabled} from "../../supports/Flag";
 import Alias from "../../enums/message/Alias";
+import Type from "../../enums/message/Type";
 
 
 abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implements BaseMessageAction {
@@ -27,7 +28,7 @@ abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implem
 
   public async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
     if(isGroup(message)) {
-      return isFlagEnabled('group', await getGroupId(message, socket), this.alias as Alias)
+      return isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias)
     }
 
     return true
