@@ -1,12 +1,12 @@
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
-import MessagePatternType from "../../types/MessagePatternType";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
+import MessagePatternType from "../../../types/MessagePatternType";
 import {downloadMediaMessage, jidDecode, proto, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import Alias from "../../enums/message/Alias";
+import Alias from "../../../enums/message/Alias";
 import {Buffer} from "buffer";
-import queue from "../../services/queue";
-import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message";
-import {isFlagEnabled} from "../../supports/Flag";
-import Type from "../../enums/message/Type";
+import queue from "../../../services/queue";
+import {getGroupId, getJid, isGroup, sendWithTyping} from "../../../supports/Message";
+import {isFlagEnabled} from "../../../supports/Flag";
+import Type from "../../../enums/message/Type";
 
 export default class AntiSecretAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;

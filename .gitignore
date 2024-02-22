@@ -4,3 +4,4 @@ ajgbotauth
 ./static/temp-img
 ./static/database
 dist
+.env.example

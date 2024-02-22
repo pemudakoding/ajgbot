@@ -1,19 +1,19 @@
 import MessagePatternType from "src/types/MessagePatternType";
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
 import {
     WAMessage,
     WASocket
 } from "@whiskeysockets/baileys";
-import {withSign} from "../../supports/Str";
-import {downloadMessageMedia, downloadQuotedMessageMedia, getJid, getText} from "../../supports/Message";
+import {withSign} from "../../../supports/Str";
+import {downloadMessageMedia, downloadQuotedMessageMedia, getJid, getText} from "../../../supports/Message";
 import * as fs from "fs";
 import {Sticker, StickerTypes} from "wa-sticker-formatter";
-import queue from "../../services/queue";
+import queue from "../../../services/queue";
 import {Buffer} from "buffer";
-import telegraph from "../../services/telegraph";
-import Alias from "../../enums/message/Alias";
-import CommandDescription from "../../enums/message/CommandDescription";
-import Category from "../../enums/message/Category";
+import telegraph from "../../../services/telegraph";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 import {PathLike, PathOrFileDescriptor} from "fs";
 
 

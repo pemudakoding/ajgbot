@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@digitak/tsc-esm": "^3.1.4",
+    "@google/generative-ai": "^0.2.1",
     "@hapi/boom": "^10.0.1",
     "@whiskeysockets/baileys": "^6.6.0",
     "@xncn/instagramdownloaderpro": "^0.0.3",

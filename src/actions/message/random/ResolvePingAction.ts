@@ -1,11 +1,11 @@
 import * as baileys from "@whiskeysockets/baileys";
-import MessagePatternType from "../../types/MessagePatternType";
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
-import {withSign} from "../../supports/Str";
-import {getJid} from "../../supports/Message";
-import Alias from "../../enums/message/Alias";
-import CommandDescription from "../../enums/message/CommandDescription";
-import Category from "../../enums/message/Category";
+import MessagePatternType from "../../../types/MessagePatternType";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
+import {withSign} from "../../../supports/Str";
+import {getJid} from "../../../supports/Message";
+import Alias from "../../../enums/message/Alias";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Category from "../../../enums/message/Category";
 
 class ResolvePingAction extends BaseMessageHandlerAction{
     description: string = CommandDescription.Ping

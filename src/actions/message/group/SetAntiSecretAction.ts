@@ -1,14 +1,14 @@
-import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
-import MessagePatternType from "../../types/MessagePatternType";
+import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
+import MessagePatternType from "../../../types/MessagePatternType";
 import {jidDecode, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {getArguments, withSign} from "../../supports/Str";
-import {getGroupId, getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../supports/Message";
-import Path from "../../enums/services/Database/Path";
-import database from "../../services/database";
-import queue from "../../services/queue";
-import Alias from "../../enums/message/Alias";
-import Category from "../../enums/message/Category";
-import CommandDescription from "../../enums/message/CommandDescription";
+import {getArguments, withSign} from "../../../supports/Str";
+import {getGroupId, getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../../supports/Message";
+import Path from "../../../enums/services/Database/Path";
+import database from "../../../services/database";
+import queue from "../../../services/queue";
+import Alias from "../../../enums/message/Alias";
+import Category from "../../../enums/message/Category";
+import CommandDescription from "../../../enums/message/CommandDescription";
 
 export default class SetAntiSecretAction extends BaseMessageHandlerAction{
     alias: string =  Alias.AntiSecret;

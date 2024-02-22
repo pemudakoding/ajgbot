@@ -7,7 +7,7 @@ import ResolvePromoteMemberAction from "../../actions/message/group/ResolvePromo
 import MessageHandler from "../../types/MessageHandler";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {resolveCommandHandlerConfig} from "../../supports/Command";
-import SetAntiSecretAction from "../../actions/message/SetAntiSecretAction";
+import SetAntiSecretAction from "../../actions/message/group/SetAntiSecretAction";
 
 
 const handlers: BaseMessageHandlerAction[] = [

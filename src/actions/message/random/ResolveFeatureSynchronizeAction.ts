@@ -1,18 +1,18 @@
-import GroupMessageHandlerAction from "../../foundation/actions/GroupMessageHandlerAction";
+import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction";
 import * as baileys from "@whiskeysockets/baileys";
-import MessagePatternType from "../../types/MessagePatternType";
-import {withSign} from "../../supports/Str";
-import database from "../../services/database";
-import {getGroupId, getJid, isGroup, sendWithTyping} from "../../supports/Message";
+import MessagePatternType from "../../../types/MessagePatternType";
+import {withSign} from "../../../supports/Str";
+import database from "../../../services/database";
+import {getGroupId, getJid, isGroup, sendWithTyping} from "../../../supports/Message";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {DataError} from "node-json-db";
-import queue from "../../services/queue";
-import Alias from "../../enums/message/Alias";
-import Command from "../../configs/command";
-import CommandDescription from "../../enums/message/CommandDescription";
-import Path from "../../enums/services/Database/Path";
-import Category from "../../enums/message/Category";
-import MessageHandler from "../../types/MessageHandler";
+import queue from "../../../services/queue";
+import Alias from "../../../enums/message/Alias";
+import Command from "../../../configs/command";
+import CommandDescription from "../../../enums/message/CommandDescription";
+import Path from "../../../enums/services/Database/Path";
+import Category from "../../../enums/message/Category";
+import MessageHandler from "../../../types/MessageHandler";
 
 export default class ResolveFeatureSynchronizeAction extends GroupMessageHandlerAction {
     description: string = CommandDescription.SyncFeature
