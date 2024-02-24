@@ -10,7 +10,7 @@ class ResolveMessageAction {
     for(const message of messageInformations) {
       for(const handler of command.messageHandlers) {
         if(handler.patterns === null) {
-          queue.add(() => handler.concrete.execute(message, socket))
+          handler.concrete.execute(message, socket)
 
           continue;
         }
