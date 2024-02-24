@@ -68,7 +68,7 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
 
                 queue.add(() => sendWithTyping(
                     socket,
-                    { text: "pakai link tiktok yang valid kanda!!!" },
+                    { text: "pakai link youtube yang valid kanda!!!" },
                     getJid(message)
                 ))
 
