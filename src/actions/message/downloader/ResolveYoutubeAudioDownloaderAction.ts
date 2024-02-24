@@ -44,13 +44,14 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
                 throw new DownloadFailed('audio tidak dapat di-proses karena berbagai alasan yang tidak pasti')
             }
 
-            const fetchBuffer = await fetch(response.data?.links[0]!.link)
-
             queue.add(async () => {
                 await sendWithTyping(
                     socket,
                     {
-                        audio: Buffer.from(await fetchBuffer.arrayBuffer()),
+                        audio: {
+                            url: response.data?.links[0]!.link as string,
+                        },
+                        ptt: true,
                         mimetype: 'audio/mp4',
                     },
                     getJid(message),
