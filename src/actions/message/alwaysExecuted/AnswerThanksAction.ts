@@ -34,12 +34,14 @@ export default class AnswerThanksAction extends BaseMessageHandlerAction {
         const mentionedJid = message.message?.extendedTextMessage?.contextInfo?.mentionedJid
         const botNumber = jidDecode(socket.user!.id)!.user
 
-        if(isGroup(message) && await isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias)) {
+        if(isGroup(message) && await isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias) && ! message.key.fromMe) {
             return (Array.isArray(mentionedJid) && mentionedJid?.filter((jid: string) => RegExp(botNumber).test(jid)).length > 0)
                 || RegExp(botNumber).test(message.message?.extendedTextMessage?.contextInfo?.participant ?? '')
         }
 
-        return ! message.key.fromMe
+        return ! isGroup(message) && ! message.key.fromMe;
+
+
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
