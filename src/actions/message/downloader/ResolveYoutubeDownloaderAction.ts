@@ -11,6 +11,7 @@ import Alias from "../../../enums/message/Alias";
 import Category from "../../../enums/message/Category";
 import CommandDescription from "../../../enums/message/CommandDescription";
 import YoutubeDownloaderType from "../../../enums/services/mediasaver/YoutubeDownloaderType";
+import {Buffer} from "buffer";
 
 export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.YoutubeDownload;
@@ -39,18 +40,18 @@ export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAc
 
             const downloader: MediaSaver = new MediaSaver(link)
             const response: YoutubeDownloaderResponse = await downloader.ytmate(YoutubeDownloaderType.video)
-            
+
             if(! response.success || response.data === null || ! Object.hasOwn(response.data.links[0]!, 'link')) {
                 throw new DownloadFailed('Video tidak dapat di-proses karena berbagai alasan yang tidak pasti')
             }
+
+            const buffer: ArrayBuffer = await (await fetch(response.data?.links[0]!.link as string)).arrayBuffer()
 
             queue.add(async () => {
                 await sendWithTyping(
                     socket,
                     {
-                        video: {
-                            url: response.data?.links[0]!.link as string,
-                        },
+                        video: Buffer.from(buffer),
                         caption: "ini videonya, bilang apa?\n\n" +
                             `title: ${response.data?.title}\n` +
                             `duration: ${response.data?.duration}\n` +
@@ -66,6 +67,7 @@ export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAc
             })
 
         } catch (Error) {
+            console.log(Error)
             if(Error.code === 'ERR_INVALID_URL') {
                 this.reactToInvalid(message, socket)
 

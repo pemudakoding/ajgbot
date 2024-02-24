@@ -38,10 +38,14 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
 
             const urls: (string | undefined)[] = await this.download(link)
             const promises: Promise<unknown>[] = []
+            let totalImage: number = 0;
+            let totalVideo: number = 0;
 
             urls.map((url: string): void => {
                 const isImage = /(webp|jpg)/
                 if(isImage.test(url)) {
+                    totalImage++
+
                     promises.push(
                         queue.add(() => sendWithTyping(
                             socket,
@@ -49,17 +53,15 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                                 image: {
                                     url: url,
                                 },
-                                caption: "ini gambarnya, bilang apa? \n\n" + link
                             },
                             getJid(message),
-                            {
-                                quoted: message
-                            }
                         ))
                     )
 
                     return
                 }
+
+                totalVideo++
 
                 promises.push(
                     queue.add(() => sendWithTyping(
@@ -68,15 +70,25 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                             video: {
                                 url: url,
                             },
-                            caption: "ini videonya, bilang apa? \n\n" + link
                         },
                         getJid(message),
-                        {
-                            quoted: message
-                        }
                     ))
                 )
             })
+
+            promises.push(
+                sendWithTyping(
+                    socket,
+                    {
+                        text: "Permintaan berhasil di proses \n\n" +
+                            `${totalImage ? 'Total Gambar:' + totalImage + '\n': ''}` +
+                            `${totalImage ? 'Total Video:' + totalVideo + '\n': ''}` +
+                            `${'Link:' + link}`
+                    },
+                    getJid(message),
+                    {quoted: message}
+                )
+            )
 
             Promise.any(promises).then(() => this.reactToDone(message, socket))
         } catch (Error) {

@@ -11,6 +11,7 @@ import Alias from "../../../enums/message/Alias";
 import Category from "../../../enums/message/Category";
 import CommandDescription from "../../../enums/message/CommandDescription";
 import YoutubeDownloaderType from "../../../enums/services/mediasaver/YoutubeDownloaderType";
+import {Buffer} from "buffer";
 
 export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.YoutubeAudioDownload;
@@ -44,13 +45,13 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
                 throw new DownloadFailed('audio tidak dapat di-proses karena berbagai alasan yang tidak pasti')
             }
 
+            const buffer: ArrayBuffer = await (await fetch(response.data?.links[0]!.link as string)).arrayBuffer()
+
             queue.add(async () => {
                 await sendWithTyping(
                     socket,
                     {
-                        audio: {
-                            url: response.data?.links[0]!.link as string,
-                        },
+                        audio: Buffer.from(buffer),
                         mimetype: 'audio/mp4',
                     },
                     getJid(message),
