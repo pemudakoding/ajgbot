@@ -38,7 +38,7 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
             new URL(link)
 
             const downloader: MediaSaver = new MediaSaver(link)
-            const response: FacebookVideoDownloaderResponse = await downloader.facebookVideo()
+            const response: FacebookVideoDownloaderResponse = await downloader.fDownloader()
             let url: string | URL
 
             if(! response.success) {

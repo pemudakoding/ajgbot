@@ -23,7 +23,7 @@
   "author": "StivenKatuuk <pemudakoding@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node --loader ts-node/esm index.ts",
+    "start": "node --trace-warnings --loader ts-node/esm index.ts ",
     "start:prod": "node dist/index.js",
     "build": "tsc-esm"
   },

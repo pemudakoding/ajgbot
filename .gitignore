@@ -1,7 +1,8 @@
 node_modules
 ajgbotauth
 .idea
-./static/temp-img
-./static/database
+static/temp-img
+static/database
+static/database/*.json
 dist
 .env

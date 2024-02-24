@@ -15,6 +15,8 @@ enum Alias {
     InstagramAudioDownloader = 'instagram-audio',
     SyncFeature = 'sync-feature',
     AntiSecret = 'anti-secret',
+    YoutubeDownload = 'youtube-downloader',
+    YoutubeAudioDownload = 'youtube-audio-downloader',
 }
 
 export default Alias

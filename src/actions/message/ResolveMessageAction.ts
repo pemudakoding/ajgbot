@@ -16,7 +16,7 @@ class ResolveMessageAction {
         }
 
         if(patternsAndTextIsMatch(handler.patterns, message)) {
-          queue.add(() => handler.concrete.execute(message, socket))
+          handler.concrete.execute(message, socket)
 
           return;
         }

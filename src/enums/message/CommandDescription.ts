@@ -15,6 +15,8 @@ enum CommandDescription {
     InstagramAudioDownloader = 'Instagram Audio Downloader',
     SyncFeature = 'Sync Feature',
     AntiSecret = 'Anti rahasia (view once)',
+    YoutubeDownload = 'Youtube Video Downloader',
+    YoutubeAudioDownload = 'Youtube Audio Downloader',
 }
 
 export default CommandDescription

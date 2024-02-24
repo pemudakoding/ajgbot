@@ -41,7 +41,7 @@ export default class ResolveTikTokAudioDownloaderAction extends BaseMessageHandl
             const tiktokDownload: BraveDownDownloaderResponse = await downloader.braveDown(BraveDownDownloaderType.TikTokDownloader)
 
             if(Array.isArray(tiktokDownload.data) && tiktokDownload.data.length === 0) {
-                throw Error('Video tidak ditemukan atau kemungkinan bot lagi error')
+                throw Error('Audio tidak ditemukan atau kemungkinan bot lagi error')
             }
 
             if("source" in tiktokDownload.data && tiktokDownload) {

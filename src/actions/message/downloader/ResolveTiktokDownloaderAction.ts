@@ -33,7 +33,7 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
 
             const downloader: MediaSaver = new MediaSaver(link)
 
-            const tiktokDownload: TiktokDownloaderResponse = await downloader.tiktok()
+            const tiktokDownload: TiktokDownloaderResponse = await downloader.snaptik()
             const promises = [];
 
             if(tiktokDownload.video !== '') {
