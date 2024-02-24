@@ -49,7 +49,7 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
                     socket,
                     {
                         audio: {
-                            url: 'https://dl162.filemate22.shop/?file=M3R4SUNiN3JsOHJ6WWQ2a3NQS1Y5ZGlxVlZIOCtyZ0RsOXMweGxzQkJPQmpyWXcybk5ldkxjNEVJYUZFaHFpd0ZOQkF2aFBYWTllS1BrU2ZzNXd2VFRpTjdzUTB1aXlCL3A1ekg4OTRXaFBIaStlM25td3oyeUhzY2MzWkFMcFRLQ1ZkcmxBd2xuUzFsYlNHbnpUUTVHbjVvUm1TWnlsUy9EWWJiclBYOUpBVi9FMk5hdS8wMm9JQXVTK1M1OGNZamFERjQxYW1sZXRuL3M5OFJFRXBJTWtJajhLbm1lUGErRU1iMUE9PQ%3D%3D',
+                            url: response.data?.links[0]!.link as string,
                         },
                         ptt: true,
                         mimetype: 'audio/mp4',
