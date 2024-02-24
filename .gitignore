@@ -4,5 +4,6 @@ ajgbotauth
 static/temp-img
 static/database
 static/database/*.json
+static/temp-audio
 dist
 .env
