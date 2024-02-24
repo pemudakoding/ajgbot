@@ -51,7 +51,7 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
                         audio: {
                             url: response.data?.links[0]!.link as string,
                         },
-                        mimetype: 'audio/mp4',
+                        mimetype: 'audio/mpeg',
                     },
                     getJid(message),
                     {
