@@ -51,10 +51,7 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
                         audio: {
                             url: response.data?.links[0]!.link as string,
                         },
-                        caption: "ini audionya, bilang apa?\n\n" +
-                            `title: ${response.data?.title}\n` +
-                            `duration: ${response.data?.duration}\n` +
-                            `link: ${link}`
+                        mimetype: 'audio/mp4',
                     },
                     getJid(message),
                     {
