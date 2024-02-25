@@ -40,7 +40,7 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
 
             const downloader: MediaSaver = new MediaSaver(link)
             const response: YoutubeDownloaderResponse = await downloader.ytmate(YoutubeDownloaderType.audio)
-            
+
             if(! response.success || response.data === null || ! Object.hasOwn(response.data.links[0]!, 'link')) {
                 throw new DownloadFailed('audio tidak dapat di-proses karena berbagai alasan yang tidak pasti')
             }
@@ -48,18 +48,17 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
             const buffer: ArrayBuffer = await (await fetch(response.data?.links[0]!.link as string)).arrayBuffer()
 
             queue.add(async () => {
-                await sendWithTyping(
-                    socket,
+                console.log('masuk sini')
+                await socket.sendMessage(
+                    getJid(message),
                     {
                         audio: Buffer.from(buffer),
                         mimetype: 'audio/mp4',
                     },
-                    getJid(message),
                     {
                         quoted: message
                     }
                 )
-
                 this.reactToDone(message, socket)
             })
 
