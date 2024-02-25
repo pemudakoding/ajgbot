@@ -41,14 +41,13 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
             if(tiktokDownload.video !== '') {
                 totalVideo++
                 promises.push(
-                    queue.add(() => sendWithTyping(
-                        socket,
+                    queue.add(() => socket.sendMessage(
+                        getJid(message),
                         {
                             video: {
                                 url: tiktokDownload.video,
                             },
                         },
-                        getJid(message)
                     ))
                 )
             }
@@ -56,14 +55,13 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
             tiktokDownload.images.map((image: string) => {
                 totalImage++
                 promises.push(
-                    queue.add(() => sendWithTyping(
-                        socket,
+                    queue.add(() => socket.sendMessage(
+                        getJid(message),
                         {
                             image: {
                                 url: image,
                             },
                         },
-                        getJid(message),
                     ))
                 )
             })
@@ -76,7 +74,7 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
                             text: "Permintaan berhasil di proses \n\n" +
                                 `${totalImage > 0 ? 'Total Gambar: ' + totalImage + '\n': ''}` +
                                 `${totalVideo > 0 ? 'Total Video: ' + totalVideo + '\n': ''}` +
-                                `${'Link:' + link}`
+                                `${'Link: ' + link}`
                         },
                         getJid(message),
                         {quoted: message}

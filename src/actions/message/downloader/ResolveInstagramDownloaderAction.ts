@@ -47,14 +47,13 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                     totalImage++
 
                     promises.push(
-                        queue.add(() => sendWithTyping(
-                            socket,
+                        queue.add(() => socket.sendMessage(
+                            getJid(message),
                             {
                                 image: {
                                     url: url,
                                 },
                             },
-                            getJid(message),
                         ))
                     )
 
@@ -64,14 +63,13 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                 totalVideo++
 
                 promises.push(
-                    queue.add(() => sendWithTyping(
-                        socket,
+                    queue.add(() => socket.sendMessage(
+                        getJid(message),
                         {
                             video: {
                                 url: url,
                             },
                         },
-                        getJid(message),
                     ))
                 )
             })
@@ -88,7 +86,7 @@ class ResolveInstagramDownloaderAction extends BaseMessageHandlerAction{
                             text: "Permintaan berhasil di proses \n\n" +
                                 `${totalImage > 0 ? 'Total Gambar: ' + totalImage + '\n': ''}` +
                                 `${totalVideo > 0 ? 'Total Video: ' + totalVideo + '\n': ''}` +
-                                `${'Link:' + link}`
+                                `${'Link: ' + link}`
                         },
                         getJid(message),
                         {quoted: message}
