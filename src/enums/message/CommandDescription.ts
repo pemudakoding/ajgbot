@@ -17,6 +17,7 @@ enum CommandDescription {
     AntiSecret = 'Anti rahasia (view once)',
     YoutubeDownload = 'Youtube Video Downloader',
     YoutubeAudioDownload = 'Youtube Audio Downloader',
+    TwitterDownloader = 'Twitter Video Downloader',
 }
 
 export default CommandDescription

@@ -8,6 +8,7 @@ import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandle
 import {resolveCommandHandlerConfig} from "../../supports/Command";
 import ResolveYoutubeDownloaderAction from "../../actions/message/downloader/ResolveYoutubeDownloaderAction";
 import ResolveYoutubeAudioDownloaderAction from "../../actions/message/downloader/ResolveYoutubeAudioDownloaderAction";
+import ResolveTwitterDownloaderAction from "../../actions/message/downloader/ResolveTwitterDownloaderAction";
 
 const handlers: BaseMessageHandlerAction[] = [
     new ResolveTiktokDownloaderAction(),
@@ -17,6 +18,7 @@ const handlers: BaseMessageHandlerAction[] = [
     new ResolveFacebookVideoDownloaderAction(),
     new ResolveYoutubeDownloaderAction(),
     new ResolveYoutubeAudioDownloaderAction(),
+    new ResolveTwitterDownloaderAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)
