@@ -58,23 +58,32 @@ class ResolveFacebookVideoDownloaderAction extends BaseMessageHandlerAction{
                     url = video.url
 
                     promises.push(
-                        queue.add(() => sendWithTyping(
-                            socket,
+                        queue.add(() => socket.sendMessage(
+                            getJid(message),
                             {
                                 video: {
                                     url: url,
                                 },
-                                caption: "ini videonya, bilang apa? \n\n" + link
-                            },
-                            getJid(message),
-                            {
-                                quoted: message
                             }
                         ))
                     )
                 })
 
-            Promise.any(promises).then(() => this.reactToDone(message, socket))
+            Promise.any(promises).then(() => {
+                queue.add(() => {
+                    sendWithTyping(
+                        socket,
+                        {
+                            text: "Permintaan berhasil di proses \n\n" +
+                                `${'Link: ' + link}`
+                        },
+                        getJid(message),
+                        {quoted: message}
+                    )
+                })
+
+                this.reactToDone(message,socket)
+            })
         } catch (error) {
             if(error.code === 'ERR_INVALID_URL') {
                 this.reactToInvalid(message, socket)
