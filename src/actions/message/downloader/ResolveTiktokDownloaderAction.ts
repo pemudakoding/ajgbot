@@ -68,21 +68,23 @@ class ResolveTiktokDownloaderAction extends BaseMessageHandlerAction{
                 )
             })
 
-            promises.push(
-                sendWithTyping(
-                    socket,
-                    {
-                        text: "Permintaan berhasil di proses \n\n" +
-                            `${totalImage ? 'Total Gambar:' + totalImage + '\n': ''}` +
-                            `${totalImage ? 'Total Video:' + totalVideo + '\n': ''}` +
-                            `${'Link:' + link}`
-                    },
-                    getJid(message),
-                    {quoted: message}
-                )
-            )
+            Promise.any(promises).then(() => {
+                queue.add(() => {
+                    sendWithTyping(
+                        socket,
+                        {
+                            text: "Permintaan berhasil di proses \n\n" +
+                                `${totalImage > 0 ? 'Total Gambar: ' + totalImage + '\n': ''}` +
+                                `${totalVideo > 0 ? 'Total Video: ' + totalVideo + '\n': ''}` +
+                                `${'Link:' + link}`
+                        },
+                        getJid(message),
+                        {quoted: message}
+                    )
+                })
 
-            Promise.any(promises).then(() => this.reactToDone(message, socket))
+                this.reactToDone(message,socket)
+            })
         } catch (Error) {
             if(Error.code === 'ERR_INVALID_URL') {
                 this.reactToInvalid(message, socket)
