@@ -39,12 +39,11 @@ export default class ResolveStickerAction extends BaseMessageHandlerAction {
         const imagePath: string = this.tempImgPath + message.key.id! + '.jpeg'
 
         switch (true) {
-
             case Boolean(message.message?.extendedTextMessage?.contextInfo?.quotedMessage?.imageMessage):
                 photoPath = await downloadQuotedMessageMedia(message.message?.extendedTextMessage?.contextInfo?.quotedMessage, imagePath);
                 photoBuffer = fs.readFileSync(photoPath)
                 break
-            case Boolean(message?.message?.imageMessage) && typeof photoPath === 'string' :
+            case Boolean(message?.message?.imageMessage):
                 photoPath = await downloadMessageMedia(message!, socket, imagePath);
                 photoBuffer = fs.readFileSync(photoPath as PathOrFileDescriptor)
                 break
