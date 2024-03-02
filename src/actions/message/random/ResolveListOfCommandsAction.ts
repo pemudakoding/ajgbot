@@ -38,6 +38,11 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
             iteration++
         }
 
+        text += '======= Donation ======= \n' +
+            'Dengan Berdonasi bisa membuat bot ini tetap hidup.' +
+            'Jadi kalau dirasa berguna, silahkan dukung bot ini dengan cara berdonasi \n\n' +
+            'Trakteer: https://trakteer.id/anakanjing_20/tip'
+
         text += '\n\nSankyuuu!!!'
 
         queue.add(() => sendWithTyping(socket,{text}, getJid(message)))
