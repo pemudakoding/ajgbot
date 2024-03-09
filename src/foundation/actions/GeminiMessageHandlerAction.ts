@@ -3,7 +3,6 @@ import * as baileys from "@whiskeysockets/baileys";
 import {patternsAndTextIsMatch} from "../../supports/Str";
 import queue from "../../services/queue";
 import {getJid, sendWithTyping} from "../../supports/Message";
-import {GoogleGenerativeAIError} from "@google/generative-ai/dist/src/errors";
 
 export default abstract class GeminiMessageHandlerAction extends BaseMessageHandlerAction {
     public async execute(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
@@ -18,7 +17,11 @@ export default abstract class GeminiMessageHandlerAction extends BaseMessageHand
 
             await this.process(message, socket)
         } catch (Error) {
-            if(Error instanceof GoogleGenerativeAIError) {
+            if(
+                Error
+                    .toString()
+                    .includes("[500 Internal Server Error] An internal error has occurred. ")
+            ) {
                 this.reactToFailed(message,socket)
 
                 queue.add(() => sendWithTyping(
