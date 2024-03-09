@@ -1,10 +1,10 @@
 import * as baileys from '@whiskeysockets/baileys'
 import {
 	DownloadableMessage,
-	downloadContentFromMessage, downloadMediaMessage,
+	downloadContentFromMessage, downloadMediaMessage, getContentType,
 	GroupMetadata,
-	GroupParticipant, MediaType,
-	MessageType,
+	GroupParticipant, MediaDownloadOptions, MediaType,
+	MessageType, proto,
 	WAMessage,
 	WASocket
 } from "@whiskeysockets/baileys";
@@ -119,6 +119,54 @@ const getGroupId = async (message: WAMessage, socket: WASocket): Promise<string>
 	return metaData.id.replace('@g.us', '')
 }
 
+const getMessageFromViewOnce = (
+	message: WAMessage
+): proto.IMessage | null | undefined => {
+	return (
+		message.message?.viewOnceMessage?.message ||
+		message.message?.viewOnceMessageV2?.message ||
+		message.message?.viewOnceMessageV2Extension?.message ||
+		message.message
+	);
+};
+
+const getMessageQuotedCaption = (message: proto.IMessage) => {
+	const type = getContentType(message)!;
+	const msg =
+		type == "viewOnceMessage"
+			? message[type]!.message![getContentType(message[type]!.message!)!]
+			: message[type];
+
+	return (
+		message?.ephemeralMessage?.message?.extendedTextMessage?.contextInfo
+			?.quotedMessage?.conversation ||
+		message?.extendedTextMessage?.contextInfo?.quotedMessage?.conversation ||
+		message?.extendedTextMessage?.contextInfo?.quotedMessage
+			?.extendedTextMessage?.text ||
+		(msg as proto.Message.IVideoMessage)?.contextInfo?.quotedMessage
+			?.conversation ||
+		""
+	);
+};
+
+const downloadContentBufferFromMessage = async (
+	{ mediaKey, directPath, url }: DownloadableMessage,
+	type: MediaType,
+	opts?: MediaDownloadOptions
+): Promise<Buffer> => {
+	const stream = await downloadContentFromMessage(
+		{ mediaKey, directPath, url },
+		type,
+		opts
+	);
+	const bufferArray: Buffer[] = [];
+	for await (const chunk of stream) {
+		bufferArray.push(chunk);
+	}
+
+	return Buffer.concat(bufferArray);
+};
+
 export {
 	getJid,
 	getText,
@@ -129,5 +177,8 @@ export {
 	isParticipantAdmin,
 	downloadQuotedMessageMedia,
 	downloadMessageMedia,
-	getGroupId
+	getGroupId,
+	getMessageFromViewOnce,
+	getMessageQuotedCaption,
+	downloadContentBufferFromMessage,
 }

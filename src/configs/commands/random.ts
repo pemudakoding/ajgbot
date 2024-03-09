@@ -5,12 +5,14 @@ import ResolveListOfCommandsAction from "../../actions/message/random/ResolveLis
 import ResolveFeatureSynchronizeAction from "../../actions/message/random/ResolveFeatureSynchronizeAction";
 import { resolveCommandHandlerConfig } from "../../supports/Command";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
+import ResolveGeminiMessageAction from "../../actions/message/random/ResolveGeminiMessageAction";
 
 const handlers: BaseMessageHandlerAction[] = [
-    new ResolvePingAction,
-    new ResolveStickerAction,
-    new ResolveListOfCommandsAction,
-    new ResolveFeatureSynchronizeAction,
+    new ResolvePingAction(),
+    new ResolveStickerAction(),
+    new ResolveListOfCommandsAction(),
+    new ResolveFeatureSynchronizeAction(),
+    new ResolveGeminiMessageAction()
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

@@ -4,10 +4,6 @@ import {jidDecode, WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {
     EnhancedGenerateContentResponse,
     GenerateContentResult,
-    GenerativeModel,
-    GoogleGenerativeAI,
-    HarmBlockThreshold,
-    HarmCategory
 } from "@google/generative-ai"
 import {getGroupId, getJid, getText, isGroup, sendWithTyping} from "../../../supports/Message";
 import AnswerThanks from "../../../types/services/AnswerThanks";
@@ -15,6 +11,7 @@ import queue from "../../../services/queue";
 import {isFlagEnabled} from "../../../supports/Flag";
 import Type from "../../../enums/message/Type";
 import Alias from "../../../enums/message/Alias";
+import Gemini from "../../../services/Gemini";
 
 export default class AnswerThanksAction extends BaseMessageHandlerAction {
     alias: string | null = null;
@@ -45,29 +42,6 @@ export default class AnswerThanksAction extends BaseMessageHandlerAction {
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
-        const genAI: GoogleGenerativeAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-        const model: GenerativeModel = genAI.getGenerativeModel({
-            model: "gemini-pro",
-            safetySettings: [
-                {
-                    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                    threshold: HarmBlockThreshold.BLOCK_NONE
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                    threshold: HarmBlockThreshold.BLOCK_NONE
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                    threshold: HarmBlockThreshold.BLOCK_NONE
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                    threshold: HarmBlockThreshold.BLOCK_NONE
-                }
-            ]
-        });
-
         const messageText: string = getText(message)
 
         if(messageText === null || messageText === '') {
@@ -76,10 +50,16 @@ export default class AnswerThanksAction extends BaseMessageHandlerAction {
 
         try {
             const prompt: string = this.rule(messageText)
-            const result: GenerateContentResult = await model.generateContent(prompt)
+            const model: Gemini = Gemini
+                .make()
+                .setPrompts(prompt)
+                .setModel('gemini-pro')
+
+            const result: GenerateContentResult = await model.generate()
             const response: EnhancedGenerateContentResponse = result.response
             const text: string = response.text().replaceAll('```','').replaceAll('json', '').trim()
             const json: AnswerThanks = JSON.parse(text)
+
             if(! json.is_thanks)  {
                 return;
             }

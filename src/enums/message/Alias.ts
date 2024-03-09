@@ -17,7 +17,8 @@ enum Alias {
     AntiSecret = 'anti-secret',
     YoutubeDownload = 'youtube-downloader',
     YoutubeAudioDownload = 'youtube-audio-downloader',
-    TwitterDownloader = 'twitter-downloader'
+    TwitterDownloader = 'twitter-downloader',
+    Ai = 'AI',
 }
 
 export default Alias
