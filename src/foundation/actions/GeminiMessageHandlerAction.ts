@@ -20,7 +20,7 @@ export default abstract class GeminiMessageHandlerAction extends BaseMessageHand
             if(
                 Error
                     .toString()
-                    .includes("[500 Internal Server Error] An internal error has occurred. ")
+                    .includes("[500 Internal Server Error] An internal error has occurred.")
             ) {
                 this.reactToFailed(message,socket)
 
@@ -32,6 +32,8 @@ export default abstract class GeminiMessageHandlerAction extends BaseMessageHand
                         quoted: message
                     }
                 ))
+
+                return;
             }
             if (
                 Error
