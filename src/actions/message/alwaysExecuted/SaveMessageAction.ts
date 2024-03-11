@@ -54,7 +54,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             return;
         }
 
-        if(! messageTypes.includes(type!)) {
+        if(! messageTypes.includes(type!) && await this.isGroupEligibleToSaveTheMessage(message, text)) {
             this.saveTextOnlyMessage(message);
 
             return;
@@ -66,11 +66,8 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             text = resolvedMessage?.message?.documentMessage?.caption || "";
         }
 
-        if(isGroup(message)
-            && await CheckIsTextContainBadwordsAction.execute(text)
-            && await isFlagEnabled(Type.Group, await getGroupId(message), Alias.AntiBadword)
-        ) {
-            return;
+        if(! await this.isGroupEligibleToSaveTheMessage(message, text)){
+            return
         }
 
         const downloadableMedia: DownloadableMessage = {
@@ -126,7 +123,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
         }
     }
 
-    saveTextOnlyMessage(message: WAMessage): void {
+    protected saveTextOnlyMessage(message: WAMessage): void {
         const jid = getJid(message);
         const messageId = message.key.id;
 
@@ -135,5 +132,11 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             text: getText(message),
             timestamp: Date.now(),
         });
+    }
+
+    protected async isGroupEligibleToSaveTheMessage(message: WAMessage, text: string): Promise<boolean> {
+        return isGroup(message)
+            && await CheckIsTextContainBadwordsAction.execute(text)
+            && await isFlagEnabled(Type.Group, await getGroupId(message), Alias.AntiBadword)
     }
 }

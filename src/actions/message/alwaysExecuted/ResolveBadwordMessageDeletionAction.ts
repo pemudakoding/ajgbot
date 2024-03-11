@@ -7,6 +7,7 @@ import {getGroupId, getJid, getText, isGroup, sendWithTyping} from "../../../sup
 import {isFlagEnabled} from "../../../supports/Flag";
 import CheckIsTextContainBadwordsAction from "../../database/CheckIsTextContainBadwordsAction";
 import queue from "../../../services/queue";
+import {withSign} from "../../../supports/Str";
 
 export default class ResolveBadwordMessageDeletionAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiBadword;
@@ -30,6 +31,10 @@ export default class ResolveBadwordMessageDeletionAction extends BaseMessageHand
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
+        if((new RegExp(`^${withSign('addbadword')}`)).test(getText(message))) {
+            return
+        }
+
         if(await CheckIsTextContainBadwordsAction.execute(getText(message))) {
             if(isGroup(message)) {
                 queue.add(() => {
