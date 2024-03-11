@@ -1,10 +1,12 @@
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
 import MessagePatternType from "../../../types/MessagePatternType";
 import {DownloadableMessage, getContentType, proto, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {getJid, getJidNumber, getText} from "../../../supports/Message";
+import {getGroupId, getJid, getJidNumber, getText, isGroup} from "../../../supports/Message";
 import Alias from "../../../enums/message/Alias";
 import database from "../../../services/database";
 import IWebMessageInfo = proto.IWebMessageInfo;
+import {isFlagEnabled} from "../../../supports/Flag";
+import Type from "../../../enums/message/Type";
 
 export default class SaveMessageAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;
@@ -18,6 +20,14 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
 
     patterns(): MessagePatternType {
         return null
+    }
+
+    async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
+        if(isGroup(message)) {
+            return isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias)
+        }
+
+        return ! message.key.fromMe
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
