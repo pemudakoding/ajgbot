@@ -54,7 +54,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             return;
         }
 
-        if(! messageTypes.includes(type!) && await this.isGroupEligibleToSaveTheMessage(message, text)) {
+        if(! messageTypes.includes(type!) && ! await this.isGroupAntiBadwordActive(message, text)) {
             this.saveTextOnlyMessage(message);
 
             return;
@@ -66,7 +66,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             text = resolvedMessage?.message?.documentMessage?.caption || "";
         }
 
-        if(! await this.isGroupEligibleToSaveTheMessage(message, text)){
+        if(! await this.isGroupAntiBadwordActive(message, text)){
             return
         }
 
@@ -134,7 +134,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
         });
     }
 
-    protected async isGroupEligibleToSaveTheMessage(message: WAMessage, text: string): Promise<boolean> {
+    protected async isGroupAntiBadwordActive(message: WAMessage, text: string): Promise<boolean> {
         return isGroup(message)
             && await CheckIsTextContainBadwordsAction.execute(text)
             && await isFlagEnabled(Type.Group, await getGroupId(message), Alias.AntiBadword)
