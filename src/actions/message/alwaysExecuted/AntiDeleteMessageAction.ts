@@ -149,7 +149,7 @@ ${formatterDate.format(new Date(data.timestamp))}
 Waktu Dihapus: 
 ${formatterDate.format(new Date())}
 
-Pesan yang Dihapus:\n`
+Pesan yang Dihapus:`
             .trim();
 
         return text
