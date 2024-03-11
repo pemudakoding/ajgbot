@@ -40,7 +40,7 @@ export default class ResolveAddBadwordAction extends BaseMessageHandlerAction {
             return false
         }
 
-        return message.key.fromMe!
+        return true
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
@@ -57,14 +57,14 @@ export default class ResolveAddBadwordAction extends BaseMessageHandlerAction {
             return
         }
 
-        AddBadwordAction.execute(badwords)
-
         queue.add(() => sendWithTyping(
             socket,
             { text: "Sukses menambahkan badword baru " + badwords.join(',')},
             getJid(message),
             {quoted: message}
         ))
+
+        AddBadwordAction.execute(badwords)
     }
 
     usageExample(): string {
