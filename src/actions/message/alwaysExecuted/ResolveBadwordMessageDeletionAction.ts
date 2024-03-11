@@ -7,7 +7,6 @@ import {getGroupId, getJid, getText, isGroup, sendWithTyping} from "../../../sup
 import {isFlagEnabled} from "../../../supports/Flag";
 import CheckIsTextContainBadwordsAction from "../../database/CheckIsTextContainBadwordsAction";
 import queue from "../../../services/queue";
-import {DataError} from "node-json-db";
 
 export default class ResolveBadwordMessageDeletionAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiBadword;
