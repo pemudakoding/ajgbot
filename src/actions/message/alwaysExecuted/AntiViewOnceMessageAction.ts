@@ -8,7 +8,7 @@ import {getGroupId, getJid, isGroup, sendWithTyping} from "../../../supports/Mes
 import {isFlagEnabled} from "../../../supports/Flag";
 import Type from "../../../enums/message/Type";
 
-export default class AntiViewOnceAction extends BaseMessageHandlerAction {
+export default class AntiViewOnceMessageAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;
     category: string | null = null;
     description: string | null = null;

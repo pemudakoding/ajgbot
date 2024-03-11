@@ -20,6 +20,11 @@ const getText = (message: baileys.WAMessage): string => {
 	if (!message) return "";
 
 	const type = getContentType(message.message!)!;
+
+	if(type === undefined) {
+		return ''
+	}
+
 	const msg = type === 'viewOnceMessage'
 		? message.message![type]!.message![getContentType(message.message![type]!.message!)!]
 		: message.message![type] || '';
@@ -195,7 +200,10 @@ const getViewOnceInstance = (message: WAMessage) => {
 }
 
 const getJidNumber = (jid: string): string => {
-	return jid.replace('@g.us', '').toString()
+	return jid
+		.replace('@g.us', '')
+		.replace('@s.whatsapp.net', '')
+		.toString()
 }
 
 export {
