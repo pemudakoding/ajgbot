@@ -8,6 +8,7 @@ import MessageHandler from "../../types/MessageHandler";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {resolveCommandHandlerConfig} from "../../supports/Command";
 import SetAntiSecretAction from "../../actions/message/group/SetAntiSecretAction";
+import SetAntiBadwordAction from "../../actions/message/group/SetAntiBadwordAction";
 
 
 const handlers: BaseMessageHandlerAction[] = [
@@ -18,6 +19,7 @@ const handlers: BaseMessageHandlerAction[] = [
     new ResolveDemoteAdminAction(),
     new ResolvePromoteMemberAction(),
     new SetAntiSecretAction(),
+    new SetAntiBadwordAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

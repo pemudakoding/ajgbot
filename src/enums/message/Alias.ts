@@ -19,6 +19,7 @@ enum Alias {
     YoutubeAudioDownload = 'youtube-audio-downloader',
     TwitterDownloader = 'twitter-downloader',
     Ai = 'AI',
+    AntiBadword = 'anti-badword',
 }
 
 export default Alias

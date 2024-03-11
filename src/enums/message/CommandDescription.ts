@@ -18,7 +18,8 @@ enum CommandDescription {
     YoutubeDownload = 'Youtube Video Downloader',
     YoutubeAudioDownload = 'Youtube Audio Downloader',
     TwitterDownloader = 'Twitter Video Downloader',
-    Ai = 'Ai'
+    Ai = 'Ai',
+    AntiBadword = 'Anti Badword',
 }
 
 export default CommandDescription
