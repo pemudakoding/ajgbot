@@ -47,7 +47,7 @@ export default class AntiDeleteMessageAction {
                     data.type
                 )) as Buffer;
 
-            const messageText = [text, data.type == 'text' ? data.text : data.caption].join("\n").trim()
+            const messageText = [text, data.type == 'text' ? data.text : data.caption].join("\n\n").trim()
 
             let messageToSend: AnyMessageContent | null = null;
 
