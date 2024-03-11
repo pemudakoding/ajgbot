@@ -11,6 +11,7 @@
     "formdata-node": "^6.0.3",
     "jimp": "^0.22.10",
     "node-json-db": "^2.3.0",
+    "node-schedule": "^2.1.1",
     "p-queue": "^8.0.1",
     "pino-pretty": "^10.3.1",
     "qrcode-terminal": "^0.12.0",
@@ -28,6 +29,7 @@
     "build": "tsc-esm"
   },
   "devDependencies": {
+    "@types/node-schedule": "^2.1.6",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",

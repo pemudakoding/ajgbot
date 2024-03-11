@@ -1,5 +1,6 @@
 interface WhatsappClient {
   start: () => Promise<void>
+  scheduler: () => WhatsappClient
 }
 
 
