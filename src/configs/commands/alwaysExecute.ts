@@ -3,10 +3,12 @@ import AntiSecretAction from "../../actions/message/alwaysExecuted/AntiSecretAct
 import MessageHandler from "../../types/MessageHandler";
 import {resolveCommandHandlerConfig} from "../../supports/Command";
 import AnswerThanksAction from "../../actions/message/alwaysExecuted/AnswerThanksAction";
+import SaveMessageAction from "../../actions/message/alwaysExecuted/SaveMessageAction";
 
 const handlers: BaseMessageHandlerAction[] = [
     new AntiSecretAction(),
-    new AnswerThanksAction()
+    new AnswerThanksAction(),
+    new SaveMessageAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

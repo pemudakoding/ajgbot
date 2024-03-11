@@ -17,8 +17,28 @@ const getJid = (message: baileys.WAMessage): string => {
 }
 
 const getText = (message: baileys.WAMessage): string => {
+	if (!message) return "";
+
+	const type = getContentType(message.message!)!;
+	const msg = type === 'viewOnceMessage'
+		? message.message![type]!.message![getContentType(message.message![type]!.message!)!]
+		: message.message![type] || '';
+
+	const isTypeViewOnce = type == "viewOnceMessage" || type == "viewOnceMessageV2" || type == "viewOnceMessageV2Extension";
+
 	return message.message?.extendedTextMessage?.text
 		?? message?.message?.imageMessage?.caption
+		?? (msg as proto.Message.IVideoMessage).caption
+		?? (msg as proto.Message.IExtendedTextMessage)?.text
+		?? ((isTypeViewOnce && (msg as proto.Message.FutureProofMessage).message?.imageMessage)
+			? (msg as proto.Message.FutureProofMessage).message?.imageMessage?.caption
+			: null
+		)
+		?? ((isTypeViewOnce && (msg as proto.Message.FutureProofMessage).message?.videoMessage)
+			? (msg as proto.Message.FutureProofMessage).message?.videoMessage?.caption
+			: null
+		)
+		?? message.message?.ephemeralMessage?.message?.extendedTextMessage?.text
 		?? message?.message?.conversation
 		?? ''
 }
@@ -167,6 +187,17 @@ const downloadContentBufferFromMessage = async (
 	return Buffer.concat(bufferArray);
 };
 
+const getViewOnceInstance = (message: WAMessage) => {
+	return message.message?.viewOnceMessage ||
+		message.message?.viewOnceMessageV2 ||
+		message.message?.viewOnceMessageV2Extension ||
+		message;
+}
+
+const getJidNumber = (jid: string): string => {
+	return jid.replace('@g.us', '').toString()
+}
+
 export {
 	getJid,
 	getText,
@@ -181,4 +212,6 @@ export {
 	getMessageFromViewOnce,
 	getMessageQuotedCaption,
 	downloadContentBufferFromMessage,
+	getViewOnceInstance,
+	getJidNumber,
 }

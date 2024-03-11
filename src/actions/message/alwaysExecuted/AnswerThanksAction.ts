@@ -37,8 +37,6 @@ export default class AnswerThanksAction extends BaseMessageHandlerAction {
         }
 
         return ! isGroup(message) && ! message.key.fromMe;
-
-
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
