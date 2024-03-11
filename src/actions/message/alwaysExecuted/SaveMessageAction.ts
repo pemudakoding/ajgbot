@@ -1,10 +1,10 @@
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
 import MessagePatternType from "../../../types/MessagePatternType";
 import {DownloadableMessage, getContentType, proto, WAMessage, WASocket} from "@whiskeysockets/baileys";
-import {getJid, getJidNumber, getText, getViewOnceInstance} from "../../../supports/Message";
+import {getJid, getJidNumber, getText} from "../../../supports/Message";
 import Alias from "../../../enums/message/Alias";
 import database from "../../../services/database";
-import IFutureProofMessage = proto.Message.IFutureProofMessage;
+import IWebMessageInfo = proto.IWebMessageInfo;
 
 export default class SaveMessageAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;
@@ -32,9 +32,13 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             "documentWithCaptionMessage",
         ] as (keyof proto.IMessage)[];
 
-        let viewOnceMessage = getViewOnceInstance(message);
+        let resolvedMessage = message;
         let text = getText(message);
         let  type = getContentType(message.message!);
+
+        if(type === "viewOnceMessage" || type === 'viewOnceMessageV2' || type === 'viewOnceMessageV2Extension') {
+            return;
+        }
 
         if(! messageTypes.includes(type!)) {
             this.saveTextOnlyMessage(message);
@@ -43,16 +47,16 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
         }
 
         if (type === "documentWithCaptionMessage") {
-            viewOnceMessage = viewOnceMessage.message?.documentWithCaptionMessage as IFutureProofMessage;
+            resolvedMessage = resolvedMessage.message?.documentWithCaptionMessage as IWebMessageInfo;
             type = "documentMessage";
-            text = viewOnceMessage?.message?.documentMessage?.caption || "";
+            text = resolvedMessage?.message?.documentMessage?.caption || "";
         }
 
         const downloadableMedia: DownloadableMessage = {
             directPath:
-            viewOnceMessage.message![type as "imageMessage"]?.directPath,
-            mediaKey: viewOnceMessage.message![type as "imageMessage"]?.mediaKey,
-            url: viewOnceMessage.message![type as "imageMessage"]?.url,
+            resolvedMessage.message![type as "imageMessage"]?.directPath,
+            mediaKey: resolvedMessage.message![type as "imageMessage"]?.mediaKey,
+            url: resolvedMessage.message![type as "imageMessage"]?.url,
         };
 
         const types: { [key in keyof proto.IMessage]: string } = {
@@ -68,8 +72,8 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             message,
             downloadableMedia,
             text,
-            viewOnceMessage.message![type as "documentMessage"]?.mimetype,
-            viewOnceMessage.message![type as "documentMessage"]?.fileName
+            resolvedMessage.message![type as "documentMessage"]?.mimetype,
+            resolvedMessage.message![type as "documentMessage"]?.fileName
         );
     }
 
