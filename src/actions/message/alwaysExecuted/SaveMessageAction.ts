@@ -4,9 +4,10 @@ import {DownloadableMessage, getContentType, proto, WAMessage, WASocket} from "@
 import {getGroupId, getJid, getJidNumber, getText, isGroup} from "../../../supports/Message";
 import Alias from "../../../enums/message/Alias";
 import database from "../../../services/database";
-import IWebMessageInfo = proto.IWebMessageInfo;
 import {isFlagEnabled} from "../../../supports/Flag";
 import Type from "../../../enums/message/Type";
+import CheckIsTextContainBadwordsAction from "../../database/CheckIsTextContainBadwordsAction";
+import IWebMessageInfo = proto.IWebMessageInfo;
 
 export default class SaveMessageAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiSecret;
@@ -63,6 +64,13 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
             resolvedMessage = resolvedMessage.message?.documentWithCaptionMessage as IWebMessageInfo;
             type = "documentMessage";
             text = resolvedMessage?.message?.documentMessage?.caption || "";
+        }
+
+        if(isGroup(message)
+            && await CheckIsTextContainBadwordsAction.execute(text)
+            && await isFlagEnabled(Type.Group, await getGroupId(message), Alias.AntiBadword)
+        ) {
+            return;
         }
 
         const downloadableMedia: DownloadableMessage = {
