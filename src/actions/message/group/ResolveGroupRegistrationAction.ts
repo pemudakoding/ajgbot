@@ -34,7 +34,7 @@ export default class ResolveGroupRegistrationAction extends GroupMessageHandlerA
     }
 
     public async process(message: baileys.WAMessage, socket: baileys.WASocket): Promise<void> {
-        const groupId: string = await getGroupId(message, socket)
+        const groupId: string = await getGroupId(message)
         const path = Path.GroupWithIdentifier.replace(':identifier', groupId);
         try {
             await database.getData(path)

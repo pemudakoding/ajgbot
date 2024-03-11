@@ -22,9 +22,12 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
         return null
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
         if(isGroup(message)) {
-            return isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias)
+            return isFlagEnabled(Type.Group, await getGroupId(message), this.alias as Alias)
         }
 
         return ! message.key.fromMe
@@ -44,7 +47,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
 
         let resolvedMessage = message;
         let text = getText(message);
-        let  type = getContentType(message.message!);
+        let type = getContentType(message.message!);
 
         if(type === "viewOnceMessage" || type === 'viewOnceMessageV2' || type === 'viewOnceMessageV2Extension') {
             return;

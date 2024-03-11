@@ -37,7 +37,7 @@ export default class SetAntiSecretAction extends BaseMessageHandlerAction{
         const argument: string[] = getArguments(getText(message))
         const type: string = isGroup(message) ? 'group' : 'individual'
         const botNumber: string = jidDecode(socket.user!.id)!.user;
-        const identifier: string = isGroup(message) ? await getGroupId(message, socket) : botNumber
+        const identifier: string = isGroup(message) ? await getGroupId(message) : botNumber
         const path: string = Path
             .Flags
             .replace(':type', type)

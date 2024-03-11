@@ -138,10 +138,11 @@ const downloadMessageMedia = async (
 	return buffer
 }
 
-const getGroupId = async (message: WAMessage, socket: WASocket): Promise<string> => {
-	const metaData = await socket.groupMetadata(getJid(message))
-
-	return metaData.id.replace('@g.us', '')
+const getGroupId = async (message: WAMessage): Promise<string> => {
+	return message
+		.key
+		.remoteJid!
+		.replace('@g.us', '')
 }
 
 const getMessageFromViewOnce = (

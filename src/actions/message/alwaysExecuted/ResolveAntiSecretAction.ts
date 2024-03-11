@@ -25,7 +25,7 @@ export default class ResolveAntiSecretAction extends BaseMessageHandlerAction {
     async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
         const type: Type = isGroup(message) ? Type.Group : Type.Individual
         const botNumber: string = jidDecode(socket.user!.id)!.user;
-        const identifier: string = isGroup(message) ? await getGroupId(message, socket) : botNumber
+        const identifier: string = isGroup(message) ? await getGroupId(message) : botNumber
 
         return isFlagEnabled(type, identifier, this.alias as Alias);
     }

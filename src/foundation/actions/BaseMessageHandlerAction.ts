@@ -26,9 +26,12 @@ abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implem
 
   public abstract usageExample(): string
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
     if(isGroup(message)) {
-      return isFlagEnabled(Type.Group, await getGroupId(message, socket), this.alias as Alias)
+      return isFlagEnabled(Type.Group, await getGroupId(message), this.alias as Alias)
     }
 
     return true
