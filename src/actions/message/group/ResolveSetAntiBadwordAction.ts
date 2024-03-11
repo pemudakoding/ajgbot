@@ -9,18 +9,19 @@ import queue from "../../../services/queue";
 import Alias from "../../../enums/message/Alias";
 import Category from "../../../enums/message/Category";
 import CommandDescription from "../../../enums/message/CommandDescription";
+import InitDefaultBadwordsAction from "../../database/InitDefaultBadwordsAction";
 
-export default class SetAntiSecretAction extends BaseMessageHandlerAction{
-    alias: string =  Alias.AntiSecret;
+export default class ResolveSetAntiBadwordAction extends BaseMessageHandlerAction{
+    alias: string =  Alias.AntiBadword;
     category: string =  Category.Group;
-    description: string = CommandDescription.AntiSecret;
+    description: string = CommandDescription.AntiBadword;
 
     hasArgument(): boolean {
         return true;
     }
 
     patterns(): MessagePatternType {
-        return withSign('setantisecret');
+        return withSign('antibadword');
     }
 
     async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
@@ -45,32 +46,33 @@ export default class SetAntiSecretAction extends BaseMessageHandlerAction{
 
         if(argument[0] != 'on' && argument[0] != 'off') {
             queue.add(() => {
-               sendWithTyping(socket, {text: "hanya menerima on/off"}, getJid(message), {quoted: message})
+                sendWithTyping(socket, {text: "hanya menerima on/off"}, getJid(message), {quoted: message})
             });
-            
+
             this.reactToInvalid(message, socket)
 
             return;
         }
         const data: {[key: string]: boolean} = {}
-        
+
         data[this.alias] = argument[0] === 'on';
-        
+
         await database.push(
             path,
             data,
             false
         )
-        
+
         queue.add(() => {
-            sendWithTyping(socket, {text: "anti rahasia berhasil di-" + argument[0] + ' kan'}, getJid(message), {quoted: message})
+            sendWithTyping(socket, {text: "anti badword berhasil di-" + argument[0] + ' kan'}, getJid(message), {quoted: message})
 
             this.reactToDone(message, socket)
         });
+
+        InitDefaultBadwordsAction.execute();
     }
 
     usageExample(): string {
-        return ".setantisecret on/off";
+        return ".antibadword on/off";
     }
-    
 }

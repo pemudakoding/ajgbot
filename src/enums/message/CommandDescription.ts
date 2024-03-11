@@ -20,6 +20,7 @@ enum CommandDescription {
     TwitterDownloader = 'Twitter Video Downloader',
     Ai = 'Ai',
     AntiBadword = 'Anti Badword',
+    AddBadword = 'Menambahkan Badword',
 }
 
 export default CommandDescription

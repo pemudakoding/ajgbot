@@ -7,8 +7,9 @@ import ResolvePromoteMemberAction from "../../actions/message/group/ResolvePromo
 import MessageHandler from "../../types/MessageHandler";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import {resolveCommandHandlerConfig} from "../../supports/Command";
-import SetAntiSecretAction from "../../actions/message/group/SetAntiSecretAction";
-import SetAntiBadwordAction from "../../actions/message/group/SetAntiBadwordAction";
+import ResolveSetAntiSecretAction from "../../actions/message/group/ResolveSetAntiSecretAction";
+import ResolveSetAntiBadwordAction from "../../actions/message/group/ResolveSetAntiBadwordAction";
+import ResolveAddBadwordAction from "../../actions/message/group/ResolveAddBadwordAction";
 
 
 const handlers: BaseMessageHandlerAction[] = [
@@ -18,8 +19,9 @@ const handlers: BaseMessageHandlerAction[] = [
     new ResolveKickMemberAction(),
     new ResolveDemoteAdminAction(),
     new ResolvePromoteMemberAction(),
-    new SetAntiSecretAction(),
-    new SetAntiBadwordAction(),
+    new ResolveSetAntiSecretAction(),
+    new ResolveSetAntiBadwordAction(),
+    new ResolveAddBadwordAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

@@ -20,6 +20,7 @@ enum Alias {
     TwitterDownloader = 'twitter-downloader',
     Ai = 'AI',
     AntiBadword = 'anti-badword',
+    AddBadword = 'add-badword',
 }
 
 export default Alias

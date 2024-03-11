@@ -10,17 +10,17 @@ import Alias from "../../../enums/message/Alias";
 import Category from "../../../enums/message/Category";
 import CommandDescription from "../../../enums/message/CommandDescription";
 
-export default class SetAntiBadwordAction extends BaseMessageHandlerAction{
-    alias: string =  Alias.AntiBadword;
+export default class ResolveSetAntiSecretAction extends BaseMessageHandlerAction{
+    alias: string =  Alias.AntiSecret;
     category: string =  Category.Group;
-    description: string = CommandDescription.AntiBadword;
+    description: string = CommandDescription.AntiSecret;
 
     hasArgument(): boolean {
         return true;
     }
 
     patterns(): MessagePatternType {
-        return withSign('antibadword');
+        return withSign('setantisecret');
     }
 
     async isEligibleToProcess(message: WAMessage, socket: WASocket): Promise<boolean> {
@@ -45,31 +45,32 @@ export default class SetAntiBadwordAction extends BaseMessageHandlerAction{
 
         if(argument[0] != 'on' && argument[0] != 'off') {
             queue.add(() => {
-                sendWithTyping(socket, {text: "hanya menerima on/off"}, getJid(message), {quoted: message})
+               sendWithTyping(socket, {text: "hanya menerima on/off"}, getJid(message), {quoted: message})
             });
-
+            
             this.reactToInvalid(message, socket)
 
             return;
         }
         const data: {[key: string]: boolean} = {}
-
+        
         data[this.alias] = argument[0] === 'on';
-
+        
         await database.push(
             path,
             data,
             false
         )
-
+        
         queue.add(() => {
-            sendWithTyping(socket, {text: "anti badword berhasil di-" + argument[0] + ' kan'}, getJid(message), {quoted: message})
+            sendWithTyping(socket, {text: "anti rahasia berhasil di-" + argument[0] + ' kan'}, getJid(message), {quoted: message})
 
             this.reactToDone(message, socket)
         });
     }
 
     usageExample(): string {
-        return ".antibadword on/off";
+        return ".setantisecret on/off";
     }
+    
 }

@@ -48,7 +48,6 @@ export default class ResolveYoutubeAudioDownloaderAction extends BaseMessageHand
             const buffer: ArrayBuffer = await (await fetch(response.data?.links[0]!.link as string)).arrayBuffer()
 
             queue.add(async () => {
-                console.log('masuk sini')
                 await socket.sendMessage(
                     getJid(message),
                     {

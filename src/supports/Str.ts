@@ -41,8 +41,24 @@ const getArguments = (text: string): string[] => {
         .map((argument: string) => argument.trim())
 }
 
+const getTextAfterSign = (text: string, signs: string | string[]) => {
+    let resolvedText= text;
+
+    if(Array.isArray(signs)) {
+        for (const sign in signs) {
+            resolvedText = resolvedText.replace(new RegExp(`^${signs[sign]}`), '').trim()
+        }
+
+    } else {
+        resolvedText = resolvedText.replace(`^${signs}`, '').trim()
+    }
+
+    return resolvedText.toString()
+}
+
 export {
     withSign,
     patternsAndTextIsMatch,
-    getArguments
+    getArguments,
+    getTextAfterSign
 }
