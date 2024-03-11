@@ -107,7 +107,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
 
         const mediaHasCaption = ["image", "video", "document", "audio"];
         if (mediaHasCaption.includes(type)) {
-            database.push(`data.messages.${getJidNumber(jid)}.${messageId!}`, {
+            database.push(`.messages.${getJidNumber(jid)}.${messageId!}`, {
                 type: type as string,
                 media,
                 timestamp: Date.now(),
@@ -122,7 +122,7 @@ export default class SaveMessageAction extends BaseMessageHandlerAction {
         const jid = getJid(message);
         const messageId = message.key.id;
 
-        database.push(`data.messages.${getJidNumber(jid)}.${messageId!}`, {
+        database.push(`.messages.${getJidNumber(jid)}.${messageId!}`, {
             type: "text",
             text: getText(message),
             timestamp: Date.now(),
