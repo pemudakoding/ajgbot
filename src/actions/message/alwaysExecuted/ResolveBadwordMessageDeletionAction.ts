@@ -31,31 +31,23 @@ export default class ResolveBadwordMessageDeletionAction extends BaseMessageHand
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
-        try {
-            if(await CheckIsTextContainBadwordsAction.execute(getText(message))) {
-                if(isGroup(message)) {
-                    queue.add(() => {
-                        socket.sendMessage(message.key.remoteJid!,{delete: message.key})
-                    })
-                }
-
+        if(await CheckIsTextContainBadwordsAction.execute(getText(message))) {
+            if(isGroup(message)) {
                 queue.add(() => {
-                    sendWithTyping(
-                        socket,
-                        {
-                            text: message.verifiedBizName + ' Jangan badword, itu kata sederhana tapi tuhan marah',
-                            mentions: [jidNormalizedUser(message.key.remoteJid!)]
-                        },
-                        getJid(message)
-                    )
+                    socket.sendMessage(message.key.remoteJid!,{delete: message.key})
                 })
             }
-        } catch (Error) {
-            if(Error instanceof DataError) {
-                return;
-            }
 
-            throw Error;
+            queue.add(() => {
+                sendWithTyping(
+                    socket,
+                    {
+                        text: message.verifiedBizName || message.pushName + ' Jangan badword, itu kata sederhana tapi tuhan marah',
+                        mentions: [jidNormalizedUser(message.key.remoteJid!)]
+                    },
+                    getJid(message)
+                )
+            })
         }
     }
 
