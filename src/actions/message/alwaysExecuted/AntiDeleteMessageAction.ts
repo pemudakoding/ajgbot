@@ -147,7 +147,9 @@ Waktu Dibuat:
 ${formatterDate.format(new Date(data.timestamp))}
 
 Waktu Dihapus: 
-${formatterDate.format(new Date())}`
+${formatterDate.format(new Date())}
+
+Pesan yang Dihapus:\n`
             .trim();
 
         return text
