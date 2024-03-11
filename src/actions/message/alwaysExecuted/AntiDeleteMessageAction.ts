@@ -134,7 +134,7 @@ export default class AntiDeleteMessageAction {
 
         if (isJidGroup(jid)) {
             const metadata = await socket.groupMetadata(jid);
-            text += "Grup: *" + metadata.subject + "\n";
+            text += "Grup: *" + metadata.subject + "*\n";
         }  else if (isJidStatusBroadcast(jid)) {
             text += "Story Whatsapp\n";
         }
