@@ -7,6 +7,7 @@ import {getGroupId, getJid, getText, isGroup, sendWithTyping} from "../../../sup
 import {isFlagEnabled} from "../../../supports/Flag";
 import CheckIsTextContainBadwordsAction from "../../database/CheckIsTextContainBadwordsAction";
 import queue from "../../../services/queue";
+import {DataError} from "node-json-db";
 
 export default class ResolveBadwordMessageDeletionAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiBadword;
@@ -30,23 +31,31 @@ export default class ResolveBadwordMessageDeletionAction extends BaseMessageHand
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
-        if(await CheckIsTextContainBadwordsAction.execute(getText(message))) {
-            if(isGroup(message)) {
+        try {
+            if(await CheckIsTextContainBadwordsAction.execute(getText(message))) {
+                if(isGroup(message)) {
+                    queue.add(() => {
+                        socket.sendMessage(message.key.remoteJid!,{delete: message.key})
+                    })
+                }
+
                 queue.add(() => {
-                    socket.sendMessage(message.key.remoteJid!,{delete: message.key})
+                    sendWithTyping(
+                        socket,
+                        {
+                            text: message.verifiedBizName + ' Jangan badword, itu kata sederhana tapi tuhan marah',
+                            mentions: [jidNormalizedUser(message.key.remoteJid!)]
+                        },
+                        getJid(message)
+                    )
                 })
             }
+        } catch (Error) {
+            if(Error instanceof DataError) {
+                return;
+            }
 
-            queue.add(() => {
-                sendWithTyping(
-                    socket,
-                    {
-                        text: message.verifiedBizName + ' Jangan badword, itu kata sederhana tapi tuhan marah',
-                        mentions: [jidNormalizedUser(message.key.remoteJid!)]
-                    },
-                    getJid(message)
-                )
-            })
+            throw Error;
         }
     }
 
