@@ -1,12 +1,13 @@
 import {badwordDatabase} from "../../services/database";
+import BadWordsNext from "bad-words-next";
 
 export default class CheckIsTextContainBadwordsAction {
     public static async execute(text: string): Promise<boolean> {
        try {
-           const words = await badwordDatabase.getData('/words')
-           const pattern = new RegExp("\\b(" + words.join("|") + ")\\b", "i");
+           const data = await badwordDatabase.getData('/')
+           const badwords = new BadWordsNext({data})
 
-           return pattern.test(text);
+           return badwords.check(text);
        } catch (Error) {
            console.log('words is not available yet')
 
