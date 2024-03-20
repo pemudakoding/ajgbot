@@ -13,6 +13,7 @@ export default class ResolveBadwordMessageDeletionAction extends BaseMessageHand
     alias: string | null = Alias.AntiBadword;
     category: string | null = null;
     description: string | null = null;
+    showInList: boolean = false;
 
     hasArgument(): boolean {
         return false;
