@@ -43,7 +43,7 @@ class ResolveToHdAction extends BaseMessageHandlerAction{
 
         const data = new FormData()
             data.append('image', new Blob([photoBuffer], { type: 'image/jpeg' }))
-            data.append('scale', '2')
+            data.append('scale', '4')
 
         const response = await axios.post(
             'https://api2.pixelcut.app/image/upscale/v1',
