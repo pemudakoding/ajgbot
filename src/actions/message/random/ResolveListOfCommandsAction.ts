@@ -91,16 +91,13 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
                 showedPatterns = patterns
             }
 
-            if(handler.concrete.alias === null) {
+            if(handler.concrete.alias === null || handler.concrete.description == null) {
                 continue;
             }
 
             text += handlerIteration + ". " + handler
                 .concrete
-                .alias
-                .toLowerCase()
-                .replace('-', ' ')
-                .replace(/\b\w/g, text => text.toUpperCase()) + ": *" + showedPatterns + '*\n'
+                .description + ": *" + showedPatterns + '*\n'
 
             handlerIteration++
         }
