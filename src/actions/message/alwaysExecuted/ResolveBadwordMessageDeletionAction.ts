@@ -11,8 +11,8 @@ import {withSign} from "../../../supports/Str";
 
 export default class ResolveBadwordMessageDeletionAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.AntiBadword;
-    category: string | null;
-    description: string | null;
+    category: string | null = null;
+    description: string | null = null;
 
     hasArgument(): boolean {
         return false;
