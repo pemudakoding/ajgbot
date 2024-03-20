@@ -64,7 +64,7 @@ class ResolveToHdAction extends BaseMessageHandlerAction{
                     image: {
                         url: response.data.result_url
                     },
-                    caption: 'Gambar berhasil di-process menjadi HD'
+                    caption: 'Gambar berhasil di-proses menjadi HD'
                 },
             )
 
