@@ -21,6 +21,7 @@ enum CommandDescription {
     Ai = 'Ai',
     AntiBadword = 'Anti Badword',
     AddBadword = 'Menambahkan Badword',
+    ToHd = 'Pembuat HD Gambar',
 }
 
 export default CommandDescription

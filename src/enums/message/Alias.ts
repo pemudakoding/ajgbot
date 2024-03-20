@@ -21,6 +21,7 @@ enum Alias {
     Ai = 'AI',
     AntiBadword = 'anti-badword',
     AddBadword = 'add-badword',
+    ToHd = 'to-hd',
 }
 
 export default Alias

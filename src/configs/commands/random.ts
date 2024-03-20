@@ -6,13 +6,15 @@ import ResolveFeatureSynchronizeAction from "../../actions/message/random/Resolv
 import { resolveCommandHandlerConfig } from "../../supports/Command";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import ResolveGeminiMessageAction from "../../actions/message/random/ResolveGeminiMessageAction";
+import ResolveToHdAction from "../../actions/message/random/ResolveToHdAction";
 
 const handlers: BaseMessageHandlerAction[] = [
     new ResolvePingAction(),
     new ResolveStickerAction(),
     new ResolveListOfCommandsAction(),
     new ResolveFeatureSynchronizeAction(),
-    new ResolveGeminiMessageAction()
+    new ResolveGeminiMessageAction(),
+    new ResolveToHdAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)
