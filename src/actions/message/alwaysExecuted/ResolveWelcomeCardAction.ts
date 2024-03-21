@@ -49,7 +49,7 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
         const participantJid: string | undefined = message.messageStubParameters![0];
-        const profileUrl: string | undefined = await socket.profilePictureUrl(participantJid!, 'image');
+        const profileUrl: string = (await socket.profilePictureUrl(participantJid!, 'image')) || 'https://img.freepik.com/free-vector/gradient-lo-fi-illustrations_52683-84144.jpg';
         const groupName = (await socket.groupMetadata(message.key.remoteJid!)).subject;
         const welcomeMessage = "@" + message.messageStubParameters![0]?.split('@')[0] + " Silahkan intro terdahulu!🤨🤨🤨"
         const greetingTitle = 'Welcome To'
@@ -61,7 +61,7 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
             "&text1=" + encodeURI(greetingTitle) +
             "&text2=" + encodeURI(groupName) +
             "&text3=" + encodeURI("Member " + (await socket.groupMetadata(message.key.remoteJid!)).participants.length)+
-            "&avatar=" + uploadedProfileLink || 'https://img.freepik.com/free-vector/gradient-lo-fi-illustrations_52683-84144.jpg',
+            "&avatar=" + uploadedProfileLink,
             {
                 responseType: 'arraybuffer'
             }
