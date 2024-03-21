@@ -5,10 +5,13 @@ import {
     WASocket,
     WAMessageStubType,
 } from "@whiskeysockets/baileys";
-import {getJid, isGroup} from "../../../supports/Message";
+import {getGroupId, getJid, isGroup} from "../../../supports/Message";
 import queue from "../../../services/queue";
 import axios from "axios";
 import telegraph from "../../../services/telegraph";
+import {isFlagEnabled} from "../../../supports/Flag";
+import Type from "../../../enums/message/Type";
+import Alias from "../../../enums/message/Alias";
 
 
 export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
@@ -37,6 +40,10 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
             return false
         }
 
+        if(false === await isFlagEnabled(Type.Group, await getGroupId(message), this.alias as Alias)) {
+            return false
+        }
+
         return message.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD
     }
 
@@ -50,7 +57,7 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
         const uploadedProfileLink: string = await telegraph(photo.data)
 
         const response = await axios.get(
-            'https://api.popcat.xyz/welcomecard?background=https://images4.alphacoders.com/134/1349198.png' +
+            'https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/f0zZktW/1349198-1.jpg' +
             "&text1=" + encodeURI(greetingTitle) +
             "&text2=" + encodeURI(groupName) +
             "&text3=" + encodeURI("Member " + (await socket.groupMetadata(message.key.remoteJid!)).participants.length)+
