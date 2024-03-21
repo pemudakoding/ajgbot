@@ -49,15 +49,22 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
         const participantJid: string | undefined = message.messageStubParameters![0];
-        const profileUrl: string = (await socket.profilePictureUrl(participantJid!, 'image')) || 'https://img.freepik.com/free-vector/gradient-lo-fi-illustrations_52683-84144.jpg';
+        let profileUrl : string | undefined;
+
+        try {
+            profileUrl = (await socket.profilePictureUrl(participantJid!, 'image'))
+        } catch (Error) {
+            profileUrl = 'https://i.ibb.co/vXzDh4y/gradient-lo-fi-illustrations-52683-84144.jpg';
+        }
+
         const groupName = (await socket.groupMetadata(message.key.remoteJid!)).subject;
-        const welcomeMessage = "@" + message.messageStubParameters![0]?.split('@')[0] + " Silahkan intro terdahulu!🤨🤨🤨"
+        const welcomeMessage = "@" + message.messageStubParameters![0]?.split('@')[0] + " Silahkan intro terdahulu! 🤨"
         const greetingTitle = 'Welcome To'
         const photo = await axios.get(profileUrl!, {responseType: "arraybuffer"});
         const uploadedProfileLink: string = await telegraph(photo.data)
 
         const response = await axios.get(
-            'https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/f0zZktW/1349198-1.jpg' +
+            'https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/dkXJ7rw/1349198-1.jpg' +
             "&text1=" + encodeURI(greetingTitle) +
             "&text2=" + encodeURI(groupName) +
             "&text3=" + encodeURI("Member " + (await socket.groupMetadata(message.key.remoteJid!)).participants.length)+
