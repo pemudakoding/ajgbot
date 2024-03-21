@@ -6,12 +6,14 @@ import ResolveAntiSecretAction from "../../actions/message/alwaysExecuted/Resolv
 import SaveMessageAction from "../../actions/message/alwaysExecuted/SaveMessageAction";
 import ResolveBadwordMessageDeletionAction
     from "../../actions/message/alwaysExecuted/ResolveBadwordMessageDeletionAction";
+import ResolveGreetingCardAction from "../../actions/message/alwaysExecuted/ResolveWelcomeCardAction";
 
 const handlers: BaseMessageHandlerAction[] = [
     new AnswerThanksAction(),
     new SaveMessageAction(),
     new ResolveAntiSecretAction(),
     new ResolveBadwordMessageDeletionAction(),
+    new ResolveGreetingCardAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)
