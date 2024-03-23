@@ -4,6 +4,7 @@ import group from "./commands/group";
 import random from "./commands/random";
 import downloader from "./commands/downloader";
 import alwaysExecute from "./commands/alwaysExecute";
+import owner from "./commands/owner";
 
 export default <CommandConfigType> {
     messageHandlers: [
@@ -11,5 +12,6 @@ export default <CommandConfigType> {
         ...random,
         ...group,
         ...downloader,
+        ...owner,
     ]
 }

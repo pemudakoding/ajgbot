@@ -1,4 +1,4 @@
-import GroupMessageHandlerAction from "../../../foundation/actions/GroupMessageHandlerAction";
+
 import * as baileys from "@whiskeysockets/baileys";
 import MessagePatternType from "../../../types/MessagePatternType";
 import {withSign} from "../../../supports/Str";
@@ -13,8 +13,9 @@ import CommandDescription from "../../../enums/message/CommandDescription";
 import Path from "../../../enums/services/Database/Path";
 import Category from "../../../enums/message/Category";
 import MessageHandler from "../../../types/MessageHandler";
+import OwnerMessageHandlerAction from "../../../foundation/actions/OwnerMessageHandlerAction";
 
-export default class ResolveFeatureSynchronizeAction extends GroupMessageHandlerAction {
+export default class ResolveFeatureSynchronizeAction extends OwnerMessageHandlerAction {
     description: string = CommandDescription.SyncFeature
     alias: string = Alias.SyncFeature
     category: string = Category.Random
