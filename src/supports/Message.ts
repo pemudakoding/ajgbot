@@ -48,6 +48,18 @@ const getText = (message: baileys.WAMessage): string => {
 		?? ''
 }
 
+const getTextWithoutCommand = (message: baileys.WAMessage): string => {
+	const text = getText(message);
+	const commandRegex = /^\.\w+/;
+	const match = text.match(commandRegex);
+
+	if (match) {
+		return text.replace(commandRegex, '').trimLeft();
+	}
+
+	return text;
+}
+
 const sendWithTyping = async (socket: baileys.WASocket, message: baileys.AnyMessageContent, jid: string, options: baileys.MiscMessageGenerationOptions = {}): Promise<void> => {
 	await socket.presenceSubscribe(jid)
 	await baileys.delay(500)
@@ -223,4 +235,5 @@ export {
 	downloadContentBufferFromMessage,
 	getViewOnceInstance,
 	getJidNumber,
+	getTextWithoutCommand,
 }
