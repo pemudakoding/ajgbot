@@ -22,6 +22,7 @@ enum Alias {
     AntiBadword = 'anti-badword',
     AddBadword = 'add-badword',
     ToHd = 'to-hd',
+    StickerToImage = 'sticker-to-image',
 }
 
 export default Alias

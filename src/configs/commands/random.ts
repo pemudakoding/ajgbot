@@ -7,6 +7,7 @@ import { resolveCommandHandlerConfig } from "../../supports/Command";
 import BaseMessageHandlerAction from "../../foundation/actions/BaseMessageHandlerAction";
 import ResolveGeminiMessageAction from "../../actions/message/random/ResolveGeminiMessageAction";
 import ResolveToHdAction from "../../actions/message/random/ResolveToHdAction";
+import ResolveStickerToImageAction from "../../actions/message/random/ResolveStickerToImageAction";
 
 const handlers: BaseMessageHandlerAction[] = [
     new ResolvePingAction(),
@@ -15,6 +16,7 @@ const handlers: BaseMessageHandlerAction[] = [
     new ResolveFeatureSynchronizeAction(),
     new ResolveGeminiMessageAction(),
     new ResolveToHdAction(),
+    new ResolveStickerToImageAction(),
 ];
 
 export default <MessageHandler[]> resolveCommandHandlerConfig(handlers)

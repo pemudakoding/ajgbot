@@ -22,6 +22,7 @@ enum CommandDescription {
     AntiBadword = 'Anti Badword',
     AddBadword = 'Menambahkan Badword',
     ToHd = 'Pembuat Gambar HD',
+    StickerToImage = 'Sticker to Image',
 }
 
 export default CommandDescription
