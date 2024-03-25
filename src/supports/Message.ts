@@ -3,7 +3,7 @@ import {
 	DownloadableMessage,
 	downloadContentFromMessage, downloadMediaMessage, getContentType,
 	GroupMetadata,
-	GroupParticipant, MediaDownloadOptions, MediaType,
+	GroupParticipant, isJidGroup, MediaDownloadOptions, MediaType,
 	MessageType, proto,
 	WAMessage,
 	WASocket
@@ -91,7 +91,7 @@ const react = async (socket: baileys.WASocket, emoji: string, message: baileys.W
 }
 
 const isGroup = (message: baileys.WAMessage): boolean => {
-	return Boolean(message.key.participant)
+	return Boolean(isJidGroup(message.key.remoteJid!))
 }
 
 const isParticipantAdmin = async (message: baileys.WAMessage, socket: WASocket): Promise<boolean> => {
