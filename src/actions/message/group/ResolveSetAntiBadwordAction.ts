@@ -53,6 +53,7 @@ export default class ResolveSetAntiBadwordAction extends BaseMessageHandlerActio
 
             return;
         }
+
         const data: {[key: string]: boolean} = {}
 
         data[this.alias] = argument[0] === 'on';

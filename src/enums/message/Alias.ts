@@ -23,6 +23,7 @@ enum Alias {
     AddBadword = 'add-badword',
     ToHd = 'to-hd',
     StickerToImage = 'sticker-to-image',
+    IsOnlyAdmin = 'is-only-admin',
 }
 
 export default Alias

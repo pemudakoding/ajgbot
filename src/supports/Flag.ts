@@ -17,6 +17,21 @@ const isFlagEnabled = async (type: Type, id: string , featureAlias: Alias): Prom
     }
 }
 
+const isOnlyAdmin = async (id: string): Promise<boolean> => {
+    try {
+        return await database.getData(
+            Path
+                .FlagsWithFeatureAlias
+                .replace(':type', 'group')
+                .replace(':id', id)
+                .replace(':featureAlias', Alias.IsOnlyAdmin)
+        )
+    } catch (Error) {
+        return false
+    }
+}
+
 export {
-    isFlagEnabled
+    isFlagEnabled,
+    isOnlyAdmin,
 }
