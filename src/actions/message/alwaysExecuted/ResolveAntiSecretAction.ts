@@ -27,6 +27,10 @@ export default class ResolveAntiSecretAction extends BaseMessageHandlerAction {
         const botNumber: string = jidDecode(socket.user!.id)!.user;
         const identifier: string = isGroup(message) ? await getGroupId(message) : botNumber
 
+        if(message.key.fromMe) {
+            return false;
+        }
+
         return isFlagEnabled(type, identifier, this.alias as Alias);
     }
 

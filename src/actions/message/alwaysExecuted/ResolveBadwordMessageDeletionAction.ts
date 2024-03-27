@@ -28,6 +28,10 @@ export default class ResolveBadwordMessageDeletionAction extends BaseMessageHand
         const botNumber: string = jidDecode(socket.user!.id)!.user;
         const identifier: string = isGroup(message) ? await getGroupId(message) : botNumber
 
+        if(message.key.fromMe) {
+            return false;
+        }
+
         return isFlagEnabled(type, identifier, this.alias as Alias);
     }
 
