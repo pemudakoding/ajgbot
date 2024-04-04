@@ -690,10 +690,10 @@
     uuid "^9.0.0"
     ws "^8.13.0"
 
-"@xncn/instagramdownloaderpro@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@xncn/instagramdownloaderpro/-/instagramdownloaderpro-0.0.3.tgz#b03521c4eaf9137e2feeb2d9279aa6d09c885cec"
-  integrity sha512-Nsf3Rbi/XVDAAFlACa3sibQ54eGf45njjH3Z9z86BravtsXW8SFAGXX91vOgiL2gtqnADYxQkuivbyzC9Lzk3w==
+"@xncn/instagramdownloaderpro@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@xncn/instagramdownloaderpro/-/instagramdownloaderpro-0.0.4.tgz#1458948a75dd19429010945470814032d7097517"
+  integrity sha512-jWsIaetu4O3DABzTpWQqf5hPP2BwuvVLJ1v3LXmsHPKmyuUS7LDfEbuM/nxvXTsFlQf+naAy4+pTXIhERu9Rig==
   dependencies:
     axios "^1.4.0"
     node-html-parser "^6.1.5"

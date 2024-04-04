@@ -4,7 +4,7 @@
     "@google/generative-ai": "^0.2.1",
     "@hapi/boom": "^10.0.1",
     "@whiskeysockets/baileys": "^6.6.0",
-    "@xncn/instagramdownloaderpro": "^0.0.3",
+    "@xncn/instagramdownloaderpro": "^0.0.4",
     "add": "^2.0.6",
     "bad-words-next": "^2.2.1",
     "dotenv": "^16.4.1",
