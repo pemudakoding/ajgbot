@@ -3,15 +3,11 @@ import MessagePatternType from "../../../types/MessagePatternType";
 import {WAMessage, WASocket} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str";
 import {getJid, getText, sendWithTyping} from "../../../supports/Message";
-import MediaSaver from "../../../services/mediasaver/MediaSaver";
 import queue from "../../../services/queue";
-import YoutubeDownloaderResponse from "../../../types/services/mediasaver/YoutubeDownloaderResponse";
-import DownloadFailed from "../../../exceptions/DownloadFailed";
 import Alias from "../../../enums/message/Alias";
 import Category from "../../../enums/message/Category";
 import CommandDescription from "../../../enums/message/CommandDescription";
-import YoutubeDownloaderType from "../../../enums/services/mediasaver/YoutubeDownloaderType";
-import {Buffer} from "buffer";
+import ytdl from 'ytdl-core';
 
 export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAction {
     alias: string | null = Alias.YoutubeDownload;
@@ -36,32 +32,43 @@ export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAc
                 throw Error('Pakailah URL Youtube Bung!!!')
             }
 
-            new URL(link)
+            const info = await ytdl.getInfo(link);
+            const formats = info
+                .formats
+                .filter(
+                    (format: ytdl.videoFormat) => format.container === 'mp4' && new RegExp(/720|480|360|240|270|144/).test(format.qualityLabel) && format.hasAudio === true
+                )
 
-            const downloader: MediaSaver = new MediaSaver(link)
-            const response: YoutubeDownloaderResponse = await downloader.ytmate(YoutubeDownloaderType.video)
-
-            if(! response.success || response.data === null || ! Object.hasOwn(response.data.links[0]!, 'link')) {
-                throw new DownloadFailed('Video tidak dapat di-proses karena berbagai alasan yang tidak pasti')
-            }
-
-            const buffer: ArrayBuffer = await (await fetch(response.data?.links[0]!.link as string)).arrayBuffer()
+            const duration = parseInt(info.videoDetails.lengthSeconds) / 60 >= 1
+                ? `${parseInt(info.videoDetails.lengthSeconds) / 60} Menit`
+                : `${parseInt(info.videoDetails.lengthSeconds)} Detik`
 
             queue.add(async () => {
                 await sendWithTyping(
                     socket,
                     {
-                        video: Buffer.from(buffer),
-                        caption: "ini videonya, bilang apa?\n\n" +
-                            `title: ${response.data?.title}\n` +
-                            `duration: ${response.data?.duration}\n` +
-                            `link: ${link}`
+                        video: {
+                            url: formats[0]!.url
+                        }
                     },
-                    getJid(message),
-                    {
-                        quoted: message
-                    }
+                    getJid(message)
+
                 )
+
+                queue.add(() => {
+                    sendWithTyping(
+                        socket,
+                        {
+                            text:  "Video berhasil di-proses\n\n" +
+                                `Title: ${info.videoDetails.title}\n` +
+                                `Duration: ${duration}\n` +
+                                `Author: ${info.videoDetails.author.name}\n` +
+                                `Link: ${link}`
+                        },
+                        getJid(message),
+                        {quoted: message}
+                    )
+                })
 
                 this.reactToDone(message, socket)
             })
