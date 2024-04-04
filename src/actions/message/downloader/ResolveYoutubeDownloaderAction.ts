@@ -40,19 +40,17 @@ export default class ResolveYoutubeDownloaderAction extends BaseMessageHandlerAc
                 )
 
             const duration = parseInt(info.videoDetails.lengthSeconds) / 60 >= 1
-                ? `${parseInt(info.videoDetails.lengthSeconds) / 60} Menit`
+                ? `${(parseInt(info.videoDetails.lengthSeconds) / 60).toFixed(2)} Menit`
                 : `${parseInt(info.videoDetails.lengthSeconds)} Detik`
 
             queue.add(async () => {
-                await sendWithTyping(
-                    socket,
+                await socket.sendMessage(
+                    getJid(message),
                     {
                         video: {
                             url: formats[0]!.url
                         }
                     },
-                    getJid(message)
-
                 )
 
                 queue.add(() => {
