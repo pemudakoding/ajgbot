@@ -1,8 +1,19 @@
 import BaseMessageHandlerAction from "../../../foundation/actions/BaseMessageHandlerAction";
 import MessagePatternType from "../../../types/MessagePatternType";
-import {GroupParticipant, WAMessage, WASocket} from "@whiskeysockets/baileys";
+import {
+    GroupParticipant,
+    MiscMessageGenerationOptions,
+    proto,
+    WAMessage,
+    WASocket
+} from "@whiskeysockets/baileys";
 import {getArguments, withSign} from "../../../supports/Str";
-import {getJid, getParticipants, getText, sendWithTyping} from "../../../supports/Message";
+import {
+    getJid,
+    getParticipants,
+    getText,
+    sendWithTyping
+} from "../../../supports/Message";
 import queue from "../../../services/queue";
 import Alias from "../../../enums/message/Alias";
 import CommandDescription from "../../../enums/message/CommandDescription";
@@ -22,10 +33,27 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
+        const quoted = message.message?.extendedTextMessage?.contextInfo;
         const texts: string[] = getArguments(getText(message))
         const groupMetaData: GroupParticipant[] = await getParticipants(socket, getJid(message))
         const participants: string[] = groupMetaData.map((participant: GroupParticipant) => participant.id)
         const text: string = texts.length < 1 ? "yo wazzup" : texts.join(" ")
+        const options: MiscMessageGenerationOptions = {};
+
+        if(quoted) {
+            //@ts-ignore
+            quoted["key"] = {
+                remoteJid: message.key.remoteJid!.endsWith("g.us") ? message.key.remoteJid : quoted!.participant,
+                id: quoted!.stanzaId,
+                participant: quoted!.participant,
+                fromMe: null
+            }
+
+            //@ts-ignore
+            quoted["message"] = quoted.quotedMessage;
+
+            options.quoted = quoted as proto.WebMessageInfo
+        }
 
         queue.add(() => sendWithTyping(
             socket,
@@ -34,6 +62,7 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
                 mentions: participants
             },
             getJid(message),
+            options
         ))
     }
 
