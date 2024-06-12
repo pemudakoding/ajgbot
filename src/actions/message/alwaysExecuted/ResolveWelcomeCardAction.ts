@@ -48,40 +48,44 @@ export default class ResolveWelcomeCardAction extends BaseMessageHandlerAction {
     }
 
     async process(message: WAMessage, socket: WASocket): Promise<void> {
-        const participantJid: string | undefined = message.messageStubParameters![0];
-        let profileUrl : string | undefined;
+        const participantJids: string[] | null | undefined = message.messageStubParameters;
 
-        try {
-            profileUrl = (await socket.profilePictureUrl(participantJid!, 'image'))
-        } catch (Error) {
-            profileUrl = 'https://i.ibb.co/vXzDh4y/gradient-lo-fi-illustrations-52683-84144.jpg';
-        }
+        participantJids?.map(async (participantJid: string) => {
+            let profileUrl : string | undefined;
 
-        const groupName = (await socket.groupMetadata(message.key.remoteJid!)).subject;
-        const welcomeMessage = "@" + message.messageStubParameters![0]?.split('@')[0] + " Silahkan intro terdahulu! 🤨"
-        const greetingTitle = 'Welcome To'
-        const photo = await axios.get(profileUrl!, {responseType: "arraybuffer"});
-        const uploadedProfileLink: string = await telegraph(photo.data)
-
-        const response = await axios.get(
-            'https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/dkXJ7rw/1349198-1.jpg' +
-            "&text1=" + encodeURI(greetingTitle) +
-            "&text2=" + encodeURI(groupName) +
-            "&text3=" + encodeURI("Member " + (await socket.groupMetadata(message.key.remoteJid!)).participants.length)+
-            "&avatar=" + uploadedProfileLink,
-            {
-                responseType: 'arraybuffer'
+            try {
+                profileUrl = (await socket.profilePictureUrl(participantJid, 'image'))
+            } catch (Error) {
+                profileUrl = 'https://i.ibb.co/vXzDh4y/gradient-lo-fi-illustrations-52683-84144.jpg';
             }
-        )
 
-        queue.add(() => socket.sendMessage(
-            getJid(message),
-            {
-                image: response.data,
-                caption: welcomeMessage,
-                mentions: [message.messageStubParameters![0]!]
-            }
-        ))
+            const groupName = (await socket.groupMetadata(message.key.remoteJid!)).subject;
+            const welcomeMessage = "@" + participantJid.split('@')[0] + " Silahkan intro terdahulu! 🤨"
+            const greetingTitle = 'Welcome To'
+            const photo = await axios.get(profileUrl!, {responseType: "arraybuffer"});
+            const uploadedProfileLink: string = await telegraph(photo.data)
+
+            const response = await axios.get(
+                'https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/dkXJ7rw/1349198-1.jpg' +
+                "&text1=" + encodeURI(greetingTitle) +
+                "&text2=" + encodeURI(groupName) +
+                "&text3=" + encodeURI("Member " + (await socket.groupMetadata(message.key.remoteJid!)).participants.length)+
+                "&avatar=" + uploadedProfileLink,
+                {
+                    responseType: 'arraybuffer'
+                }
+            )
+
+            queue.add(() => socket.sendMessage(
+                getJid(message),
+                {
+                    image: response.data,
+                    caption: welcomeMessage,
+                    mentions: [participantJid]
+                }
+            ))
+        })
+
     }
 
     usageExample(): string {
