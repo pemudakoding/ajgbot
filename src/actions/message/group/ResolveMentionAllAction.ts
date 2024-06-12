@@ -40,7 +40,7 @@ class ResolveMentionAllAction extends BaseMessageHandlerAction {
         const text: string = texts.length < 1 ? "yo wazzup" : texts.join(" ")
         const options: MiscMessageGenerationOptions = {};
 
-        if(quoted) {
+        if(Boolean(quoted?.quotedMessage)) {
             //@ts-ignore
             quoted["key"] = {
                 remoteJid: message.key.remoteJid!.endsWith("g.us") ? message.key.remoteJid : quoted!.participant,
