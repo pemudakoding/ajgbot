@@ -24,6 +24,7 @@ enum Alias {
     ToHd = 'to-hd',
     StickerToImage = 'sticker-to-image',
     IsOnlyAdmin = 'is-only-admin',
+    CheckKhodam = 'check-khodam',
 }
 
 export default Alias

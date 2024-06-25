@@ -7,6 +7,7 @@
     "@xncn/instagramdownloaderpro": "^0.0.4",
     "add": "^2.0.6",
     "bad-words-next": "^2.2.1",
+    "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.1",
     "file-type": "^19.0.0",
     "formdata-node": "^6.0.3",
