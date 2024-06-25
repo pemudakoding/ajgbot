@@ -24,12 +24,14 @@ export default class ResolveBroadcastToGroupsAction extends OwnerMessageHandlerA
     async process(message: WAMessage, socket: WASocket): Promise<void> {
         try {
             const groups = await database.getData('.group');
-            const text = `${getTextWithoutCommand(message)} \n\n\n\n\n\n > ${Date.now()}`;
+            const text = `${getTextWithoutCommand(message)}
+            
+> ${Date.now()}`;
 
             for (const group in groups) {
                 const jid = group + '@g.us'
 
-                wait(2000)
+                await wait(2000)
 
                 queue.add(() => sendWithTyping(
                     socket,
