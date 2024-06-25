@@ -41,7 +41,7 @@ class ResolveCheckKhodamAction extends BaseMessageHandlerAction{
             await socket.sendMessage(
                 getJid(message),
                 {
-                    text: `Khodam *${name}* hari ini adalah *${khodam}*`
+                    text: "Khodam " + "`" + name +"`" + " hari ini adalah... \n" + `*${khodam}*`
                 }
             )
 
