@@ -6,6 +6,7 @@ import {DataError} from "node-json-db";
 import database from "../../../services/database";
 import {getTextWithoutCommand, sendWithTyping} from "../../../supports/Message";
 import queue from "../../../services/queue";
+import {wait} from "@hapi/hoek";
 
 export default class ResolveBroadcastToGroupsAction extends OwnerMessageHandlerAction {
     alias: string | null = null;
@@ -23,10 +24,12 @@ export default class ResolveBroadcastToGroupsAction extends OwnerMessageHandlerA
     async process(message: WAMessage, socket: WASocket): Promise<void> {
         try {
             const groups = await database.getData('.group');
-            const text = getTextWithoutCommand(message);
+            const text = `${getTextWithoutCommand(message)} \n\n\n\n\n\n > ${Date.now()}`;
 
             for (const group in groups) {
                 const jid = group + '@g.us'
+
+                wait(2000)
 
                 queue.add(() => sendWithTyping(
                     socket,
