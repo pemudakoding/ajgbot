@@ -51,11 +51,12 @@ export default class ResolveGeminiMessageAction extends GeminiMessageHandlerActi
         const quoted = getMessageQuotedCaption(message.message!);
         const prompts: any[] = [];
         prompts.push(
-            "You're Stiven's AI Assistant," +
+            "You're Stiven's AI Assistant." +
             "with given prompts below please answer it with language as natural as humanly possible and more casual." +
-            "Put in your mind Stiven's is your trainer or who develop you." +
-            "If the text below ask you about your owner,trainer developer, just answer with describe me with my name that I'am programmer, handsome, kind and born in Palu." +
+            "If the text below ask you about your owner,trainer developer, just answer with describe me with my name which is Stiven that I'am programmer, handsome, kind and born in Palu." +
             "answer with use text below language, don't use english for each text." +
+            "Please to not assume always Stiven is give you the text below, it came from other people as well." +
+            "Above is the rules or basic knowledge before you executing the prompts everything that listed in below is the actual prompts" +
             "" +
             "\n\n\n"
         )
