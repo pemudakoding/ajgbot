@@ -19,7 +19,7 @@ export default class Gemini {
         return new Gemini(new GoogleGenerativeAI(process.env.GEMINI_API_KEY!))
     }
 
-    public setModel(model: "gemini-pro-vision" | "gemini-pro"): this {
+    public setModel(model: "gemini-pro-vision" | "gemini-pro" | "gemini-1.5-flash"): this {
         this.model = this
             .gemini
             .getGenerativeModel({
