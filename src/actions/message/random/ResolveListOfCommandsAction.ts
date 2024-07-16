@@ -58,7 +58,7 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
     }
 
     usageExample(): string {
-        return ".help";
+        return "";
     }
 
     protected resolveForCommandGroup(): {[key: string]: MessageHandler[]} {

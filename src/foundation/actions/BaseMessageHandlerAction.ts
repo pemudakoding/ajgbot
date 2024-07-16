@@ -52,7 +52,7 @@ abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implem
         return;
       }
 
-      if(getText(message).includes('--help')) {
+      if(getText(message).includes('--help') && this.usageExample() !== '') {
         queue.add(() => sendWithTyping(
            socket,
             {
@@ -65,6 +65,8 @@ abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implem
               quoted: message
             }
         ));
+
+        return;
       }
 
       await this.process(message, socket)
