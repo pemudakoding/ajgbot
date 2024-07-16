@@ -38,6 +38,11 @@ export default class ResolveListOfCommandsAction extends BaseMessageHandlerActio
             iteration++
         }
 
+        text += "*Note*: " +
+            "\n" +
+            "1. Gunakan --help untuk melihat cara pemakaian command `.command --help`" +
+            "\n\n"
+
         text += '\n' +
             '======================\n' +
             '======= Donasi ======= \n' +
