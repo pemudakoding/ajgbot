@@ -4,7 +4,7 @@ import MessagePatternType from "../../types/MessagePatternType";
 import BaseMessageAction from "../../contracts/actions/BaseMessageAction";
 import {patternsAndTextIsMatch} from "../../supports/Str";
 import queue from "../../services/queue";
-import {getGroupId, getJid, isGroup, isParticipantAdmin, sendWithTyping} from "../../supports/Message";
+import {getGroupId, getJid, getText, isGroup, isParticipantAdmin, sendWithTyping} from "../../supports/Message";
 import MessageReactHandlerAction from "./MessageReactHandlerAction";
 import {isFlagEnabled, isOnlyAdmin} from "../../supports/Flag";
 import Alias from "../../enums/message/Alias";
@@ -50,6 +50,21 @@ abstract class BaseMessageHandlerAction extends MessageReactHandlerAction implem
 
       if(! await this.isEligibleToProcess(message, socket)) {
         return;
+      }
+
+      if(getText(message).includes('--help')) {
+        queue.add(() => sendWithTyping(
+           socket,
+            {
+              text: "Untuk menggunakan commandnya, ikuti cara seperti dibawah ya" +
+                  "\n" +
+                  "> " + this.usageExample()
+            } ,
+            getJid(message),
+            {
+              quoted: message
+            }
+        ));
       }
 
       await this.process(message, socket)
